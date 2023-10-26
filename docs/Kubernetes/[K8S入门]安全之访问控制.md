@@ -1,3 +1,9 @@
+---
+layout: default
+title: [K8S入门]安全之访问控制
+parent: Kubernetes
+---
+
 ### 一、K8S API请求访问控制
 
 ![](../../assets/images/Kubernetes/attachments/[K8S入门]安全之访问控制_image_0.png)

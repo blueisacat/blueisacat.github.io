@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML入门]概念篇(2)
+parent: ML
+---
+
 **样本/示例**
 
 **特征/属性**

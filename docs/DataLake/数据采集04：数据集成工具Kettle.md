@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据采集04：数据集成工具Kettle
+parent: DataLake
+nav_order: 1.4
+---
+
 ### 1. Kettle是什么
 
 Kettle最早是一个开源的ETL工具，全称为KDE Extraction, Transportation, Transformation and Loading Environment。

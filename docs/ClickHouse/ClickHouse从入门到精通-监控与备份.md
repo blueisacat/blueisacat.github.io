@@ -1,3 +1,9 @@
+---
+layout: default
+title: ClickHouse从入门到精通-监控与备份
+parent: ClickHouse
+---
+
 ### 1. ClickHouse 监控概述
 
 ClickHouse 运行时会将一些个自身的运行状态记录到众多系统表中( system.*)。所以我 们对于 CH 自身的一些运行指标的监控数据，也主要来自这些系统表。

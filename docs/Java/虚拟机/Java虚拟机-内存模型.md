@@ -1,3 +1,9 @@
+---
+layout: default
+title: Java虚拟机-内存模型
+parent: 虚拟机
+---
+
 ### 什么是RAM？
 
 随机访问储存器：Random Access Memory, 在关闭电源的时候内存上的内容即会被删除。

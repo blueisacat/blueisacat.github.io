@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第3篇：Nacos服务注册与发现
+parent: SpringCloudAlibaba
+nav_order: 1.3
+---
+
 上一篇《Spring Cloud Alibaba | Nacos服务中心初探》我们聊了什么是Nacos以及Nacos如何搭建，这一篇我们接着聊Nacos如何简单使用。
 
 首先，Nacos是一个服务注册和服务发现的注册中心，在Spring Cloud中，可以替代Eureka的功能，我们先聊一下Nacos如何和Spring Cloud集成做一个注册中心。

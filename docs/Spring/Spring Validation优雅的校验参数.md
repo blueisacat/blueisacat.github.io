@@ -1,3 +1,9 @@
+---
+layout: default
+title: Spring Validation优雅的校验参数
+parent: Spring
+---
+
 ### 一、为何使用？
 
 在业务代码开发过程中，一般都会对 

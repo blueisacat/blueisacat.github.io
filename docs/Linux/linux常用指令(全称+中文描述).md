@@ -1,3 +1,9 @@
+---
+layout: default
+title: linux常用指令(全称+中文描述)
+parent: Linux
+---
+
 - man: Manual   意思是手册，可以用这个命令查询其他命令的用法。
 
 - pwd：Print working directory   显示当前工作路径。

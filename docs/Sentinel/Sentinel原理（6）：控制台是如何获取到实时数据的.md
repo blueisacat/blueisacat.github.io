@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（6）：控制台是如何获取到实时数据的
+parent: Sentinel
+nav_order: 2.6
+---
+
 # Sentinel原理：控制台是如何获取到实时数据的
 
 Sentinel 能够被大家所认可，除了他自身的轻量级，高性能，可扩展之外，跟控制台的好用和易用也有着莫大的关系，因为通过控制台极大的方便了我们日常的运维工作。

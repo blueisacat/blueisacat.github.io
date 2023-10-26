@@ -1,3 +1,10 @@
+---
+layout: default
+title: Mybatis源码(5)-数据读写
+parent: Mybatis
+nav_order: 1.5
+---
+
 ### 数据读写的本质
 
 不管是哪种ORM框架，数据读写其本质都是对JDBC的封装，其目的主要都是简化JDBC的开发流程，进而让开发人员更关注业务。下面是JDBC的核心流程：

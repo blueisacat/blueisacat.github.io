@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML基础]概率论(1)-三门问题
+parent: ML
+---
+
 ![](../../assets/images/ML/attachments/[ML基础]概率论(1)-三门问题_image_0.png)
 
 ![](../../assets/images/ML/attachments/[ML基础]概率论(1)-三门问题_image_1.png)

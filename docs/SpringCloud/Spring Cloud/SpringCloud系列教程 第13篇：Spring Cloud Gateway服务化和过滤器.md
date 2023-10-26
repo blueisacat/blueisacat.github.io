@@ -1,3 +1,10 @@
+---
+layout: default
+title: SpringCloud系列教程 第13篇：Spring Cloud Gateway服务化和过滤器
+parent: SpringCloud系列教程
+nav_order: 1.13
+---
+
 > Springboot: 2.1.6.RELEASE
 > SpringCloud: Greenwich.SR1
 > 如无特殊说明，本系列教程全采用以上版本

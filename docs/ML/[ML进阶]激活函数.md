@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML进阶]激活函数
+parent: ML
+---
+
 ![](../../assets/images/ML/attachments/[ML进阶]激活函数_image_0.png)
 
 ### 什么是激活函数?

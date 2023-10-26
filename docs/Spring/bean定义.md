@@ -1,3 +1,9 @@
+---
+layout: default
+title: bean定义
+parent: Spring
+---
+
 ### bean定义
 
 > Q：什么是bean定义？

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（2）：重要概念
+parent: Sentinel
+nav_order: 2.2
+---
+
 # Sentinel原理：重要概念
 
 Sentinel 中有很多比较重要的概念，我们要了解一个框架，首先要对框架中重要的概念实体进行分析，本文我将跟大家一起来分析一下 Sentinel 中非常重要的几个概念。

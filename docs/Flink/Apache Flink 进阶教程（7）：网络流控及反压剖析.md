@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（7）：网络流控及反压剖析
+parent: Flink
+nav_order: 4.7
+---
+
 # 网络流控的概念与背景
 
 ## 为什么需要网络流控

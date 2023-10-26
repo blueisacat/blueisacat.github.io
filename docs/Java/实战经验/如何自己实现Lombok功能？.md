@@ -1,3 +1,9 @@
+---
+layout: default
+title: 如何自己实现Lombok功能？
+parent: 实战经验
+---
+
 # 一、Lombok是实现了什么功能？
 
 Lombok是一款在java代码编译阶段改变代码的插件。比如生成getter和setter方法等，能够简化开发一些特定模板式代码。

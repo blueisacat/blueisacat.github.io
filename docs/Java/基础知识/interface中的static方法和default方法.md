@@ -1,3 +1,9 @@
+---
+layout: default
+title: interface中的static方法和default方法
+parent: 基础知识
+---
+
 ### static方法
 
 java8中为接口新增了一项功能:定义一个或者更多个静态方法。用法和普通的static方法一样。

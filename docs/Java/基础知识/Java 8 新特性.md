@@ -1,3 +1,9 @@
+---
+layout: default
+title: Java 8 新特性
+parent: 基础知识
+---
+
 # 一、新特性
 
 Java8 新增了非常多的特性，我们主要讨论以下几个：

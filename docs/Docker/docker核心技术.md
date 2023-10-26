@@ -1,3 +1,9 @@
+---
+layout: default
+title: docker核心技术
+parent: Docker
+---
+
 Docker底层实现主要基于LINUX技术，包含LINUX上的命名空间（Namespaces）、控制组（Control groups）、Union文件系统（Union file system）。
 
 1. 命名空间。权限隔离控制，保证虽然在同一个宿主机上，但是相互是透明的。

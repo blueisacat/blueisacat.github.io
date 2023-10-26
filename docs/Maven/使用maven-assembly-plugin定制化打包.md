@@ -1,3 +1,9 @@
+---
+layout: default
+title: 使用maven-assembly-plugin定制化打包
+parent: Maven
+---
+
 ### 有个想法
 
 以SpringBoot为例，使用官方默认的maven插件spring-boot-maven-plugin进行打包时，最终的形态是一个jar包，其中配置文件、lib依赖都会打进jar内，这就导致了整个jar包的体积很大。对于经常进行版本更迭的项目来说，每次都是要把整个jar上传。如果网速较慢的话，那么整个更迭的过程会很痛苦。

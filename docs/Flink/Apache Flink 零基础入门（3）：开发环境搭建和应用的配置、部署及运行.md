@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（3）：开发环境搭建和应用的配置、部署及运行
+parent: Flink
+nav_order: 5.2
+---
+
 # 一、Flink 开发环境部署和配置
 
 Flink 是一个以 Java 及 Scala 作为开发语言的开源大数据项目，代码开源在 GitHub 上，并使用 Maven 来编译和构建项目。对于大部分使用 Flink 的同学来说，Java、Maven 和 Git 这三个工具是必不可少的，另外一个强大的 IDE 有助于我们更快的阅读代码、开发新功能以及修复 Bug。因为篇幅所限，我们不会详述每个工具的安装细节，但会给出必要的安装建议。

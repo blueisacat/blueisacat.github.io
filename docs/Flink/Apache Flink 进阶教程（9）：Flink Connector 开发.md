@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（9）：Flink Connector 开发
+parent: Flink
+nav_order: 4.9
+---
+
 # Flink Streaming Connector
 
 Flink 是新一代流批统一的计算引擎，它需要从不同的第三方存储引擎中把数据读过来，进行处理，然后再写出到另外的存储引擎中。Connector 的作用就相当于一个连接器，连接 Flink 计算引擎跟外界存储系统。Flink 里有以下几种方式，当然也不限于这几种方式可以跟外界进行数据交换：

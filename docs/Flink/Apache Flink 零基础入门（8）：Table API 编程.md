@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（8）：Table API 编程
+parent: Flink
+nav_order: 5.7
+---
+
 # 一、什么是 Table API
 
 为了更好地了解 Table API，我们先看下 Flink 都提供了哪些 API 供用户使用。

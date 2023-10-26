@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel实战（2）：使用控制台管理规则
+parent: Sentinel
+nav_order: 1.2
+---
+
 # Sentinel 实战：使用控制台管理规则
 
 通过 sentinel 的控制台，我们可以对规则进行查询和修改，也可以查看到实时监控，机器列表等信息，所以我们需要对 sentinel 的控制台做个完整的了解。

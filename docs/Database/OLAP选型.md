@@ -1,3 +1,9 @@
+---
+layout: default
+title: OLAP选型
+parent: Database
+---
+
 ### 1. OLAP和OLTP的区别
 
 OLTP（On-Line Transaction Processing）联机事务处理，它使分析人员能够迅速、一致、交互地从各个方面观察信息，以达到深入理解数据的目的。它具有FASMI(Fast Analysis of Shared Multidimensional Information)，即共享多维信息的快速分析的特征。主要应用是传统关系型数据库。OLTP系统强调的是内存效率，实时性比较高。 Mysql、Oracle、Redis、Hbase。

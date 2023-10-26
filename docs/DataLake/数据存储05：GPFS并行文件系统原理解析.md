@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据存储05：GPFS并行文件系统原理解析
+parent: DataLake
+nav_order: 2.5
+---
+
 ### 1. GPFS历史背景及发展
 
 GPFS（General Parallel File System）是IBM公司推出的行业领先的并行分布式通用并行集群文件系统，GPFS从1993开始研发，1995年投入商用（最早投入使用在多媒体处理行业，所以我们现在看到GPFS的很多目录和命令为什么都有MM[multimedia]两个字母，就是根据这个背景延续下来的）。

@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML入门]算法篇(2)
+parent: ML
+---
+
 ### 算法篇
 
 #### 1. 决策树

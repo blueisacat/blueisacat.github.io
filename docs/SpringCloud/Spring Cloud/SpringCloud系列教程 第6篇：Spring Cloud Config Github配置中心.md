@@ -1,3 +1,10 @@
+---
+layout: default
+title: SpringCloud系列教程 第6篇：Spring Cloud Config Github配置中心
+parent: SpringCloud系列教程
+nav_order: 1.6
+---
+
 > Springboot: 2.1.6.RELEASE
 > 
 > SpringCloud: Greenwich.SR1

@@ -1,3 +1,10 @@
+---
+layout: default
+title: SpringCloud系列教程 第15篇：微服务利剑之APM平台（一）Skywalking
+parent: SpringCloud系列教程
+nav_order: 1.15
+---
+
 > Springboot: 2.1.6.RELEASE
 > SpringCloud: Greenwich.SR1
 > 如无特殊说明，本系列教程全采用以上版本

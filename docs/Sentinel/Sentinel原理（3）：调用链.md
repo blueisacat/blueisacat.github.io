@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（3）：调用链
+parent: Sentinel
+nav_order: 2.3
+---
+
 # Sentinel原理：调用链
 
 我们已经知道了 Sentinel 实现限流降级的原理，其核心就是一堆 Slot 组成的调用链。

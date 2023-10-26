@@ -1,3 +1,10 @@
+---
+layout: default
+title: 概念：流计算中的At Most Once、At Least Once、Exactly Once
+parent: Flink
+nav_order: 2
+---
+
 目前市面上使用较多的流计算系统有Apache Storm，Apache Flink，Heron，Apache Kafka（Kafka Streams）和Apache Spark（Spark Streaming）。关于流计算系统有个被广泛讨论的特性是『Exactly Once』语义，很多系统宣称已经支持了这一特性。但是，到底什么是『Exactly Once』，怎么样才算是实现了『Exactly Once』，人们存在很多误解和歧义。接下来我们做下分析。
 
 # 一、背景

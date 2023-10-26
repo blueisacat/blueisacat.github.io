@@ -1,3 +1,9 @@
+---
+layout: default
+title: IoC源码(2)
+parent: Spring
+---
+
 ### 加载BeanDefinition
 
 refresh其实实在AbstractApplicationContext类中实现的。

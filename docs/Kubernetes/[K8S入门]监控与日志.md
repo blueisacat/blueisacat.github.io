@@ -1,3 +1,9 @@
+---
+layout: default
+title: [K8S入门]监控与日志
+parent: Kubernetes
+---
+
 ### 一、监控
 
 #### 监控类型

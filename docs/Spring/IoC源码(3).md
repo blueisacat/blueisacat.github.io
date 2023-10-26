@@ -1,3 +1,9 @@
+---
+layout: default
+title: IoC源码(3)
+parent: Spring
+---
+
 ### 注册bean后置处理器
 
 registerBeanPostProcessors方法负责初始化实现了BeanPostProcessor接口的Bean，并将其注册到BeanFactory中。

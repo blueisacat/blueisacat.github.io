@@ -1,3 +1,9 @@
+---
+layout: default
+title: bean定义动态生成
+parent: Spring
+---
+
 > bean定义在spring中的组件名叫:BeanDefinition当我们创建了一个BeanDefinition后可以通过BeanDefinitionRegistry接口(ApplicationContext会实现此接口)将新的BeanDefinition注册到spring上下文中。
 
 

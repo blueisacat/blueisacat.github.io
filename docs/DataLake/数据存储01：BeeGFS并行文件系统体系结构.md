@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据存储01：BeeGFS并行文件系统体系结构
+parent: DataLake
+nav_order: 2.1
+---
+
 ThinkParQ成立于2013年底，由BeeGFS背后的一些关键人物组成，为BeeGFS客户提供专业的支持，服务和咨询。BeeGFS原名为FhGFS，是由Fraunhofer Institute为工业数学计算而设计开发，由于在欧洲和美国的中小型HPC系统性能表现良好，在2014年改名注册为BeeGFS并受到科研和商业的广泛应用。
 
 BeeGFS既是一个网络文件系统也是一个并行文件系统。客户端通过网络与存储服务器进行通信(具有TCP/IP或任何具有RDMA功能的互连，如InfiniBand，RoCE或Omni-Path，支持native verbs 接口)。通过BeeGFS添加更多的服务器，其容量和性能被聚合在单个命名空间中。

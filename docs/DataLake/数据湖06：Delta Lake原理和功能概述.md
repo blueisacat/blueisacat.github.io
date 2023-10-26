@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据湖06：Delta Lake原理和功能概述
+parent: DataLake
+nav_order: 3.6
+---
+
 ### 1. DeltaLake是什么
 
 Delta Lake 是 DataBricks 公司开源的、用于构建湖仓架构的存储框架。能够支持 Spark，Flink，Hive，PrestoDB，Trino 等查询/计算引擎。作为一个开放格式的存储层，它在提供了批流一体的同时，为湖仓架构提供可靠的，安全的，高性能的保证。

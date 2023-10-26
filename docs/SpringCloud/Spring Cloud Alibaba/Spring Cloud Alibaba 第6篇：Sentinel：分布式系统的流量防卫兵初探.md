@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第6篇：Sentinel：分布式系统的流量防卫兵初探
+parent: SpringCloudAlibaba
+nav_order: 1.6
+---
+
 # 1. Sentinel 是什么？
 
 Sentinel 是阿里中间件团队研发的面向分布式服务架构的轻量级高可用流量控制组件，最近正式开源。Sentinel 主要以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度来帮助用户保护服务的稳定性。讲到这里，可能很多人会有疑问：Sentinel 和之前常用的熔断降级库 Netflix Hystrix 有什么异同呢？如果不清楚什么是Hystrix的，可以看我签名的文章跟我学SpringCloud | 第四篇：熔断器Hystrix。

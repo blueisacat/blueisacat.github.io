@@ -1,3 +1,9 @@
+---
+layout: default
+title: Exception
+parent: Spring
+---
+
 # 异常处理
 
 在基于Spring框架的项目中，可以通过在ApplicationContext-MVC.xml，即SpringMVC配置文件中配置 

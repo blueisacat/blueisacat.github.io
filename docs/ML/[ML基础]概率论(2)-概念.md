@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML基础]概率论(2)-概念
+parent: ML
+---
+
 **概率**
 
 **样本空间Ω**

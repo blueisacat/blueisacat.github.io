@@ -1,3 +1,9 @@
+---
+layout: default
+title: 如何正确控制bean的加载顺序
+parent: Spring
+---
+
 ### 一、为什么控制
 
 springboot遵从约定大于配置的原则，极大程度的解决了配置繁琐的问题。在此基础上，又提供了spi机制，用spring.factories可以完成一个小组件的自动装配功能。

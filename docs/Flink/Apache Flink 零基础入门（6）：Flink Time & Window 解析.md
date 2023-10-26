@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（6）：Flink Time & Window 解析
+parent: Flink
+nav_order: 5.5
+---
+
 # 一、Window & Time 介绍
 
 Apache Flink（以下简称 Flink） 是一个天然支持无限流数据处理的分布式计算框架，在 Flink 中 Window 可以将无限流切分成有限流，是处理有限流的核心组件，现在 Flink 中 Window 可以是时间驱动的（Time Window），也可以是数据驱动的（Count Window）。

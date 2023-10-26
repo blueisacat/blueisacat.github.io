@@ -1,8 +1,7 @@
 ---
 layout: default
-title: 主页
+title: Home
 nav_order: 1
-description: "梅尔菲斯的主页"
 permalink: /
 ---
 

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第12篇：Sentinel：分布式系统的流量防卫兵进阶实战
+parent: SpringCloudAlibaba
+nav_order: 1.12
+---
+
 # 1. Sentinel整合Feign和RestTemplate
 
 Sentinel目前已经同时支持Feign和RestTemplate，需要我们引入对应的依赖，在使用Feign的时候需要在配置文件中打开Sentinel对Feign的支持：feign.sentinel.enabled=true，同时需要加入openfeign starter依赖使sentinel starter中的自动化配置类生效。在使用RestTemplate的时候需要在构造RestTemplate的Bean的时候加上@SentinelRestTemplate注解，开启Sentinel对RestTemplate的支持。

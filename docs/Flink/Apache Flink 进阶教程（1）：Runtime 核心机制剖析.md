@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（1）：Runtime 核心机制剖析
+parent: Flink
+nav_order: 4.1
+---
+
 # 1. 综述
 
 本文主要介绍 Flink Runtime 的作业执行的核心机制。本文将首先介绍 Flink Runtime 的整体架构以及 Job 的基本执行流程，然后介绍在这个过程，Flink 是怎么进行资源管理、作业调度以及错误恢复的。最后，本文还将简要介绍 Flink Runtime 层当前正在进行的一些工作。

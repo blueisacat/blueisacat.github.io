@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第2篇：Nacos服务中心初探
+parent: SpringCloudAlibaba
+nav_order: 1.2
+---
+
 # 1. 什么是Nacos？
 
 Nacos 是阿里巴巴推出来的一个新开源项目，这是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。

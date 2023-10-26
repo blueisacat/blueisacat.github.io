@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（8）：详解 Metrics 原理与实战
+parent: Flink
+nav_order: 4.8
+---
+
 # 什么是 Metrics？
 
 Flink 提供的 Metrics 可以在 Flink 内部收集一些指标，通过这些指标让开发人员更好地理解作业或集群的状态。由于集群运行后很难发现内部的实际状况，跑得慢或快，是否异常等，开发人员无法实时查看所有的 Task 日志，比如作业很大或者有很多作业的情况下，该如何处理？此时 Metrics 可以很好的帮助开发人员了解作业的当前状况。

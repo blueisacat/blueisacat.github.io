@@ -1,3 +1,9 @@
+---
+layout: default
+title: [K8S入门]调度和资源管理
+parent: Kubernetes
+---
+
 ### 一、K8S调度过程
 
 首先来看第一部分，K8S的调度过程。如下图所示，画了一个很简单的K8S集群架构，它包括了一个kube-ApiServer，一组Web-hook Controllers，以及一个默认的调度器kube-Scheduler，还有两台物理机节点Node1和Node2，分别在上面部署了两个kubelet。

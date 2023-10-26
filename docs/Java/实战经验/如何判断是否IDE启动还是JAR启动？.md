@@ -1,3 +1,9 @@
+---
+layout: default
+title: 如何判断是否IDE启动还是JAR启动？
+parent: 实战经验
+---
+
 ### 判断逻辑
 
 1. 首先找到启动类

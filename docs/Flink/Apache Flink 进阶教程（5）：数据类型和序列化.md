@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（5）：数据类型和序列化
+parent: Flink
+nav_order: 4.5
+---
+
 # 为 Flink 量身定制的序列化框架
 
 ## 为什么定制?

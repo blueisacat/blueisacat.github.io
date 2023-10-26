@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（4）：滑动窗口
+parent: Sentinel
+nav_order: 2.4
+---
+
 # Sentinel原理：滑动窗口
 
 上篇文章中，我们了解了 Sentinel 是如何构造资源调用链的，以及每种Slot的具体作用，其中最重要的一个Slot非StatisticSlot莫属，因为他做的事是其他所有的Slot的基础。包括各种限流，熔断的规则，都是基于StatisticSlot统计出来的结果进行规则校验的。本篇文章我将深入研究下 Sentinel 是如何进行qps等指标的统计的，首先要确定的一点是，sentinel是基于滑动时间窗口来实现的。

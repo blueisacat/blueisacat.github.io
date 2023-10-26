@@ -1,3 +1,9 @@
+---
+layout: default
+title: CRUD命名
+parent: Spring
+---
+
 对于业务模块 
 
 - 分页：

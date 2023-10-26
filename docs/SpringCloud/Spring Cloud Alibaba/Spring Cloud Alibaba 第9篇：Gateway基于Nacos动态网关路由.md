@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第9篇：Gateway基于Nacos动态网关路由
+parent: SpringCloudAlibaba
+nav_order: 1.9
+---
+
 # 1. 背景介绍
 
 在Spring Cloud微服务体系下，常用的服务网关有Netflix公司开源的Zuul，还有Spring Cloud团队自己开源的Spring Cloud Gateway，其中NetFlix公司开源的Zuul版本已经迭代至2.x，但是Spring Cloud并未集成，目前Spring Cloud集成的Spring Cloud Zuul还是Zuul1.x，这一版的Zuul是基于Servlet构建的，采用的方案是阻塞式的多线程方案，即一个线程处理一次连接请求，这种方式在内部延迟严重、设备故障较多情况下会引起存活的连接增多和线程增加的情况发生。Spring Cloud自己开源的Spring Cloud Gateway则是基于Spring Webflux来构建的，Spring Webflux有一个全新的非堵塞的函数式 Reactive Web 框架，可以用来构建异步的、非堵塞的、事件驱动的服务，在伸缩性方面表现非常好。使用非阻塞API， Websockets得到支持，并且由于它与Spring紧密集成，将会得到更好的开发体验。

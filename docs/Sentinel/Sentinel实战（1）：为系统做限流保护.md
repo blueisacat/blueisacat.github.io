@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel实战（1）：为系统做限流保护
+parent: Sentinel
+nav_order: 1.1
+---
+
 # Sentinel实战：为系统做限流保护
 
 我们已经知道了 Sentinel 的三大功能：

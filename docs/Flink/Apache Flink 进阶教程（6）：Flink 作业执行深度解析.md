@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（6）：Flink 作业执行深度解析
+parent: Flink
+nav_order: 4.6
+---
+
 # Flink 四层转化流程
 
 Flink 有四层转换流程，第一层为 Program 到 StreamGraph；第二层为 StreamGraph 到 JobGraph；第三层为 JobGraph 到 ExecutionGraph；第四层为 ExecutionGraph 到物理执行计划。通过对 Program 的执行，能够生成一个 DAG 执行图，即逻辑执行图。如下：

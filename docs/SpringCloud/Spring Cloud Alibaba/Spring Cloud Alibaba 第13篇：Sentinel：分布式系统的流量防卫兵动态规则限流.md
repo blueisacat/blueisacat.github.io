@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流
+parent: SpringCloudAlibaba
+nav_order: 1.13
+---
+
 前面几篇文章较为详细的介绍了Sentinel的使用姿势，还没看过的小伙伴可以访问以下链接查看：
 
 - 《Spring Cloud Alibaba | Sentinel：分布式系统的流量防卫兵基础实战》

@@ -1,3 +1,9 @@
+---
+layout: default
+title: ClickHouse从入门到精通-高级
+parent: ClickHouse
+---
+
 ### 1. Explain 查看执行计划
 
 在 clickhouse 20.6 版本之前要查看 SQL 语句的执行计划需要设置日志级别为 trace 才能可以看到，并且只能真正执行 sql，在执行日志里面查看。在 20.6 版本引入了原生的执行计划的语法。在 20.6.3 版本成为正式版本的功能。

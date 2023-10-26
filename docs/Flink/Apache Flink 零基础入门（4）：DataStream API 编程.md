@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（4）：DataStream API 编程
+parent: Flink
+nav_order: 5.3
+---
+
 # 1. 流处理基本概念
 
 对于什么是流处理，从不同的角度有不同的定义。其实流处理与批处理这两个概念是对立统一的，它们的关系有点类似于对于 Java 中的 ArrayList 中的元素，是直接看作一个有限数据集并用下标去访问，还是用迭代器去访问。

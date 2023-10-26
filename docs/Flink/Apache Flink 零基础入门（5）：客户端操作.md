@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（5）：客户端操作
+parent: Flink
+nav_order: 5.4
+---
+
 # 1. 环境说明
 
 在前面几期的课程里面讲过了 Flink 开发环境的搭建和应用的部署以及运行，今天的课程主要是讲 Flink 的客户端操作。本次讲解以实际操作为主。这次课程是基于社区的 Flink 1.7.2 版本，操作系统是 Mac 系统，浏览器是 Google Chrome 浏览器。有关开发环境的准备和集群的部署，请参考「

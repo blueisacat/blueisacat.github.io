@@ -1,3 +1,9 @@
+---
+layout: default
+title: 反射修改private static final问题
+parent: 实战经验
+---
+
 在日常应用中，常常会利用java的反射，在运行时将需要修改的常量强制更改成我们所需要的值。
 
 对于private static final的私有静态常量，需要特别注意。

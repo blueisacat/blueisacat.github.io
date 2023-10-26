@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（1）：全解析
+parent: Sentinel
+nav_order: 2.1
+---
+
 # Sentinel原理：全解析
 
 [Sentinel](https://github.com/alibaba/Sentinel) 是阿里中间件团队开源的，面向分布式服务架构的轻量级高可用流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度来帮助用户保护服务的稳定性。

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（4）：Flink on YarnK8s 原理剖析及实践
+parent: Flink
+nav_order: 4.4
+---
+
 # Flink 架构概览
 
 ## Flink 架构概览–Job

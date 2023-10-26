@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（2）：Time 深度解析
+parent: Flink
+nav_order: 4.2
+---
+
 # 前言
 
 Flink 的 API 大体上可以划分为三个层次：处于最底层的 ProcessFunction、中间一层的 DataStream API 和最上层的 SQL/Table API，这三层中的每一层都非常依赖于时间属性。时间属性是流处理中最重要的一个方面，是流处理系统的基石之一，贯穿这三层 API。在 DataStream API 这一层中因为封装方面的原因，我们能够接触到时间的地方不是很多，所以我们将重点放在底层的 ProcessFunction 和最上层的 SQL/Table API。

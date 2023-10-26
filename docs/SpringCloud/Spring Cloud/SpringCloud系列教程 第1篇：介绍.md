@@ -1,3 +1,10 @@
+---
+layout: default
+title: SpringCloud系列教程 第1篇：介绍
+parent: SpringCloud系列教程
+nav_order: 1.1
+---
+
 > 首先讲一下我为什么要写这一系列的文章，现在网上大量的springcloud相关的文章，使用的springboot和springcloud的版本都相对比较老，很多还是在使用springboot1.x的版本，如果尝鲜想使用springboot2.x的版本，很多配置都和之前的不一样，有了大量的修改，很多刚开始学习的朋友可能试一试搭不起来就放弃了，本系列教程就是帮助刚接触springcloud的朋友简单上手，快速起步。
 > 
 > springboot进入2.x以后，历经一年多的修修改改，终于到了2.1.x的版本，相对较为稳定，本系列教程将使用目前最新的springboot（2.1.6.RELEASE）和springcloud（Greenwich.SR1）版本（如无特殊说明）。

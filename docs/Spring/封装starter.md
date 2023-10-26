@@ -1,3 +1,9 @@
+---
+layout: default
+title: 封装starter
+parent: Spring
+---
+
 # 为何封装？
 
 SpringBoot的starter开箱即用，只需要引入依赖，就可以帮你自动装配bean，这样可以让开发者不需要过多的关注框架的配置。

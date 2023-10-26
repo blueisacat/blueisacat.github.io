@@ -1,3 +1,9 @@
+---
+layout: default
+title: UUID的定义
+parent: 基础知识
+---
+
 # UUID的定义
 
 UUID是Universally Unique IDentifier的缩写，翻译为通用唯一标识符或者全局唯一标识符。

@@ -1,3 +1,9 @@
+---
+layout: default
+title: CDH调优
+parent: CDH
+---
+
 ### 1. YARN相关调优
 
 #### yarn.nodemanager.resource.memory-mb

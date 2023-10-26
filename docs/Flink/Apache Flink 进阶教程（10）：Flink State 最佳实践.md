@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（10）：Flink State 最佳实践
+parent: Flink
+nav_order: 4.10
+---
+
 # 1. State 概念回顾
 
 我们先回顾一下到底什么是 state，流式计算的数据往往是转瞬即逝， 当然，真实业务场景不可能说所有的数据都是进来之后就走掉，没有任何东西留下来，那么留下来的东西其实就是称之为 state，中文可以翻译成状态。

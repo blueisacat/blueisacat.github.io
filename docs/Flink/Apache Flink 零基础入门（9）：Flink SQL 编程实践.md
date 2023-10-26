@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（9）：Flink SQL 编程实践
+parent: Flink
+nav_order: 5.8
+---
+
 # 通过本课你能学到什么？
 
 本文将通过五个实例来贯穿 Flink SQL 的编程实践，主要会涵盖以下几个方面的内容。

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第5篇：Nacos配置管理
+parent: SpringCloudAlibaba
+nav_order: 1.5
+---
+
 上一篇《Spring Cloud Alibaba | Nacos服务注册与发现》我们聊了Nacos服务注册与发现，这一篇我们接着聊Nacos配置管理。
 
 Nacos具有配置管理的功能，在Spring Cloud中可以用作配置中心，代替Spring Cloud Config组件，下面我们聊一下Nacos如何和Spring Cloud集成配置中心。

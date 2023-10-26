@@ -1,3 +1,9 @@
+---
+layout: default
+title: Seata原理解析
+parent: Seata
+---
+
 Seata框架是一个业务层的XA（两阶段提交）解决方案。在理解Seata分布式事务机制前，我们先回顾一下数据库层面的XA方案。
 
 # 1. MySQL XA方案

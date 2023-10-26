@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel实战（3）：规则持久化的5种方式
+parent: Sentinel
+nav_order: 1.3
+---
+
 # Sentinel实战：规则持久化的5种方式
 
 ## 规则丢失

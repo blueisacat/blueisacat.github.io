@@ -1,3 +1,9 @@
+---
+layout: default
+title: Java虚拟机-Class文件
+parent: 虚拟机
+---
+
 # Class文件数据类型
 
 Class文件是一组以字节为基础单位的二进制流。

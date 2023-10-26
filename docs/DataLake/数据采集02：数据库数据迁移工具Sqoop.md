@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据采集02：数据库数据迁移工具Sqoop
+parent: DataLake
+nav_order: 1.2
+---
+
 Sqoop（SQL-to-Hadoop）是Apache旗下的一款开源工具，该项目开始于2009年，最早是作为Hadoop的一个第三方模块存在，后来为了让使用者能够快速部署，也为了让开发人员能够更快速的迭代开发，并在2013年，独立成为Apache的一个顶级开源项目。
 
 ### 1. 概述

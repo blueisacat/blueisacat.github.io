@@ -1,3 +1,10 @@
+---
+layout: default
+title: Mybatis源码(3)-代理模块
+parent: Mybatis
+nav_order: 1.3
+---
+
 ### Mybatis代理模块
 
 Mybatis是在iBatis上演变而来ORM框架，所以Mybatis最终会将代码转换成iBatis编程模型，而 Mybatis 代理阶段主要是将面向接口编程模型，通过动态代理转换成ibatis编程模型。

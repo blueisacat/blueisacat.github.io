@@ -1,3 +1,9 @@
+---
+layout: default
+title: [K8S入门]etcd
+parent: Kubernetes
+---
+
 ### 一、etcd项目的发展历程
 
 etcd诞生于CoreOS公司，它最初是用于解决集群管理系统中OS升级的分布式并发控制以及配置文件的存储于分发等问题。基于此，etcd被设计为提供高可用、强一致的小型key-value数据存储服务。

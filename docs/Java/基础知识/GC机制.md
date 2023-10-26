@@ -1,3 +1,9 @@
+---
+layout: default
+title: GC机制
+parent: 基础知识
+---
+
 # GC机制
 
 Jvm区域总体分两类，heap区和非heap区。heap区又分：Eden Space（伊甸园）、Survivor Space(幸存者区)、Tenured Gen（老年代-养老区）。 非heap区又分：Code Cache(代码缓存区)、Perm Gen（永久代）、Jvm Stack(java虚拟机栈)、Local Method Statck(本地方法栈)。

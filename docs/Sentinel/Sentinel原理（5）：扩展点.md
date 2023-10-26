@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sentinel原理（5）：扩展点
+parent: Sentinel
+nav_order: 2.5
+---
+
 # Sentinel原理：扩展点
 
 一个好的框架有一个很重要的特性就是扩展性要好，不能把系统写死，后期想要新增功能时，可以通过预留的扩展点进行扩展，而不是去修改原来的代码。

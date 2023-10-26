@@ -1,3 +1,9 @@
+---
+layout: default
+title: [ML基础]线性代数(1)-概念
+parent: ML
+---
+
 **向量**
 
 **矩阵**

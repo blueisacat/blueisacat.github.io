@@ -1,3 +1,9 @@
+---
+layout: default
+title: CDH官方推荐的集群节点和角色配置
+parent: CDH
+---
+
 ### 1. 主机角色分配
 
 > Master Hosts：运行 Hadoop 主进程，例如 HDFS NameNode 和 YARN 资源管理器。Utility Hosts： 运行其他不是主进程的集群进程，例如 Cloudera Manager 和 Hive Metastore。Gateway Hosts： 是用于在集群中启动作业的客户端访问点。 所需网关主机的数量因工作负载的类型和大小而异。Worker Hosts： 主要运行 DataNodes 和其他分布式进程，例如 Impalad。

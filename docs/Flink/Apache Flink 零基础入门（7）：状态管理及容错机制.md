@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 零基础入门（7）：状态管理及容错机制
+parent: Flink
+nav_order: 5.6
+---
+
 # 一. 状态管理的基本概念
 
 ## 1. 什么是状态

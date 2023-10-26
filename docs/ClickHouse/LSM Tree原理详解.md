@@ -1,3 +1,9 @@
+---
+layout: default
+title: LSM Tree原理详解
+parent: ClickHouse
+---
+
 ### 0 前言
 
 对于存储介质为磁盘或SSD的数据库，长期以来主流使用B+树这种索引结构来实现快速数据查找。当数据量不太大时，B+树读写性能表现非常好。但是在海量数据情况下，B+树越来越高，由于B+树更新和删除数据时需要沿着B+树逐层进行页分裂和页合并，严重影响数据写入性能。为了应对这种情况，google在论文《Bigtable: A Distributed Storage System for Structured Data》中介绍了一种新的数据组织结构LSM Tree(Log-Structured Merge Tree)，随后，Bigtable主要作者Jeffrey Dean和 Sanjay Ghemawat开源了一款基于LSM Tree实现的数据库LevelDB，让大家对LSM Tree的思想和实现理解得更为透彻、深入。当前，比较流行的NoSQL数据库，如Cassandra、RocksDB、HBase、LevelDB等，newSQL数据库，如TiDB，均是使用LSM Tree来组织磁盘数据的。甚至像SQLite这种传统的关系型数据库和MongoDB这种传统的文档型数据库都提供了基于LSM Tree的存储引擎作为可选的存储引擎。

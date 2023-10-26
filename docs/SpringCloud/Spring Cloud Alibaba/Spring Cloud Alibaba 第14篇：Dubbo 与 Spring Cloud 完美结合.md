@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第14篇：Dubbo 与 Spring Cloud 完美结合
+parent: SpringCloudAlibaba
+nav_order: 1.14
+---
+
 # 1. 概述
 
 可能说起来Dubbo，很多人都不陌生，这毕竟是一款从2012年就开始开源的Java RPC框架，中间由于各种各样的原因停止更新4年半的时间，中间只发过一个小版本修了一个小bug，甚至大家都以为这个项目已经死掉了，竟然又在2017年9月份恢复了更新，不可谓不神奇。

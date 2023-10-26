@@ -1,3 +1,9 @@
+---
+layout: default
+title: 使用flatten-maven-plugin管理版本号
+parent: Maven
+---
+
 ### 发现问题
 
 当项目分为多个子包时，通常都会引用同一个 

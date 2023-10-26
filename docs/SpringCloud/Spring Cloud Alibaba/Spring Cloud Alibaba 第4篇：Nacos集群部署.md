@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第4篇：Nacos集群部署
+parent: SpringCloudAlibaba
+nav_order: 1.4
+---
+
 # 1. Nacos支持三种部署模式
 
 - 单机模式 – 用于测试和单机试用。

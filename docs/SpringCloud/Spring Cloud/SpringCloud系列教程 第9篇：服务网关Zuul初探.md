@@ -1,3 +1,10 @@
+---
+layout: default
+title: SpringCloud系列教程 第9篇：服务网关Zuul初探
+parent: SpringCloud系列教程
+nav_order: 1.9
+---
+
 > Springboot: 2.1.6.RELEASE
 > SpringCloud: Greenwich.SR1
 > 如无特殊说明，本系列教程全采用以上版本

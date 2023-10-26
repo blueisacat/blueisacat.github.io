@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apache Flink 进阶教程（3）：Checkpoint 的应用实践
+parent: Flink
+nav_order: 4.3
+---
+
 # Checkpoint 与 state 的关系
 
 Checkpoint 是从 source 触发到下游所有节点完成的一次全局操作。下图可以有一个对 Checkpoint 的直观感受，红框里面可以看到一共触发了 569K 次 Checkpoint，然后全部都成功完成，没有 fail 的。

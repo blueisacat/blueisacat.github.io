@@ -1,3 +1,10 @@
+---
+layout: default
+title: Mybatis源码(6)-Mybatis-Spring框架实现原理
+parent: Mybatis
+nav_order: 1.6
+---
+
 我在使用mybatis-spring过程中一直有一个疑问，在Mybatis 源码（一）总揽中我提到过，SqlSession和Mapper对象的声明周期是方法级别的，也就是每个请求的SqlSession和Mapper对象是不一样的，是一个非单例的Bean。但是与Spring集成后，为什么我们可以直接注入Mapper对象，如果通过直接注入的话Mapper对象却成了单例的了？
 
 我们带着疑问来看下Mybatis-Spring是如何实现的。

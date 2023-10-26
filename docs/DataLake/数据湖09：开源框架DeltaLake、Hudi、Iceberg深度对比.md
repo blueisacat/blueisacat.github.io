@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据湖09：开源框架DeltaLake、Hudi、Iceberg深度对比
+parent: DataLake
+nav_order: 3.9
+---
+
 ### 1. 数据湖框架
 
 如前面几篇文章所述，目前市面上流行的三大开源数据湖方案分别为：DeltaLake、Apache Iceberg和Apache Hudi。

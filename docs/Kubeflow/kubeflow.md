@@ -1,3 +1,10 @@
+---
+layout: default
+title: kubeflow
+nav_order: 2
+has_children: false
+---
+
 ### Kubeflow平台组件
 
 ![](../../assets/images/Kubeflow/attachments/kubeflow_image_0.png)

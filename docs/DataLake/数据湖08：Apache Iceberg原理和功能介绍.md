@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据湖08：Apache Iceberg原理和功能介绍
+parent: DataLake
+nav_order: 3.8
+---
+
 在使用不同的引擎进行大数据计算时，需要将数据根据计算引擎进行适配。这是一个相当棘手的问题，为此出现了一种新的解决方案：介于上层计算引擎和底层存储格式之间的一个中间层。这个中间层不是数据存储的方式，只是定义了数据的元数据组织方式，并向计算引擎提供统一的类似传统数据库中"表"的语义。它的底层仍然是Parquet、ORC等存储格式。
 
 基于此，Netflix开发了Iceberg，目前已经是Apache的顶级项目，[https://iceberg.apache.org/](https://iceberg.apache.org/)

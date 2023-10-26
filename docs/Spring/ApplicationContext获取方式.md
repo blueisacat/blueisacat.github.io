@@ -1,3 +1,9 @@
+---
+layout: default
+title: ApplicationContext获取方式
+parent: Spring
+---
+
 ### 直接注入
 
 ```java

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第15篇：Dubbo Spring Cloud 之 HTTP 实战
+parent: SpringCloudAlibaba
+nav_order: 1.15
+---
+
 上一篇文章《Spring Cloud Alibaba | Dubbo 与 Spring Cloud 完美结合》我们介绍了Dubbo Spring Cloud的基本使用，使用的服务中心为Spring Cloud Alibaba提供的Nacos，Dubbo内部提供了基于Dubbo的RPC调用，同时，Dubbo Spring Cloud在整合了Spring Cloud之后，可以直接提供HTTP接口，同Spring Cloud无缝衔接，直接支持Feign、RestTemplate等方式的远程调用，在提供HTTP服务的同时可以提供Dubbo服务。Dubbo Spring Cloud支持HTTP远程调用级大的方便了我们的对接外部系统，无需对Dubbo再做二次封装。
 
 # 1. 案例实战

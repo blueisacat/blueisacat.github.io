@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第10篇：微服务分布式事务之Seata
+parent: SpringCloudAlibaba
+nav_order: 1.10
+---
+
 # 1. 概述
 
 在构建微服务的过程中，不管是使用什么框架、组件来构建，都绕不开一个问题，跨服务的业务操作如何保持数据一致性。

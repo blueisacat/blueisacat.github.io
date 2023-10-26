@@ -1,3 +1,9 @@
+---
+layout: default
+title: AOP源码
+parent: Spring
+---
+
 > AOP(Aspect Oriented Programming)是通过动态代理实现的，动态代理又分为JDK动态代理和CGLIB动态代理
 
 

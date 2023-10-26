@@ -1,3 +1,9 @@
+---
+layout: default
+title: Java虚拟机-HotSpot对象
+parent: 虚拟机
+---
+
 ### 概念
 
 在Hotspot虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）。

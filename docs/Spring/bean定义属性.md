@@ -1,3 +1,9 @@
+---
+layout: default
+title: bean定义属性
+parent: Spring
+---
+
 ### parentName
 
 bean定义对象的父类定义对象名称

@@ -1,3 +1,10 @@
+---
+layout: default
+title: 案例（3）：Flink 在顺丰的应用实践
+parent: Flink
+nav_order: 1.3
+---
+
 # 一、建设背景
 
 ![](../../assets/images/Flink/attachments/案例（3）：Flink%20在顺丰的应用实践_image_0.png)

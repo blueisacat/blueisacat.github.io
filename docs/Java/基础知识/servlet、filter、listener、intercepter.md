@@ -1,3 +1,9 @@
+---
+layout: default
+title: servlet、filter、listener、intercepter
+parent: 基础知识
+---
+
 - servlet:是一种运行于服务器端的java应用程序，具有独立于平台和协议的特性，并且可以动态生成web页面;它工作在客户端请求和服务器响应的中间层。servlet的主要功能在于交互式地浏览和修改数据，生成动态的web内容。
 
 

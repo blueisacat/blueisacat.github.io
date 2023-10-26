@@ -1,3 +1,10 @@
+---
+layout: default
+title: 数据采集03：数据集成工具DataX
+parent: DataLake
+nav_order: 1.3
+---
+
 ### 1. DataX是什么
 
 DataX 是阿里云 DataWorks数据集成的开源版本，主要就是用于实现数据间的离线同步。 DataX 致力于实现包括关系型数据库（MySQL、Oracle 等）、HDFS、Hive、ODPS、HBase、FTP 等 各种异构数据源（即不同的数据库） 间稳定高效的数据同步功能。

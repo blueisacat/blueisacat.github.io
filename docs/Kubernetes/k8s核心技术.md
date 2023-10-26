@@ -1,3 +1,9 @@
+---
+layout: default
+title: k8s核心技术
+parent: Kubernetes
+---
+
 ### Kubernetes有如下几个核心的功能
 
 - 服务的发现与负载的均衡

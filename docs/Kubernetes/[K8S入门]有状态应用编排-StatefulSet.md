@@ -1,3 +1,9 @@
+---
+layout: default
+title: [K8S入门]有状态应用编排-StatefulSet
+parent: Kubernetes
+---
+
 ### 一、 "有状态"需求
 
 我们之前讲到过Deployment作为一个应用不该拿牌管理工具，它为我们提供了哪些功能?

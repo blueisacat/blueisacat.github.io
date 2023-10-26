@@ -1,3 +1,10 @@
+---
+layout: default
+title: Spring Cloud Alibaba 第7篇：Sentinel：服务限流基础篇
+parent: SpringCloudAlibaba
+nav_order: 1.7
+---
+
 # 1. Sentinel控制台概述
 
 在介绍入门实战之前，先来介绍一下Sentinel。Sentinel控制台提供一个轻量级的开源控制台，它提供机器发现以及健康情况管理、监控（单机和集群），规则管理和推送的功能。
