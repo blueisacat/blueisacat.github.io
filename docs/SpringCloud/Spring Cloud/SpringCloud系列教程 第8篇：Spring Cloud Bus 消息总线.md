@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第8篇：Spring Cloud Bus 消息总线
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.8
 ---
 

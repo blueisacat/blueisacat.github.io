@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]调度和资源管理
+title: K8S入门-调度和资源管理
 parent: Kubernetes
 ---
 

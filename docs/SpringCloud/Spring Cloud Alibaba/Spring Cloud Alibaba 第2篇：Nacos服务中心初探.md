@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第2篇：Nacos服务中心初探
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.2
 ---
 

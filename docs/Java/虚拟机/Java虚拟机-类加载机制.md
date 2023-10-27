@@ -2,6 +2,7 @@
 layout: default
 title: Java虚拟机-类加载机制
 parent: 虚拟机
+grand_parent: Java
 ---
 
 ### 1. 什么是类的加载

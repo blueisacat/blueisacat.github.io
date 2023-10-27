@@ -2,6 +2,7 @@
 layout: default
 title: interface中的static方法和default方法
 parent: 基础知识
+grand_parent: Java
 ---
 
 ### static方法

@@ -2,6 +2,7 @@
 layout: default
 title: Java虚拟机-字节码、机器码、JVM
 parent: 虚拟机
+grand_parent: Java
 ---
 
 ### 1. Java虚拟机（JVM）

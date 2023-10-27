@@ -2,6 +2,7 @@
 layout: default
 title: Java虚拟机-字节码指令
 parent: 虚拟机
+grand_parent: Java
 ---
 
 ### 概念

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第15篇：Dubbo Spring Cloud 之 HTTP 实战
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.15
 ---
 

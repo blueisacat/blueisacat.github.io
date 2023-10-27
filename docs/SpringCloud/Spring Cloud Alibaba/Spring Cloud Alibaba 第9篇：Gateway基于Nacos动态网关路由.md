@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第9篇：Gateway基于Nacos动态网关路由
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.9
 ---
 

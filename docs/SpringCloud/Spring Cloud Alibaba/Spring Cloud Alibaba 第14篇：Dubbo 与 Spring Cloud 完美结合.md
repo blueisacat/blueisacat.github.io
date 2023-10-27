@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第14篇：Dubbo 与 Spring Cloud 完美结合
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.14
 ---
 

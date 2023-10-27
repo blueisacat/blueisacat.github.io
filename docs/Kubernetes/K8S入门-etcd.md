@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]etcd
+title: K8S入门-etcd
 parent: Kubernetes
 ---
 

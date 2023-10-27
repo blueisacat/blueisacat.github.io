@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第11篇：使用Spring Cloud Sleuth和Zipkin进行分布式链路跟踪
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.11
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]服务发现与负载均衡
+title: K8S入门-服务发现与负载均衡
 parent: Kubernetes
 ---
 

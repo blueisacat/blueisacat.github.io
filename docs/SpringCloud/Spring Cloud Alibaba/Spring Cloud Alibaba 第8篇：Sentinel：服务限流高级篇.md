@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第8篇：Sentinel：服务限流高级篇
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.8
 ---
 

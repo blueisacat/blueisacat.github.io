@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [ML进阶]激活函数
+title: ML进阶-激活函数
 parent: ML
 ---
 

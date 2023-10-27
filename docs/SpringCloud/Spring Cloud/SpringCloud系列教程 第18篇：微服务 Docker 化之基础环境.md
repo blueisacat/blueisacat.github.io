@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第18篇：微服务 Docker 化之基础环境
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.18
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]监控与日志
+title: K8S入门-监控与日志
 parent: Kubernetes
 ---
 

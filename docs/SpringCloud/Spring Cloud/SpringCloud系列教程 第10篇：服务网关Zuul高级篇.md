@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第10篇：服务网关Zuul高级篇
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.10
 ---
 

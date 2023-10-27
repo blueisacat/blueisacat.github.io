@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第10篇：微服务分布式事务之Seata
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.10
 ---
 

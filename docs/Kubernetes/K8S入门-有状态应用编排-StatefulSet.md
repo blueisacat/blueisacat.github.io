@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]有状态应用编排-StatefulSet
+title: K8S入门-有状态应用编排-StatefulSet
 parent: Kubernetes
 ---
 

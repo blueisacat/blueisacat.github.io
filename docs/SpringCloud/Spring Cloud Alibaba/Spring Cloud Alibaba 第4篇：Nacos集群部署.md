@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第4篇：Nacos集群部署
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.4
 ---
 

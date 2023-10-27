@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第17篇：服务网关Zuul基于Apollo动态路由
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.17
 ---
 

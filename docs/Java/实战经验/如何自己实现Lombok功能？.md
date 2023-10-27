@@ -2,6 +2,7 @@
 layout: default
 title: 如何自己实现Lombok功能？
 parent: 实战经验
+grand_parent: Java
 ---
 
 # 一、Lombok是实现了什么功能？

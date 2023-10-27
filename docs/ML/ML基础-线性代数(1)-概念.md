@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [ML基础]线性代数(1)-概念
+title: ML基础-线性代数(1)-概念
 parent: ML
 ---
 

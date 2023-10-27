@@ -2,6 +2,7 @@
 layout: default
 title: GC机制
 parent: 基础知识
+grand_parent: Java
 ---
 
 # GC机制

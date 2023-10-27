@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [ML基础]概率论(2)-概念
+title: ML基础-概率论(2)-概念
 parent: ML
 ---
 

@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第1篇：介绍
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.1
 ---
 

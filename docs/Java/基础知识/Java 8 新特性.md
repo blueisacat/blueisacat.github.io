@@ -2,6 +2,7 @@
 layout: default
 title: Java 8 新特性
 parent: 基础知识
+grand_parent: Java
 ---
 
 # 一、新特性

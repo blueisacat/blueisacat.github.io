@@ -1,8 +1,7 @@
 ---
 layout: default
-title: kubeflow
-nav_order: 2
-has_children: false
+title: kubeflow介绍
+parent: kubeflow
 ---
 
 ### Kubeflow平台组件

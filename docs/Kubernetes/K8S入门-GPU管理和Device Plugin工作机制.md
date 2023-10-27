@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]GPU管理和Device Plugin工作机制
+title: K8S入门-GPU管理和Device Plugin工作机制
 parent: Kubernetes
 ---
 

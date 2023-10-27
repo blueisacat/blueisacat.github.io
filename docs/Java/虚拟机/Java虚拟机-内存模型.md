@@ -2,6 +2,7 @@
 layout: default
 title: Java虚拟机-内存模型
 parent: 虚拟机
+grand_parent: Java
 ---
 
 ### 什么是RAM？

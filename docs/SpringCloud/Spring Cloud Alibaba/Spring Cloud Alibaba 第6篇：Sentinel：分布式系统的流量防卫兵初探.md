@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第6篇：Sentinel：分布式系统的流量防卫兵初探
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.6
 ---
 

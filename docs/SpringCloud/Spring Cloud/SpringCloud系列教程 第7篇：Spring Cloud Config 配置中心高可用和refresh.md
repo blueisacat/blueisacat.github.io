@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第7篇：Spring Cloud Config 配置中心高可用和refresh
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.7
 ---
 

@@ -2,6 +2,7 @@
 layout: default
 title: Java虚拟机-Class文件
 parent: 虚拟机
+grand_parent: Java
 ---
 
 # Class文件数据类型

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Spring Cloud Alibaba 第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流
-parent: SpringCloudAlibaba
+parent: SpringCloudAlibaba系列教程
+grand_parent: SpringCloud
 nav_order: 1.13
 ---
 

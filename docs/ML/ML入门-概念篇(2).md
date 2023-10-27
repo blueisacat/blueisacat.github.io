@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [ML入门]概念篇(2)
+title: ML入门-概念篇(2)
 parent: ML
 ---
 

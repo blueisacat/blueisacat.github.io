@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第19章：Spring Cloud 组件 Docker 化
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.19
 ---
 

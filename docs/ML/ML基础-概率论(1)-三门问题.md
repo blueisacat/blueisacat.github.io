@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [ML基础]概率论(1)-三门问题
+title: ML基础-概率论(1)-三门问题
 parent: ML
 ---
 

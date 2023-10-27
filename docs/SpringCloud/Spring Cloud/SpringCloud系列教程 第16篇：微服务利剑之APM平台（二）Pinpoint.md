@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第16篇：微服务利剑之APM平台（二）Pinpoint
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.16
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: [K8S入门]安全之访问控制
+title: K8S入门-安全之访问控制
 parent: Kubernetes
 ---
 

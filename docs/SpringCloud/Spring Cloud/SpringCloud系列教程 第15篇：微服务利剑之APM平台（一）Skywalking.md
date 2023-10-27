@@ -2,6 +2,7 @@
 layout: default
 title: SpringCloud系列教程 第15篇：微服务利剑之APM平台（一）Skywalking
 parent: SpringCloud系列教程
+grand_parent: SpringCloud
 nav_order: 1.15
 ---
 
