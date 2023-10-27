@@ -1,5 +1,5 @@
 ---
 layout: default
-title: kubeflow
+title: Kubeflow
 has_children: true
 ---

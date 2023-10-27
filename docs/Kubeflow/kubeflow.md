@@ -1,7 +1,7 @@
 ---
 layout: default
 title: kubeflow介绍
-parent: kubeflow
+parent: Kubeflow
 ---
 
 ### Kubeflow平台组件
