@@ -11,13 +11,13 @@ grand_parent: Java
 
 举个栗子：
 
-```
+```java
 class Bean{  
     private static final Integer INT_VALUE = 100;  
 }
 ```
 
-```
+```java
 System.out.println(Bean.INT_VALUE);  
 //获取Bean类的INT_VALUE字段  
 Field field = Bean.class.getField("INT_VALUE");  
@@ -41,7 +41,7 @@ System.out.println(Bean.INT_VALUE);
 
 那么，这种方式是万能的么？答案是否定的，可以通过下一个栗子来说明，将Integer换成基本类型int。
 
-```
+```java
 class Bean{  
     private static final int INT_VALUE = 100;//把类型由Integer改成了int  
 }
@@ -57,7 +57,7 @@ class Bean{
 对于基本类型的静态常量，JAVA在编译的时候就会把代码中对此常量中引用的地方替换成相应常量值。
 
 
-```
+```java
 if( index > maxFormatRecordsIndex   ){  
     index  =  maxFormatRecordsIndex ;  
 }
@@ -65,7 +65,7 @@ if( index > maxFormatRecordsIndex   ){
 
 这段代码在编译的时候已经被java自动优化成这样的：
 
-```
+```java
 if( index > 100){  
     index = 100;  
 } 
@@ -73,7 +73,7 @@ if( index > 100){
 
 所以在INT_VALUE是int类型的时候
 
-```
+```java
 System.out.println(Bean.INT_VALUE);  
 //编译时会被优化成下面这样：  
 System.out.println(100); 

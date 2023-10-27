@@ -602,234 +602,234 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 1. 首先排除掉默认的 ribbon
 
-```
-<dependency>
-    <groupId>com.alibaba.cloud</groupId>
-    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-    <exclusions>
-        <exclusion>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </exclusion>
-    </exclusions>
-</dependency>
-```
+    ```
+    <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    ```
 
 1. 引入官方新的负载均衡包
 
-```
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-</dependency>
-```
+    ```
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+    </dependency>
+    ```
 
 1. 自定义负载均衡策略
 
-```
-package cn.idea360.gateway.gray;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.reactive.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.reactive.EmptyResponse;
-import org.springframework.cloud.client.loadbalancer.reactive.Request;
-import org.springframework.cloud.client.loadbalancer.reactive.Response;
-import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
-import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
-import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
-import org.springframework.http.HttpHeaders;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-/**
- * @author cuishiying
- * @date 2021-01-22
- */
-public class VersionGrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
-    private ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
-    private String serviceId;
-    private final AtomicInteger position;
-    public VersionGrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider, String serviceId) {
-        this(serviceInstanceListSupplierProvider, serviceId, new Random().nextInt(1000));
-    }
-    public VersionGrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider, String serviceId, int seedPosition) {
-        this.serviceId = serviceId;
-        this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
-        this.position = new AtomicInteger(seedPosition);
-    }
-    @Override
-    public Mono<Response<ServiceInstance>> choose(Request request) {
-        HttpHeaders headers = (HttpHeaders) request.getContext();
-        ServiceInstanceListSupplier supplier = this.serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new);
-        return ((Flux) supplier.get()).next().map(list -> processInstanceResponse((List<ServiceInstance>) list, headers));
-    }
-    private Response<ServiceInstance> processInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
-        if (instances.isEmpty()) {
-            return new EmptyResponse();
-        } else {
-            String reqVersion = headers.getFirst("version");
-            if (StringUtils.isEmpty(reqVersion)) {
-                return processRibbonInstanceResponse(instances);
-            }
-            List<ServiceInstance> serviceInstances = instances.stream()
-                    .filter(instance -> reqVersion.equals(instance.getMetadata().get("version")))
-                    .collect(Collectors.toList());
-            if (serviceInstances.size() > 0) {
-                return processRibbonInstanceResponse(serviceInstances);
+    ```
+    package cn.idea360.gateway.gray;
+    import org.apache.commons.lang3.StringUtils;
+    import org.springframework.beans.factory.ObjectProvider;
+    import org.springframework.cloud.client.ServiceInstance;
+    import org.springframework.cloud.client.loadbalancer.reactive.DefaultResponse;
+    import org.springframework.cloud.client.loadbalancer.reactive.EmptyResponse;
+    import org.springframework.cloud.client.loadbalancer.reactive.Request;
+    import org.springframework.cloud.client.loadbalancer.reactive.Response;
+    import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
+    import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+    import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
+    import org.springframework.http.HttpHeaders;
+    import reactor.core.publisher.Flux;
+    import reactor.core.publisher.Mono;
+    import java.util.List;
+    import java.util.Random;
+    import java.util.concurrent.atomic.AtomicInteger;
+    import java.util.stream.Collectors;
+    /**
+    * @author cuishiying
+    * @date 2021-01-22
+    */
+    public class VersionGrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+        private ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
+        private String serviceId;
+        private final AtomicInteger position;
+        public VersionGrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider, String serviceId) {
+            this(serviceInstanceListSupplierProvider, serviceId, new Random().nextInt(1000));
+        }
+        public VersionGrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider, String serviceId, int seedPosition) {
+            this.serviceId = serviceId;
+            this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
+            this.position = new AtomicInteger(seedPosition);
+        }
+        @Override
+        public Mono<Response<ServiceInstance>> choose(Request request) {
+            HttpHeaders headers = (HttpHeaders) request.getContext();
+            ServiceInstanceListSupplier supplier = this.serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new);
+            return ((Flux) supplier.get()).next().map(list -> processInstanceResponse((List<ServiceInstance>) list, headers));
+        }
+        private Response<ServiceInstance> processInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
+            if (instances.isEmpty()) {
+                return new EmptyResponse();
             } else {
-                return processRibbonInstanceResponse(instances);
+                String reqVersion = headers.getFirst("version");
+                if (StringUtils.isEmpty(reqVersion)) {
+                    return processRibbonInstanceResponse(instances);
+                }
+                List<ServiceInstance> serviceInstances = instances.stream()
+                        .filter(instance -> reqVersion.equals(instance.getMetadata().get("version")))
+                        .collect(Collectors.toList());
+                if (serviceInstances.size() > 0) {
+                    return processRibbonInstanceResponse(serviceInstances);
+                } else {
+                    return processRibbonInstanceResponse(instances);
+                }
             }
         }
+        /**
+        * 负载均衡器
+        * 参考 org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer#getInstanceResponse
+        *
+        * @author javadaily
+        */
+        private Response<ServiceInstance> processRibbonInstanceResponse(List<ServiceInstance> instances) {
+            int pos = Math.abs(this.position.incrementAndGet());
+            ServiceInstance instance = instances.get(pos % instances.size());
+            return new DefaultResponse(instance);
+        }
     }
-    /**
-     * 负载均衡器
-     * 参考 org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer#getInstanceResponse
-     *
-     * @author javadaily
-     */
-    private Response<ServiceInstance> processRibbonInstanceResponse(List<ServiceInstance> instances) {
-        int pos = Math.abs(this.position.incrementAndGet());
-        ServiceInstance instance = instances.get(pos % instances.size());
-        return new DefaultResponse(instance);
-    }
-}
-```
+    ```
 
 1. 自定义过滤器加载负载均衡策略
 
-```
-package cn.idea360.gateway.gray;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerUriTools;
-import org.springframework.cloud.client.loadbalancer.reactive.DefaultRequest;
-import org.springframework.cloud.client.loadbalancer.reactive.Request;
-import org.springframework.cloud.client.loadbalancer.reactive.Response;
-import org.springframework.cloud.gateway.config.LoadBalancerProperties;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
-import org.springframework.cloud.gateway.support.DelegatingServiceInstance;
-import org.springframework.cloud.gateway.support.NotFoundException;
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
-import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
-import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
-import org.springframework.core.Ordered;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
-import java.net.URI;
-/**
- * @author cuishiying
- * @date 2021-01-22
- */
-public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Ordered {
-    private static final Log log = LogFactory.getLog(ReactiveLoadBalancerClientFilter.class);
-    private static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
-    private final LoadBalancerClientFactory clientFactory;
-    private LoadBalancerProperties properties;
-    public GrayReactiveLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
-        this.clientFactory = clientFactory;
-        this.properties = properties;
-    }
-    @Override
-    public int getOrder() {
-        return LOAD_BALANCER_CLIENT_FILTER_ORDER;
-    }
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        URI url = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
-        String schemePrefix = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_SCHEME_PREFIX_ATTR);
-        if (url != null && ("grayLb".equals(url.getScheme()) || "grayLb".equals(schemePrefix))) {
-            ServerWebExchangeUtils.addOriginalRequestUrl(exchange, url);
-            if (log.isTraceEnabled()) {
-                log.trace(ReactiveLoadBalancerClientFilter.class.getSimpleName() + " url before: " + url);
-            }
-            return this.choose(exchange).doOnNext((response) -> {
-                if (!response.hasServer()) {
-                    throw NotFoundException.create(this.properties.isUse404(), "Unable to find instance for " + url.getHost());
-                } else {
-                    URI uri = exchange.getRequest().getURI();
-                    String overrideScheme = null;
-                    if (schemePrefix != null) {
-                        overrideScheme = url.getScheme();
-                    }
-                    DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance((ServiceInstance)response.getServer(), overrideScheme);
-                    URI requestUrl = this.reconstructURI(serviceInstance, uri);
-                    if (log.isTraceEnabled()) {
-                        log.trace("LoadBalancerClientFilter url chosen: " + requestUrl);
-                    }
-                    exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, requestUrl);
+    ```
+    package cn.idea360.gateway.gray;
+    import org.apache.commons.logging.Log;
+    import org.apache.commons.logging.LogFactory;
+    import org.springframework.cloud.client.ServiceInstance;
+    import org.springframework.cloud.client.loadbalancer.LoadBalancerUriTools;
+    import org.springframework.cloud.client.loadbalancer.reactive.DefaultRequest;
+    import org.springframework.cloud.client.loadbalancer.reactive.Request;
+    import org.springframework.cloud.client.loadbalancer.reactive.Response;
+    import org.springframework.cloud.gateway.config.LoadBalancerProperties;
+    import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+    import org.springframework.cloud.gateway.filter.GlobalFilter;
+    import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
+    import org.springframework.cloud.gateway.support.DelegatingServiceInstance;
+    import org.springframework.cloud.gateway.support.NotFoundException;
+    import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
+    import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
+    import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+    import org.springframework.core.Ordered;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.web.server.ServerWebExchange;
+    import reactor.core.publisher.Mono;
+    import java.net.URI;
+    /**
+    * @author cuishiying
+    * @date 2021-01-22
+    */
+    public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Ordered {
+        private static final Log log = LogFactory.getLog(ReactiveLoadBalancerClientFilter.class);
+        private static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
+        private final LoadBalancerClientFactory clientFactory;
+        private LoadBalancerProperties properties;
+        public GrayReactiveLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
+            this.clientFactory = clientFactory;
+            this.properties = properties;
+        }
+        @Override
+        public int getOrder() {
+            return LOAD_BALANCER_CLIENT_FILTER_ORDER;
+        }
+        @Override
+        public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+            URI url = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
+            String schemePrefix = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_SCHEME_PREFIX_ATTR);
+            if (url != null && ("grayLb".equals(url.getScheme()) || "grayLb".equals(schemePrefix))) {
+                ServerWebExchangeUtils.addOriginalRequestUrl(exchange, url);
+                if (log.isTraceEnabled()) {
+                    log.trace(ReactiveLoadBalancerClientFilter.class.getSimpleName() + " url before: " + url);
                 }
-            }).then(chain.filter(exchange));
-        } else {
-            return chain.filter(exchange);
+                return this.choose(exchange).doOnNext((response) -> {
+                    if (!response.hasServer()) {
+                        throw NotFoundException.create(this.properties.isUse404(), "Unable to find instance for " + url.getHost());
+                    } else {
+                        URI uri = exchange.getRequest().getURI();
+                        String overrideScheme = null;
+                        if (schemePrefix != null) {
+                            overrideScheme = url.getScheme();
+                        }
+                        DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance((ServiceInstance)response.getServer(), overrideScheme);
+                        URI requestUrl = this.reconstructURI(serviceInstance, uri);
+                        if (log.isTraceEnabled()) {
+                            log.trace("LoadBalancerClientFilter url chosen: " + requestUrl);
+                        }
+                        exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, requestUrl);
+                    }
+                }).then(chain.filter(exchange));
+            } else {
+                return chain.filter(exchange);
+            }
+        }
+        protected URI reconstructURI(ServiceInstance serviceInstance, URI original) {
+            return LoadBalancerUriTools.reconstructURI(serviceInstance, original);
+        }
+        private Mono<Response<ServiceInstance>> choose(ServerWebExchange exchange) {
+            URI uri = (URI)exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
+            VersionGrayLoadBalancer loadBalancer = new VersionGrayLoadBalancer(clientFactory.getLazyProvider(uri.getHost(), ServiceInstanceListSupplier.class), uri.getHost());
+            if (loadBalancer == null) {
+                throw new NotFoundException("No loadbalancer available for " + uri.getHost());
+            } else {
+                return loadBalancer.choose(this.createRequest(exchange));
+            }
+        }
+        private Request createRequest(ServerWebExchange exchange) {
+            HttpHeaders headers = exchange.getRequest().getHeaders();
+            Request<HttpHeaders> request = new DefaultRequest<>(headers);
+            return request;
         }
     }
-    protected URI reconstructURI(ServiceInstance serviceInstance, URI original) {
-        return LoadBalancerUriTools.reconstructURI(serviceInstance, original);
-    }
-    private Mono<Response<ServiceInstance>> choose(ServerWebExchange exchange) {
-        URI uri = (URI)exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
-        VersionGrayLoadBalancer loadBalancer = new VersionGrayLoadBalancer(clientFactory.getLazyProvider(uri.getHost(), ServiceInstanceListSupplier.class), uri.getHost());
-        if (loadBalancer == null) {
-            throw new NotFoundException("No loadbalancer available for " + uri.getHost());
-        } else {
-            return loadBalancer.choose(this.createRequest(exchange));
-        }
-    }
-    private Request createRequest(ServerWebExchange exchange) {
-        HttpHeaders headers = exchange.getRequest().getHeaders();
-        Request<HttpHeaders> request = new DefaultRequest<>(headers);
-        return request;
-    }
-}
-```
+    ```
 
 1. 注入过滤器
 
-```
-package cn.idea360.gateway.gray;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.gateway.config.LoadBalancerProperties;
-import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-/**
- * @author cuishiying
- * @date 2021-01-22
- */
-@Configuration
-public class GrayGatewayReactiveLoadBalancerClientAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean({GrayReactiveLoadBalancerClientFilter.class})
-    public GrayReactiveLoadBalancerClientFilter grayReactiveLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
-        return new GrayReactiveLoadBalancerClientFilter(clientFactory, properties);
+    ```
+    package cn.idea360.gateway.gray;
+    import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+    import org.springframework.cloud.gateway.config.LoadBalancerProperties;
+    import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    /**
+    * @author cuishiying
+    * @date 2021-01-22
+    */
+    @Configuration
+    public class GrayGatewayReactiveLoadBalancerClientAutoConfiguration {
+        @Bean
+        @ConditionalOnMissingBean({GrayReactiveLoadBalancerClientFilter.class})
+        public GrayReactiveLoadBalancerClientFilter grayReactiveLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
+            return new GrayReactiveLoadBalancerClientFilter(clientFactory, properties);
+        }
     }
-}
-```
+    ```
 
 1. 发布灰度服务
 
-```
-# 应用名称
-spring.application.name=provider
-# 应用服务 WEB 访问端口
-server.port=9002
-spring.cloud.nacos.config.server-addr=127.0.0.1:8848
-spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
-spring.cloud.nacos.discovery.metadata.version = gray
-```
+    ```
+    # 应用名称
+    spring.application.name=provider
+    # 应用服务 WEB 访问端口
+    server.port=9002
+    spring.cloud.nacos.config.server-addr=127.0.0.1:8848
+    spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+    spring.cloud.nacos.discovery.metadata.version = gray
+    ```
 
 1. 测试
 
-```
-curl -X GET -H "version:gray" -d '{"name": "admin"}' 
-```
+    ```
+    curl -X GET -H "version:gray" -d '{"name": "admin"}' 
+    ```
 
 发现会永远路由到 9002

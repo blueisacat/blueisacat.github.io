@@ -118,25 +118,25 @@ StatefulSet可能会创建三种类型的资源。
 
 - 第一种资源：ControllerRevison
 
-**通过这个资源，StatefulSet可以很方便的管理不同版本的template模板。**
+    **通过这个资源，StatefulSet可以很方便的管理不同版本的template模板。**
 
-举个例子：比如上文中提到的nginx，在创建之初拥有的第一个template版本，都会创建一个对应的ControllerRevision。而当修改了image版本之后，StatefulSet Controller会创建也给新的ControllerRevision，大家可以理解为每一个ControllerResion对应了每一个版本得Template，也对应了每一个版本的ControllerResion hash。其实在Pod label中定义的ControllerRevision hash，就是ControllerRevison的名字。通过这个资源StatefulSet Controller来管理不同版本的tmeplate资源。
+    举个例子：比如上文中提到的nginx，在创建之初拥有的第一个template版本，都会创建一个对应的ControllerRevision。而当修改了image版本之后，StatefulSet Controller会创建也给新的ControllerRevision，大家可以理解为每一个ControllerResion对应了每一个版本得Template，也对应了每一个版本的ControllerResion hash。其实在Pod label中定义的ControllerRevision hash，就是ControllerRevison的名字。通过这个资源StatefulSet Controller来管理不同版本的tmeplate资源。
 
 - 第二种资源：PVC
 
-**如果在StatefulSet中定义了volumeClaimTemplates，StatefulSet会在创建Pod之前，先更具这个模板创建PVC，并把PVC加到Pod volume中。**
+    **如果在StatefulSet中定义了volumeClaimTemplates，StatefulSet会在创建Pod之前，先更具这个模板创建PVC，并把PVC加到Pod volume中。**
 
-如果用户在spec的pvc模板中定义了volumeClaimTemplates，StatefulSet在创建Pod之前，根据模板创建PVC，并加到Pod对应的volume中。当然也可以在spec中不定义pvc template，那么所创建出来的Pod就不会挂载单独的一个pv。
+    如果用户在spec的pvc模板中定义了volumeClaimTemplates，StatefulSet在创建Pod之前，根据模板创建PVC，并加到Pod对应的volume中。当然也可以在spec中不定义pvc template，那么所创建出来的Pod就不会挂载单独的一个pv。
 
 - 第三种资源：Pod
 
-**StatefulSet按照顺序创建、删除、更新Pod，每个Pod有唯一的序号。**
+    **StatefulSet按照顺序创建、删除、更新Pod，每个Pod有唯一的序号。**
 
-![](../../assets/images/Kubernetes/attachments/[K8S入门]有状态应用编排-StatefulSet_image_9.png)
+    ![](../../assets/images/Kubernetes/attachments/[K8S入门]有状态应用编排-StatefulSet_image_9.png)
 
-如上图所示，StatefulSet Controller是Owned三个资源：ControllerRevision、Pod、PVC。
+    如上图所示，StatefulSet Controller是Owned三个资源：ControllerRevision、Pod、PVC。
 
-这里不同的地方在于，当前版本的StatefulSet只会在ControllerRevision和Pod种添加OwnerReference，而不会在PVC种添加OwnerReference。拥有OwnerReference的资源，在管理的这个资源进行删除的默认情况下，会关联级联删除下属资源。因此默认情况下删除StatefulSet之后，StatefulSet创建的ControllerRevision和Pod都会被删除，但是PVC因为没有写入OwnerReference，PVC并不会被级联删除。
+    这里不同的地方在于，当前版本的StatefulSet只会在ControllerRevision和Pod种添加OwnerReference，而不会在PVC种添加OwnerReference。拥有OwnerReference的资源，在管理的这个资源进行删除的默认情况下，会关联级联删除下属资源。因此默认情况下删除StatefulSet之后，StatefulSet创建的ControllerRevision和Pod都会被删除，但是PVC因为没有写入OwnerReference，PVC并不会被级联删除。
 
 #### StatefuleSet控制器
 

@@ -134,7 +134,7 @@ public class HelloController {
 
 打开Nacos显示页面，可以看到服务spring-cloud-nacos-producer正常上线。
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第3篇：Nacos服务注册与发现_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第3篇：Nacos服务注册与发现_image_0.png)
 
 到这里，我们的服务提供者已经正常搭建完毕。
 
@@ -400,7 +400,7 @@ public class NacosGatewayApplication {
 
 最后，我们打开看一下Nacos的服务列表：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第3篇：Nacos服务注册与发现_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第3篇：Nacos服务注册与发现_image_1.png)
 
 这里我把消费者服务停止掉了，可以看到Nacos可以实时的显示出来。
 

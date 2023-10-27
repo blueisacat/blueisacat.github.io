@@ -48,52 +48,52 @@ EXPLAIN [AST | SYNTAX | PLAN | PIPELINE] [setting = value, ...] SELECT ... [FORM
 
 1. 查看 PLAIN
 
-简单查询
+    简单查询
 
-```
-explain plan select arrayJoin([1,2,3,null,null]);
-```
+    ```
+    explain plan select arrayJoin([1,2,3,null,null]);
+    ```
 
-复杂 SQL 的执行计划
+    复杂 SQL 的执行计划
 
-```
-explain select database,table,count(1) cnt from system.parts where database in ('datasets','system') group by database,table order by database,cnt desc limit 2 by database;
-```
+    ```
+    explain select database,table,count(1) cnt from system.parts where database in ('datasets','system') group by database,table order by database,cnt desc limit 2 by database;
+    ```
 
-打开全部的参数的执行计划
+    打开全部的参数的执行计划
 
-```
-EXPLAIN header=1, actions=1,description=1 SELECT number from system.numbers limit 10;
-```
+    ```
+    EXPLAIN header=1, actions=1,description=1 SELECT number from system.numbers limit 10;
+    ```
 
 1. AST 语法树
 
-```
-EXPLAIN AST SELECT number from system.numbers limit 10;
-```
+    ```
+    EXPLAIN AST SELECT number from system.numbers limit 10;
+    ```
 
 1. SYNTAX 语法优化
 
-```
-#先做一次查询 
-SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
-#查看语法优化 
-EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
-#开启三元运算符优化 
-SET optimize_if_chain_to_multiif = 1; 
-#再次查看语法优化 
-EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
-#返回优化后的语句 
-SELECT multiIf(number = 1, \'hello\', number = 2, \'world\', \'xyz\') FROM numbers(10)
-```
+    ```
+    #先做一次查询 
+    SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
+    #查看语法优化 
+    EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
+    #开启三元运算符优化 
+    SET optimize_if_chain_to_multiif = 1; 
+    #再次查看语法优化 
+    EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10); 
+    #返回优化后的语句 
+    SELECT multiIf(number = 1, \'hello\', number = 2, \'world\', \'xyz\') FROM numbers(10)
+    ```
 
 1. 查看 PIPELINE
 
-```
-EXPLAIN PIPELINE SELECT sum(number) FROM numbers_mt(100000) GROUP BY number % 20; 
-#打开其他参数 
-EXPLAIN PIPELINE header=1,graph=1 SELECT sum(number) FROM numbers_mt(10000) GROUP BY number%20;
-```
+    ```
+    EXPLAIN PIPELINE SELECT sum(number) FROM numbers_mt(100000) GROUP BY number % 20; 
+    #打开其他参数 
+    EXPLAIN PIPELINE header=1,graph=1 SELECT sum(number) FROM numbers_mt(10000) GROUP BY number%20;
+    ```
 
 ##### 1.2.2 老版本查看执行计划
 
@@ -202,11 +202,11 @@ in_memory_parts_enable_wal 默认为 true
 
 - config.xml 的配置项
 
-[https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/]()
+    [https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/]()
 
 - users.xml 的配置项
 
-[https://clickhouse.tech/docs/en/operations/settings/settings/]()
+    [https://clickhouse.tech/docs/en/operations/settings/settings/]()
 
 ##### 2.5.1 CPU 资源
 
@@ -228,29 +228,29 @@ ClickHouse 的 SQL 优化规则是基于 RBO(Rule Based Optimization)，下面�
 
 1. 上传官方的数据集
 
-将 visits_v1.tar 和 hits_v1.tar 上传到虚拟机，解压到 clickhouse 数据路径下
+    将 visits_v1.tar 和 hits_v1.tar 上传到虚拟机，解压到 clickhouse 数据路径下
 
-```
-#解压到 clickhouse 数据路径 
-sudo tar -xvf hits_v1.tar -C /var/lib/clickhouse 
-sudo tar -xvf visits_v1.tar -C /var/lib/clickhouse 
-#修改所属用户 
-sudo chown -R clickhouse:clickhouse /var/lib/clickhouse/data/datasets 
-sudo chown -R clickhouse:clickhouse /var/lib/clickhouse/metadata/datasets
-```
+    ```
+    #解压到 clickhouse 数据路径 
+    sudo tar -xvf hits_v1.tar -C /var/lib/clickhouse 
+    sudo tar -xvf visits_v1.tar -C /var/lib/clickhouse 
+    #修改所属用户 
+    sudo chown -R clickhouse:clickhouse /var/lib/clickhouse/data/datasets 
+    sudo chown -R clickhouse:clickhouse /var/lib/clickhouse/metadata/datasets
+    ```
 
 1. 重启 clickhouse-server
 
-```
-sudo clickhouse restart
-```
+    ```
+    sudo clickhouse restart
+    ```
 
 1. 执行查询
 
-```
-clickhouse-client --query "SELECT COUNT(*) FROM datasets.hits_v1"
-clickhouse-client --query "SELECT COUNT(*) FROM datasets.visits_v1"
-```
+    ```
+    clickhouse-client --query "SELECT COUNT(*) FROM datasets.hits_v1"
+    clickhouse-client --query "SELECT COUNT(*) FROM datasets.visits_v1"
+    ```
 
 注意：官方的 tar 包，包含了建库、建表语句、数据内容，这种方式不需要手动建库、建表，最方便。
 
@@ -866,50 +866,50 @@ ReplacingMergeTree，该引擎和MergeTree的不同之处在于它会删除排�
 
 1. 创建表
 
-```
-CREATE TABLE test_a( 
-    user_id UInt64, 
-    score String, 
-    deleted UInt8 DEFAULT 0, 
-    create_time DateTime DEFAULT toDateTime(0) 
-)ENGINE= ReplacingMergeTree(create_time) 
-ORDER BY user_id;
-```
+    ```
+    CREATE TABLE test_a( 
+        user_id UInt64, 
+        score String, 
+        deleted UInt8 DEFAULT 0, 
+        create_time DateTime DEFAULT toDateTime(0) 
+    )ENGINE= ReplacingMergeTree(create_time) 
+    ORDER BY user_id;
+    ```
 
-其中:
+    其中:
 
-user_id 是数据去重更新的标识;
+    user_id 是数据去重更新的标识;
 
-create_time 是版本号字段，每组数据中 create_time 最大的一行表示最新的数据;
+    create_time 是版本号字段，每组数据中 create_time 最大的一行表示最新的数据;
 
-deleted 是自定的一个标记位，比如 0 代表未删除，1 代表删除数据。
+    deleted 是自定的一个标记位，比如 0 代表未删除，1 代表删除数据。
 
 1. 写入 1000 万 测试数据
 
-```
-INSERT INTO TABLE test_a(user_id,score) 
-WITH( 
-    SELECT ['A','B','C','D','E','F','G'] 
-)AS dict 
-SELECT number AS user_id, dict[number%7+1] FROM numbers(10000000);
-```
+    ```
+    INSERT INTO TABLE test_a(user_id,score) 
+    WITH( 
+        SELECT ['A','B','C','D','E','F','G'] 
+    )AS dict 
+    SELECT number AS user_id, dict[number%7+1] FROM numbers(10000000);
+    ```
 
 1. 修改前 50 万 行数据，修改内容包括 name 字段和 create_time 版本号字段
 
-```
-INSERT INTO TABLE test_a(user_id,score,create_time) 
-WITH( 
-    SELECT ['AA','BB','CC','DD','EE','FF','GG'] 
-)AS dict 
-SELECT number AS user_id, dict[number%7+1], now() AS create_time FROM numbers(500000);
-```
+    ```
+    INSERT INTO TABLE test_a(user_id,score,create_time) 
+    WITH( 
+        SELECT ['AA','BB','CC','DD','EE','FF','GG'] 
+    )AS dict 
+    SELECT number AS user_id, dict[number%7+1], now() AS create_time FROM numbers(500000);
+    ```
 
 1. 统计总数
 
-```
-SELECT COUNT() FROM test_a; 
-10500000
-```
+    ```
+    SELECT COUNT() FROM test_a; 
+    10500000
+    ```
 
 还未触发分区合并，所以还未去重。
 
@@ -927,54 +927,54 @@ OPTIMIZE TABLE [db.]name [ON CLUSTER cluster] [PARTITION partition | PARTITION I
 
 1. 执行去重的查询
 
-```
-SELECT 
-    user_id , argMax(score, create_time) AS score, argMax(deleted, create_time) AS deleted, max(create_time) AS ctime 
-FROM 
-    test_a 
-GROUP BY 
-    user_id 
-HAVING 
-    deleted = 0;
-```
+    ```
+    SELECT 
+        user_id , argMax(score, create_time) AS score, argMax(deleted, create_time) AS deleted, max(create_time) AS ctime 
+    FROM 
+        test_a 
+    GROUP BY 
+        user_id 
+    HAVING 
+        deleted = 0;
+    ```
 
-函数说明：
+    函数说明：
 
-- argMax(field1，field2):按照 field2 的最大值取 field1 的值。
+    - argMax(field1，field2):按照 field2 的最大值取 field1 的值。
 
-当我们更新数据时，会写入一行新的数据，例如上面语句中，通过查询最大的 create_time 得到修改后的 score 字段值。
+    当我们更新数据时，会写入一行新的数据，例如上面语句中，通过查询最大的 create_time 得到修改后的 score 字段值。
 
 1. 创建视图，方便测试
 
-```
-CREATE VIEW view_test_a AS 
-SELECT 
-    user_id , argMax(score, create_time) AS score, argMax(deleted, create_time) AS deleted, max(create_time) AS ctime 
-FROM 
-    test_a 
-GROUP BY 
-    user_id 
-HAVING 
-    deleted = 0;
-```
+    ```
+    CREATE VIEW view_test_a AS 
+    SELECT 
+        user_id , argMax(score, create_time) AS score, argMax(deleted, create_time) AS deleted, max(create_time) AS ctime 
+    FROM 
+        test_a 
+    GROUP BY 
+        user_id 
+    HAVING 
+        deleted = 0;
+    ```
 
 1. 插入重复数据，再次查询
 
-```
-#再次插入一条数据 
-INSERT INTO TABLE test_a(user_id,score,create_time) VALUES(0,'AAAA',now()) 
-#再次查询 
-SELECT * FROM view_test_a WHERE user_id = 0;
-```
+    ```
+    #再次插入一条数据 
+    INSERT INTO TABLE test_a(user_id,score,create_time) VALUES(0,'AAAA',now()) 
+    #再次查询 
+    SELECT * FROM view_test_a WHERE user_id = 0;
+    ```
 
 1. 删除数据测试
 
-```
-#再次插入一条标记为删除的数据 
-INSERT INTO TABLE test_a(user_id,score,deleted,create_time) VALUES(0,'AAAA',1,now()); 
-#再次查询，刚才那条数据看不到了 
-SELECT *  FROM view_test_a WHERE user_id = 0;
-```
+    ```
+    #再次插入一条标记为删除的数据 
+    INSERT INTO TABLE test_a(user_id,score,deleted,create_time) VALUES(0,'AAAA',1,now()); 
+    #再次查询，刚才那条数据看不到了 
+    SELECT *  FROM view_test_a WHERE user_id = 0;
+    ```
 
 这行数据并没有被真正的删除，而是被过滤掉了。在一些合适的场景下，可以结合 表 级别的 TTL 最终将物理数据删除。
 
@@ -998,15 +998,15 @@ FINAL 查询最终的性能和很多因素相关，列字段的大小、分区�
 
 1. 普通查询语句
 
-```
-select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100;
-```
+    ```
+    select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100;
+    ```
 
 1. FINAL 查询
 
-```
-select * from visits_v1 FINAL WHERE StartDate = '2014-03-17' limit 100;
-```
+    ```
+    select * from visits_v1 FINAL WHERE StartDate = '2014-03-17' limit 100;
+    ```
 
 先前的并行查询变成了单线程。
 
@@ -1014,48 +1014,48 @@ select * from visits_v1 FINAL WHERE StartDate = '2014-03-17' limit 100;
 
 1. 普通语句查询
 
-```
-select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100 settings max_threads = 2;
-```
+    ```
+    select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100 settings max_threads = 2;
+    ```
 
-查看执行计划：
+    查看执行计划：
 
-```
-explain pipeline select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100 settings max_threads = 2; 
-(Expression) 
-ExpressionTransform × 2 
-    (SettingQuotaAndLimits) 
-        (Limit) 
-        Limit 2 → 2 
-            (ReadFromMergeTree)
-        MergeTreeThread × 2 0 → 1
-```
+    ```
+    explain pipeline select * from visits_v1 WHERE StartDate = '2014-03-17' limit 100 settings max_threads = 2; 
+    (Expression) 
+    ExpressionTransform × 2 
+        (SettingQuotaAndLimits) 
+            (Limit) 
+            Limit 2 → 2 
+                (ReadFromMergeTree)
+            MergeTreeThread × 2 0 → 1
+    ```
 
-明显将由 2 个线程并行读取 part 查询。
+    明显将由 2 个线程并行读取 part 查询。
 
 1. FINAL 查询
 
-```
-select * from visits_v1 final WHERE StartDate = '2014-03-17' limit 100 settings max_final_threads = 2;
-```
+    ```
+    select * from visits_v1 final WHERE StartDate = '2014-03-17' limit 100 settings max_final_threads = 2;
+    ```
 
-查询速度没有普通的查询快，但是相比之前已经有了一些提升,查看 FINAL 查询的执行 计划：
+    查询速度没有普通的查询快，但是相比之前已经有了一些提升,查看 FINAL 查询的执行 计划：
 
-```
-explain pipeline select * from visits_v1 final WHERE StartDate = '2014- 03-17' limit 100 settings max_final_threads = 2; 
-(Expression) 
-ExpressionTransform × 2 
-    (SettingQuotaAndLimits) 
-        (Limit) 
-        Limit 2 → 2 
-            (ReadFromMergeTree) 
-            ExpressionTransform × 2 
-                CollapsingSortedTransform × 2 
-                    Copy 1 → 2 
-                        AddingSelector 
-                            ExpressionTransform 
-                                MergeTree 0 → 1
-```
+    ```
+    explain pipeline select * from visits_v1 final WHERE StartDate = '2014- 03-17' limit 100 settings max_final_threads = 2; 
+    (Expression) 
+    ExpressionTransform × 2 
+        (SettingQuotaAndLimits) 
+            (Limit) 
+            Limit 2 → 2 
+                (ReadFromMergeTree) 
+                ExpressionTransform × 2 
+                    CollapsingSortedTransform × 2 
+                        Copy 1 → 2 
+                            AddingSelector 
+                                ExpressionTransform 
+                                    MergeTree 0 → 1
+    ```
 
 从 CollapsingSortedTransform 这一步开始已经是多线程执行，但是读取 part 部分的动 作还是串行。
 
@@ -1087,36 +1087,36 @@ CREATE [MATERIALIZED] VIEW [IF NOT EXISTS] [db.]table_name [TO[db.]name] [ENGINE
 
 1. 创建物化视图的限制
 
-1. 必须指定物化视图的 engine 用于数据存储
+    1. 必须指定物化视图的 engine 用于数据存储
 
-1. TO [db].[table]语法的时候，不得使用 POPULATE。
+    1. TO [db].[table]语法的时候，不得使用 POPULATE。
 
-1. 查询语句(select）可以包含下面的子句： DISTINCT, GROUP BY, ORDER BY, LIMIT…
+    1. 查询语句(select）可以包含下面的子句： DISTINCT, GROUP BY, ORDER BY, LIMIT…
 
-1. 物化视图的 alter 操作有些限制，操作起来不大方便。
+    1. 物化视图的 alter 操作有些限制，操作起来不大方便。
 
-1. 若物化视图的定义使用了 TO [db.]name 子语句，则可以将目标表的视图 卸载 DETACH 再装载 ATTACH
+    1. 若物化视图的定义使用了 TO [db.]name 子语句，则可以将目标表的视图 卸载 DETACH 再装载 ATTACH
 
 1. 物化视图的数据更新
 
-1. 物化视图创建好之后，若源表被写入新数据则物化视图也会同步更新
+    1. 物化视图创建好之后，若源表被写入新数据则物化视图也会同步更新
 
-1. POPULATE 关键字决定了物化视图的更新策略：
+    1. POPULATE 关键字决定了物化视图的更新策略：
 
 
-- 若有 POPULATE 则在创建视图的过程会将源表已经存在的数据一并导入，类似于 create table ... as
+        - 若有 POPULATE 则在创建视图的过程会将源表已经存在的数据一并导入，类似于 create table ... as
 
-- 若无 POPULATE 则物化视图在创建之后没有数据，只会在创建只有同步之后写入 源表的数据
+        - 若无 POPULATE 则物化视图在创建之后没有数据，只会在创建只有同步之后写入 源表的数据
 
-- clickhouse 官方并不推荐使用 POPULATE，因为在创建物化视图的过程中同时写入 的数据不能被插入物化视图。
+        - clickhouse 官方并不推荐使用 POPULATE，因为在创建物化视图的过程中同时写入 的数据不能被插入物化视图。
 
-1. 物化视图不支持同步删除，若源表的数据不存在（删除了）则物化视图的数据仍然保留
+    1. 物化视图不支持同步删除，若源表的数据不存在（删除了）则物化视图的数据仍然保留
 
-1. 物化视图是一种特殊的数据表，可以用 show tables 查看
+    1. 物化视图是一种特殊的数据表，可以用 show tables 查看
 
-1. 物化视图数据的删除：
+    1. 物化视图数据的删除：
 
-1. 物化视图的删除：
+    1. 物化视图的删除：
 
 #### 6.2 案例实操
 
@@ -1126,26 +1126,26 @@ CREATE [MATERIALIZED] VIEW [IF NOT EXISTS] [db.]table_name [TO[db.]name] [ENGINE
 
 1. 建表
 
-```
-#建表语句 
-CREATE TABLE hits_test ( 
-    EventDate Date, 
-    CounterID UInt32, 
-    UserID UInt64, 
-    URL String, 
-    Income UInt8 
-) ENGINE = MergeTree() 
-    PARTITION BY toYYYYMM(EventDate) 
-    ORDER BY (CounterID, EventDate, intHash32(UserID)) 
-    SAMPLE BY intHash32(UserID) 
-    SETTINGS index_granularity = 8192
-```
+    ```
+    #建表语句 
+    CREATE TABLE hits_test ( 
+        EventDate Date, 
+        CounterID UInt32, 
+        UserID UInt64, 
+        URL String, 
+        Income UInt8 
+    ) ENGINE = MergeTree() 
+        PARTITION BY toYYYYMM(EventDate) 
+        ORDER BY (CounterID, EventDate, intHash32(UserID)) 
+        SAMPLE BY intHash32(UserID) 
+        SETTINGS index_granularity = 8192
+    ```
 
 1. 导入一些数据
 
-```
-INSERT INTO hits_test SELECT EventDate, CounterID, UserID, URL, Income FROM hits_v1 limit 10000;
-```
+    ```
+    INSERT INTO hits_test SELECT EventDate, CounterID, UserID, URL, Income FROM hits_v1 limit 10000;
+    ```
 
 ##### 6.2.2 创建物化视图
 
@@ -1232,27 +1232,27 @@ ClickHouse 20.8.2.3 版本新增加了 MaterializeMySQL 的 database 引擎，�
 
 1. DDL 查询
 
-MySQL DDL 查询被转换成相应的 ClickHouse DDL 查询（ALTER, CREATE, DROP, RENAME）。 如果 ClickHouse 不能解析某些 DDL 查询，该查询将被忽略。
+    MySQL DDL 查询被转换成相应的 ClickHouse DDL 查询（ALTER, CREATE, DROP, RENAME）。 如果 ClickHouse 不能解析某些 DDL 查询，该查询将被忽略。
 
 1. 数据复制
 
-MaterializeMySQL 不支持直接插入、删除和更新查询，而是将 DDL 语句进行相应转换：
+    MaterializeMySQL 不支持直接插入、删除和更新查询，而是将 DDL 语句进行相应转换：
 
-MySQL INSERT 查询被转换为 INSERT with _sign=1。 MySQL DELETE 查询被转换为 INSERT with _sign=-1。
+    MySQL INSERT 查询被转换为 INSERT with _sign=1。 MySQL DELETE 查询被转换为 INSERT with _sign=-1。
 
-MySQL UPDATE 查询被转换成 INSERT with _sign=1 和 INSERT with _sign=-1。
+    MySQL UPDATE 查询被转换成 INSERT with _sign=1 和 INSERT with _sign=-1。
 
 1. SELECT 查询
 
-如果在 SELECT 查询中没有指定_version，则使用 FINAL 修饰符，返回_version 的最大值 对应的数据，即最新版本的数据。
+    如果在 SELECT 查询中没有指定_version，则使用 FINAL 修饰符，返回_version 的最大值 对应的数据，即最新版本的数据。
 
-如果在 SELECT 查询中没有指定_sign，则默认使用 WHERE _sign=1，即返回未删除状态 （_sign=1)的数据。
+    如果在 SELECT 查询中没有指定_sign，则默认使用 WHERE _sign=1，即返回未删除状态 （_sign=1)的数据。
 
 1. 索引转换
 
-ClickHouse 数据库表会自动将 MySQL 主键和索引子句转换为 ORDER BY 元组。
+    ClickHouse 数据库表会自动将 MySQL 主键和索引子句转换为 ORDER BY 元组。
 
-ClickHouse 只有一个物理顺序，由 ORDER BY 子句决定。如果需要创建新的物理顺序， 请使用物化视图。
+    ClickHouse 只有一个物理顺序，由 ORDER BY 子句决定。如果需要创建新的物理顺序， 请使用物化视图。
 
 #### 7.2 案例实操
 
@@ -1260,61 +1260,61 @@ ClickHouse 只有一个物理顺序，由 ORDER BY 子句决定。如果需要�
 
 1. 确保 MySQL 开启了 binlog 功能，且格式为 ROW
 
-打开/etc/my.cnf,在[mysqld]下添加：
+    打开/etc/my.cnf,在[mysqld]下添加：
 
-```
-server-id=1 
-log-bin=mysql-bin 
-binlog_format=ROW
-```
+    ```
+    server-id=1 
+    log-bin=mysql-bin 
+    binlog_format=ROW
+    ```
 
 1. 开启 GTID 模式
 
-如果如果 clickhouse 使用的是 20.8 prestable 之后发布的版本，那么 MySQL 还需要配置 开启 GTID 模式, 这种方式在 mysql 主从模式下可以确保数据同步的一致性(主从切换时)。
+    如果如果 clickhouse 使用的是 20.8 prestable 之后发布的版本，那么 MySQL 还需要配置 开启 GTID 模式, 这种方式在 mysql 主从模式下可以确保数据同步的一致性(主从切换时)。
 
-```
-gtid-mode=on 
-enforce-gtid-consistency=1 # 设置为主从强一致性 
-log-slave-updates=1 # 记录日志
-```
+    ```
+    gtid-mode=on 
+    enforce-gtid-consistency=1 # 设置为主从强一致性 
+    log-slave-updates=1 # 记录日志
+    ```
 
-GTID 是 MySQL 复制增强版，从 MySQL 5.6 版本开始支持，目前已经是 MySQL 主流 复制模式。它为每个 event 分配一个全局唯一 ID 和序号，我们可以不用关心 MySQL 集群 主从拓扑结构，直接告知 MySQL 这个 GTID 即可
+    GTID 是 MySQL 复制增强版，从 MySQL 5.6 版本开始支持，目前已经是 MySQL 主流 复制模式。它为每个 event 分配一个全局唯一 ID 和序号，我们可以不用关心 MySQL 集群 主从拓扑结构，直接告知 MySQL 这个 GTID 即可
 
 1. 重启 MySQL
 
-```
-sudo systemctl restart mysqld
-```
+    ```
+    sudo systemctl restart mysqld
+    ```
 
 ##### 7.2.2 准备 MySQL 表和数据
 
 1. 在 MySQL 中创建数据表并写入数据
 
-```
-CREATE DATABASE testck; 
-CREATE TABLE `testck`.`t_organization` ( 
-    `id` int(11) NOT NULL AUTO_INCREMENT, 
-    `code` int NOT NULL, 
-    `name` text DEFAULT NULL, 
-    `updatetime` datetime DEFAULT NULL, 
-    PRIMARY KEY (`id`), 
-    UNIQUE KEY (`code`) 
-) ENGINE=InnoDB; 
-INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1000,'Realinsight',NOW()); 
-INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1001, 'Realindex',NOW()); 
-INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1002,'EDT',NOW());
-```
+    ```
+    CREATE DATABASE testck; 
+    CREATE TABLE `testck`.`t_organization` ( 
+        `id` int(11) NOT NULL AUTO_INCREMENT, 
+        `code` int NOT NULL, 
+        `name` text DEFAULT NULL, 
+        `updatetime` datetime DEFAULT NULL, 
+        PRIMARY KEY (`id`), 
+        UNIQUE KEY (`code`) 
+    ) ENGINE=InnoDB; 
+    INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1000,'Realinsight',NOW()); 
+    INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1001, 'Realindex',NOW()); 
+    INSERT INTO testck.t_organization (code, name,updatetime) VALUES(1002,'EDT',NOW());
+    ```
 
 1. 创建第二张表
 
-```
-CREATE TABLE `testck`.`t_user` (
-    ` id` int(11) NOT NULL AUTO_INCREMENT, 
-    `code` int, 
-    PRIMARY KEY (`id`) 
-) ENGINE=InnoDB; 
-INSERT INTO testck.t_user (code) VALUES(1);
-```
+    ```
+    CREATE TABLE `testck`.`t_user` (
+        ` id` int(11) NOT NULL AUTO_INCREMENT, 
+        `code` int, 
+        PRIMARY KEY (`id`) 
+    ) ENGINE=InnoDB; 
+    INSERT INTO testck.t_user (code) VALUES(1);
+    ```
 
 ##### 7.2.3 开启 ClickHouse 物化引擎
 
@@ -1326,94 +1326,94 @@ set allow_experimental_database_materialize_mysql=1;
 
 1. ClickHouse 中创建 MaterializeMySQL 数据库
 
-```
-CREATE DATABASE test_binlog ENGINE = MaterializeMySQL('hadoop1:3306','testck','root','000000');
-```
+    ```
+    CREATE DATABASE test_binlog ENGINE = MaterializeMySQL('hadoop1:3306','testck','root','000000');
+    ```
 
-其中 4 个参数分别是 MySQL 地址、databse、username 和 password。
+    其中 4 个参数分别是 MySQL 地址、databse、username 和 password。
 
 1. 查看 ClickHouse 的数据
 
-```
-use test_binlog;
-show tables;
-select * from t_organization;
-select * from t_user;
-```
+    ```
+    use test_binlog;
+    show tables;
+    select * from t_organization;
+    select * from t_user;
+    ```
 
 ##### 7.2.5 修改数据
 
 1. 在 MySQL 中修改数据:
 
-```
-update t_organization set name = CONCAT(name,'-v1') where id = 1
-```
+    ```
+    update t_organization set name = CONCAT(name,'-v1') where id = 1
+    ```
 
 1. 查看 clickhouse 日志可以看到 binlog 监听事件，查询 clickhouse
 
-```
-select * from t_organization;
-```
+    ```
+    select * from t_organization;
+    ```
 
 ##### 7.2.6 删除数据
 
 1. MySQL 删除数据:
 
-```
-DELETE FROM t_organization where id = 2;
-```
+    ```
+    DELETE FROM t_organization where id = 2;
+    ```
 
 1. ClicKHouse，日志有 DeleteRows 的 binlog 监听事件，查看数据：
 
-```
-select * from t_organization;
-```
+    ```
+    select * from t_organization;
+    ```
 
 1. 在刚才的查询中增加 _sign 和 _version 虚拟字段
 
-```
-select *,_sign,_version from t_organization order by _sign desc,_version desc;
-```
+    ```
+    select *,_sign,_version from t_organization order by _sign desc,_version desc;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-高级_image_3.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-高级_image_3.png)
 
-在查询时，对于已经被删除的数据，_sign=-1，ClickHouse 会自动重写 SQL，将 _sign = -1 的数据过滤掉;
+    在查询时，对于已经被删除的数据，_sign=-1，ClickHouse 会自动重写 SQL，将 _sign = -1 的数据过滤掉;
 
-对于修改的数据，则自动重写 SQL，为其增加 FINAL 修饰符。
+    对于修改的数据，则自动重写 SQL，为其增加 FINAL 修饰符。
 
-```
-select * from t_organization 
-#等同于 
-select * from t_organization final where _sign = 1
-```
+    ```
+    select * from t_organization 
+    #等同于 
+    select * from t_organization final where _sign = 1
+    ```
 
 ##### 7.2.7 删除表
 
 1. 在 mysql 执行删除表
 
-```
-drop table t_user;
-```
+    ```
+    drop table t_user;
+    ```
 
 1. 此时在 clickhouse 处会同步删除对应表，如果查询会报错
 
-```
-show tables; 
-select * from t_user; 
-DB::Exception: Table scene_mms.scene doesn't exist..
-```
+    ```
+    show tables; 
+    select * from t_user; 
+    DB::Exception: Table scene_mms.scene doesn't exist..
+    ```
 
 1. mysql 新建表，clickhouse 可以查询到
 
-```
-CREATE TABLE `testck`.`t_user` ( 
-    `id` int(11) NOT NULL AUTO_INCREMENT, `
-    code` int, PRIMARY KEY (`id`) 
-) ENGINE=InnoDB; 
-INSERT INTO testck.t_user (code) VALUES(1); 
-#ClickHouse 查询 
-show tables; select * from t_user;
-```
+    ```
+    CREATE TABLE `testck`.`t_user` ( 
+        `id` int(11) NOT NULL AUTO_INCREMENT, `
+        code` int, PRIMARY KEY (`id`) 
+    ) ENGINE=InnoDB; 
+    INSERT INTO testck.t_user (code) VALUES(1); 
+    #ClickHouse 查询 
+    show tables; select * from t_user;
+    ```
 
 ### 8. 常见问题排查
 
@@ -1421,9 +1421,9 @@ show tables; select * from t_user;
 
 1. 问题：使用分布式 ddl 执行命令 create table on cluster xxxx 某个节点上没有创建 表，但是 client 返回正常，查看日志有如下报错。
 
-```
-<Error>xxx.xxx: Retrying createReplica(), because some other replicas were created at the same time
-```
+    ```
+    <Error>xxx.xxx: Retrying createReplica(), because some other replicas were created at the same time
+    ```
 
 1. 解决办法：重启该不执行的节点。
 
@@ -1431,79 +1431,79 @@ show tables; select * from t_user;
 
 1. 问题：
 
-由于某个数据节点副本异常，导致两数据副本表不一致，某个数据副本缺 少表，需要将两个数据副本调整一致。
+    由于某个数据节点副本异常，导致两数据副本表不一致，某个数据副本缺 少表，需要将两个数据副本调整一致。
 
 1. 解决办法：
 
-在缺少表的数据副本节点上创建缺少的表，创建为本地表，表结构可以在其他数据副本 通过 show create table xxxx 获取。 表结构创建后，clickhouse 会自动从其他副本同步该表数据，验证数据量是否一致即可。
+    在缺少表的数据副本节点上创建缺少的表，创建为本地表，表结构可以在其他数据副本 通过 show create table xxxx 获取。 表结构创建后，clickhouse 会自动从其他副本同步该表数据，验证数据量是否一致即可。
 
 #### 8.3 副本节点全量恢复
 
 1. 问题：
 
-某个数据副本异常无法启动，需要重新搭建副本。
+    某个数据副本异常无法启动，需要重新搭建副本。
 
 1. 解决办法：
 
-清空异常副本节点的 metadata 和 data 目录。
+    清空异常副本节点的 metadata 和 data 目录。
 
-从另一个正常副本将 metadata 目录拷贝过来（这一步之后可以启动数据库，但是只有 表结构没有数据）。
+    从另一个正常副本将 metadata 目录拷贝过来（这一步之后可以启动数据库，但是只有 表结构没有数据）。
 
-执行 sudo -u clickhouse touch /data/clickhouse/flags/force_restore_data 启动数据库。
+    执行 sudo -u clickhouse touch /data/clickhouse/flags/force_restore_data 启动数据库。
 
 #### 8.4 数据副本启动缺少 zk 表
 
 1. 问题：
 
-某个数据副本表在 zk 上丢失数据，或者不存在，但是 metadata 元数据里 存在，导致启动异常，报错：
+    某个数据副本表在 zk 上丢失数据，或者不存在，但是 metadata 元数据里 存在，导致启动异常，报错：
 
-```
-Can’t get data for node /clickhouse/tables/01- 02/xxxxx/xxxxxxx/replicas/xxx/metadata: node doesn’t exist (No node): Cannot attach table xxxxxxx
-```
+    ```
+    Can’t get data for node /clickhouse/tables/01- 02/xxxxx/xxxxxxx/replicas/xxx/metadata: node doesn’t exist (No node): Cannot attach table xxxxxxx
+    ```
 
 1. 解决办法：
 
-metadata 中移除该表的结构文件，如果多个表报错都移除
+    metadata 中移除该表的结构文件，如果多个表报错都移除
 
-mv metadata/xxxxxx/xxxxxxxx.sql /tmp/
+    mv metadata/xxxxxx/xxxxxxxx.sql /tmp/
 
-启动数据库
+    启动数据库
 
-手工创建缺少的表，表结构从其他节点 show create table 获取。
+    手工创建缺少的表，表结构从其他节点 show create table 获取。
 
-创建后会自动同步数据，验证数据是否一致。
+    创建后会自动同步数据，验证数据是否一致。
 
 #### 8.5 ZK table replicas 数据未删除，导致重建表报错
 
 1. 问题：
 
-重建表过程中，先使用 drop table xxx on cluster xxx ,各节点在 clickhouse 上 table 已物理删除，但是 zk 里面针对某个 clickhouse 节点的 table meta 信息未被删除（低概 率事件），因 zk 里仍存在该表的 meta 信息，导致再次创建该表 create table xxx on cluster, 该 节点无法创建表(其他节点创建表成功)，报错：
+    重建表过程中，先使用 drop table xxx on cluster xxx ,各节点在 clickhouse 上 table 已物理删除，但是 zk 里面针对某个 clickhouse 节点的 table meta 信息未被删除（低概 率事件），因 zk 里仍存在该表的 meta 信息，导致再次创建该表 create table xxx on cluster, 该 节点无法创建表(其他节点创建表成功)，报错：
 
-Replica /clickhouse/tables/01-03/xxxxxx/xxx/replicas/xxx already exists..
+    Replica /clickhouse/tables/01-03/xxxxxx/xxx/replicas/xxx already exists..
 
 1. 解决办法：
 
-从其他数据副本 cp 该 table 的 metadata sql 过来。
+    从其他数据副本 cp 该 table 的 metadata sql 过来。
 
-重启节点。
+    重启节点。
 
 #### 8.6 Clickhouse 节点意外关闭
 
 1. 问题：
 
-模拟其中一个节点意外宕机，在大量 insert 数据的情况下，关闭某个节点。
+    模拟其中一个节点意外宕机，在大量 insert 数据的情况下，关闭某个节点。
 
 1. 现象：
 
-数据写入不受影响、数据查询不受影响、建表 DDL 执行到异常节点会卡住， 报错：
+    数据写入不受影响、数据查询不受影响、建表 DDL 执行到异常节点会卡住， 报错：
 
-```
-Code: 159. DB::Exception: Received from localhost:9000. DB::Exception: Watching task /clickhouse/task_queue/ddl/query-0000565925 is executing longer than distributed_ddl_task_timeout (=180) seconds. There are 1 unfinished hosts (0 of them are currently active), they are going to execute the query in background.
-```
+    ```
+    Code: 159. DB::Exception: Received from localhost:9000. DB::Exception: Watching task /clickhouse/task_queue/ddl/query-0000565925 is executing longer than distributed_ddl_task_timeout (=180) seconds. There are 1 unfinished hosts (0 of them are currently active), they are going to execute the query in background.
+    ```
 
 1. 解决办法：
 
-启动异常节点，期间其他副本写入数据会自动同步过来，其他副本的 建表 DDL 也会同步。
+    启动异常节点，期间其他副本写入数据会自动同步过来，其他副本的 建表 DDL 也会同步。
 
 #### 8.7 其他问题参考
 

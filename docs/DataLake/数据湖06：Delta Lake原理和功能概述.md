@@ -39,15 +39,15 @@ Delta Lake 的文件结构主要有两部分组成：
 
 1. _delta_log目录：存储 deltalake 表的所有元数据信息，其中：
 
-- 每次对表的操作称一次 commit，包括数据操作（Insert/Update/Delete/Merge）和元数据操作（添加新列/修改表配置），每次 commit 都会生成一个新的 json 格式的 log 文件，记录本次 commit 对表产生的行为（action），如新增文件，删除文件，更新后的元数据信息等；
+    - 每次对表的操作称一次 commit，包括数据操作（Insert/Update/Delete/Merge）和元数据操作（添加新列/修改表配置），每次 commit 都会生成一个新的 json 格式的 log 文件，记录本次 commit 对表产生的行为（action），如新增文件，删除文件，更新后的元数据信息等；
 
-- 默认情况下，每10次 commit 会自动合并成一个 parquet 格式的 checkpoint 文件，用于加速元数据的解析，及支持定期清理历史的元数据文件；
+    - 默认情况下，每10次 commit 会自动合并成一个 parquet 格式的 checkpoint 文件，用于加速元数据的解析，及支持定期清理历史的元数据文件；
 
 1. 数据目录/文件：除 _delta_log 目录之外的即为实际存储表数据的文件；需要注意：
 
-- DeltaLake 对分区表的数据组织形式同普通的 Hive 表，分区字段及其对应值作为实际数据路径的一部分；
+    - DeltaLake 对分区表的数据组织形式同普通的 Hive 表，分区字段及其对应值作为实际数据路径的一部分；
 
-- 并非所有可见的数据文件均为有效的；DeltaLake 是以 snapshot 的形式组织表，最新 snopshot 所对应的有效数据文件在 _delta_log 元数据中管理；
+    - 并非所有可见的数据文件均为有效的；DeltaLake 是以 snapshot 的形式组织表，最新 snopshot 所对应的有效数据文件在 _delta_log 元数据中管理；
 
 ### 4. 元数据机制
 

@@ -246,7 +246,7 @@ public class ConfigClientApplication {
 
 先访问[http://localhost:8761/](http://localhost:8761/)，可以看到两个config-serve都正常注册到注册中心。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第7篇：Spring%20Cloud%20Config%20配置中心高可用和refresh_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第7篇：Spring%20Cloud%20Config%20配置中心高可用和refresh_image_0.png)
 
 如上图就可发现会有两个server端同时提供配置中心的服务，防止某一台down掉之后影响整个系统的使用。
 
@@ -330,7 +330,7 @@ WebHook是当某个事件发生时，通过发送http post请求的方式来通�
 
 如此一来，你就可以通过这种方式去自动完成一些重复性工作，比如，你可以用Webhook来自动触发一些持续集成（CI）工具的运作，比如Travis CI；又或者是通过 Webhook 去部署你的线上服务器。下图就是github上面的webhook配置。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第7篇：Spring%20Cloud%20Config%20配置中心高可用和refresh_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第7篇：Spring%20Cloud%20Config%20配置中心高可用和refresh_image_1.png)
 
 - Payload URL： 触发后回调的URL
 

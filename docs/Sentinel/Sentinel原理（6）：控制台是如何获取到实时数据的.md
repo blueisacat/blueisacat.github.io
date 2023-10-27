@@ -200,11 +200,11 @@ HeartbeatSenderInitFunc 会启动一个 HeartbeatSender 来定时的向 dashboar
 
 1. 数据安全性
 
-sentinel-dashboard 和 sentinel-core 之间的通讯是基于 http 的，没有进行加密或鉴权，可能会存在数据安全性的问题，不过这些数据并非是很机密的数据，对安全性要求并不是很高，另外增加了鉴权或加密之后，对于性能和实效性有一定的影响。
+    sentinel-dashboard 和 sentinel-core 之间的通讯是基于 http 的，没有进行加密或鉴权，可能会存在数据安全性的问题，不过这些数据并非是很机密的数据，对安全性要求并不是很高，另外增加了鉴权或加密之后，对于性能和实效性有一定的影响。
 
 1. SentinelApiClient
 
-目前所有的数据请求都是通过 SentinelApiClient 类去完成的，该类中充斥着大量的方法，都是发送 http 请求的。代码的可读性和可维护性不高，所以需要对该类进行重构，目前我能够想到的有两种方法：
+    目前所有的数据请求都是通过 SentinelApiClient 类去完成的，该类中充斥着大量的方法，都是发送 http 请求的。代码的可读性和可维护性不高，所以需要对该类进行重构，目前我能够想到的有两种方法：
 
 1. 通过将 sentinel-core 注册为 rpc 服务，dashboard 就像调用本地方法一样去调用 sentinel-core 中的方法，不过这样的话需要引入服务注册和发现的依赖了。
 

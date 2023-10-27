@@ -217,20 +217,20 @@ public class UserController {
 
 我们使用测试工具PostMan进行测试，顺次启动三个子工程provider_web、spring_cloud_consumer和dubbo_consumer，首先测试组件Feign访问，使用PostMan向：[http://localhost:8080/saveByFeign](http://localhost:8080/saveByFeign) 发送 POST 请求，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_0.png)
 
 测试链接：[http://localhost:8080/findAllByFeign](http://localhost:8080/findAllByFeign) ，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_1.png)
 
 测试 RestTemplate 访问，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_2.png)
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_3.png)
 
 至此，spring_cloud_consumer测试成功，下面继续测试dubbo_consumer，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_4.png)
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_5.png)

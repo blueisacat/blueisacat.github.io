@@ -18,23 +18,23 @@ ClickHouse 是俄罗斯的 Yandex 于 2016 年开源的列式存储数据库（D
 
 1. 采用行式存储时，数据在磁盘上的组织结构为：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_1.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_1.png)
 
-好处是想查某个人所有的属性时，可以通过一次磁盘查找加顺序读取就可以。但是当想查所有人的年龄时，需要不停的查找，或者全表扫描才行，遍历的很多数据都是不需要的。
+    好处是想查某个人所有的属性时，可以通过一次磁盘查找加顺序读取就可以。但是当想查所有人的年龄时，需要不停的查找，或者全表扫描才行，遍历的很多数据都是不需要的。
 
 1. 采用列式存储时，数据在磁盘上的组织结构为：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_2.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_2.png)
 
-这时想查所有人的年龄只需把年龄那一列拿出来就可以了
+    这时想查所有人的年龄只需把年龄那一列拿出来就可以了
 
-1. 列式储存的好处：
+    1. 列式储存的好处：
 
-- 对于列的聚合，计数，求和等统计操作原因优于行式存储。
+    - 对于列的聚合，计数，求和等统计操作原因优于行式存储。
 
-- 由于某一列的数据类型都是相同的，针对于数据存储更容易进行数据压缩，每一列选择更优的数据压缩算法，大大提高了数据的压缩比重。
+    - 由于某一列的数据类型都是相同的，针对于数据存储更容易进行数据压缩，每一列选择更优的数据压缩算法，大大提高了数据的压缩比重。
 
-- 由于数据压缩比更好，一方面节省了磁盘空间，另一方面对于 cache 也有了更大的发挥空间。
+    - 由于数据压缩比更好，一方面节省了磁盘空间，另一方面对于 cache 也有了更大的发挥空间。
 
 ##### 1.1.2 DBMS 的功能
 
@@ -62,11 +62,11 @@ ClickHouse 将数据划分为多个 partition，每个 partition 再进一步划
 
 1. 单表查询
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_3.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_3.png)
 
 1. 关联查询
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_4.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_4.png)
 
 结论: ClickHouse 像很多 OLAP 数据库一样，单表查询速度由于关联查询，而且 ClickHouse的两者差距更为明显。
 
@@ -80,30 +80,30 @@ ClickHouse 将数据划分为多个 partition，每个 partition 再进一步划
 
 1. 在 hadoop102 的 /etc/security/limits.conf 文件的末尾加入以下内容
 
-```
-[atguigu@hadoop102 ~]$ sudo vim /etc/security/limits.conf
-* soft nofile 65536
-* hard nofile 65536
-* soft nproc 131072
-* hard nproc 131072
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo vim /etc/security/limits.conf
+    * soft nofile 65536
+    * hard nofile 65536
+    * soft nproc 131072
+    * hard nproc 131072
+    ```
 
 1. 在 hadoop102 的/etc/security/limits.d/20-nproc.conf 文件的末尾加入以下内容
 
-```
-[atguigu@hadoop102 ~]$ sudo vim /etc/security/limits.d/20-nproc.conf
-* soft nofile 65536
-* hard nofile 65536
-* soft nproc 131072
-* hard nproc 131072
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo vim /etc/security/limits.d/20-nproc.conf
+    * soft nofile 65536
+    * hard nofile 65536
+    * soft nproc 131072
+    * hard nproc 131072
+    ```
 
 1. 执行同步操作
 
-```
-[atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/security/limits.conf    
-[atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/security/limits.d/20-nproc.conf
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/security/limits.conf    
+    [atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/security/limits.d/20-nproc.conf
+    ```
 
 ##### 2.1.3 安装依赖
 
@@ -125,17 +125,17 @@ ClickHouse 将数据划分为多个 partition，每个 partition 再进一步划
 
 1. 修改/etc/selinux/config 中的 SELINUX=disabled
 
-```
-[atguigu@hadoop102 ~]$ sudo vim /etc/selinux/config
-SELINUX=disabled
-注意：别改错了
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo vim /etc/selinux/config
+    SELINUX=disabled
+    注意：别改错了
+    ```
 
 1. 执行同步操作
 
-```
-[atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/selinux/config
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/selinux/config
+    ```
 
 1. 重启三台服务器
 
@@ -181,19 +181,19 @@ sudo rpm -qa|grep clickhouse 查看安装情况
 
 1. 把 <listen_host>::</listen_host> 的注释打开，这样的话才能让 ClickHouse 被除本机以外的服务器访问
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_10.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_10.png)
 
 1. 分发配置文件
 
-```
-sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
-```
+    ```
+    sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
+    ```
 
-在这个文件中，有 ClickHouse 的一些默认路径配置，比较重要的
+    在这个文件中，有 ClickHouse 的一些默认路径配置，比较重要的
 
-数据文件路径：/var/lib/clickhouse/
+    数据文件路径：/var/lib/clickhouse/
 
-日志文件路径：/var/log/clickhouse-server/clickhouse-server.log
+    日志文件路径：/var/log/clickhouse-server/clickhouse-server.log
 
 ##### 2.2.6 启动 Server
 
@@ -303,36 +303,36 @@ Enum16 用 'String'= Int16 对描述。
 
 1. 用法演示 创建一个带有一个枚举 Enum8('hello' = 1, 'world' = 2) 类型的列
 
-```
-CREATE TABLE t_enum ( 
-    x Enum8('hello' = 1, 'world' = 2) 
-) 
-ENGINE = TinyLog;
-```
+    ```
+    CREATE TABLE t_enum ( 
+        x Enum8('hello' = 1, 'world' = 2) 
+    ) 
+    ENGINE = TinyLog;
+    ```
 
 1. 这个 x 列只能存储类型定义中列出的值：'hello'或'world'
 
-```
-hadoop102 :) INSERT INTO t_enum VALUES ('hello'), ('world'), ('hello');
-```
+    ```
+    hadoop102 :) INSERT INTO t_enum VALUES ('hello'), ('world'), ('hello');
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_14.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_14.png)
 
 1. 如果尝试保存任何其他值，ClickHouse 抛出异常
 
-```
-hadoop102 :) insert into t_enum values('a')
-```
+    ```
+    hadoop102 :) insert into t_enum values('a')
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_15.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_15.png)
 
 1. 如果需要看到对应行的数值，则必须将 Enum 值转换为整数类型
 
-```
-hadoop102 :) SELECT CAST(x, 'Int8') FROM t_enum;
-```
+    ```
+    hadoop102 :) SELECT CAST(x, 'Int8') FROM t_enum;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_16.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_16.png)
 
 使用场景：对一些状态、类型的字段算是一种空间优化，也算是一种数据约束。但是实 际使用中往往因为一些数据内容的变化增加一定的维护成本，甚至是数据丢失问题。所以谨 慎使用。
 
@@ -358,19 +358,19 @@ T 可以是任意类型，包含数组类型。 但不推荐使用多维数组�
 
 1. 创建数组方式 1，使用 array 函数
 
-```
-array(T) hadoop102 :) SELECT array(1, 2) AS x, toTypeName(x) ;
-```
+    ```
+    array(T) hadoop102 :) SELECT array(1, 2) AS x, toTypeName(x) ;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_17.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_17.png)
 
 1. 创建数组方式 2：使用方括号
 
-```
-[] hadoop102 :) SELECT [1, 2] AS x, toTypeName(x);
-```
+    ```
+    [] hadoop102 :) SELECT [1, 2] AS x, toTypeName(x);
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_18.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_18.png)
 
 ### 4. 表引擎
 
@@ -416,29 +416,29 @@ ClickHouse 中最强大的表引擎当属 MergeTree（合并树）引擎及该�
 
 1. 建表语句
 
-```
-create table t_order_mt( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime
-) engine =MergeTree 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id,sku_id);
-```
+    ```
+    create table t_order_mt( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime
+    ) engine =MergeTree 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id,sku_id);
+    ```
 
 1. 插入数据
 
-```
-insert into t_order_mt values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
-(102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
-(102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_mt values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
+    (102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
+    (102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',600.00,'2020-06-02 12:00:00');
+    ```
 
 MergeTree 其实还有很多参数(绝大多数用默认值即可)，但是三个参数是更加重要的， 也涉及了关于 MergeTree 的很多概念。
 
@@ -446,55 +446,55 @@ MergeTree 其实还有很多参数(绝大多数用默认值即可)，但是三�
 
 1. 作用
 
-学过 hive 的应该都不陌生，分区的目的主要是降低扫描的范围，优化查询速度
+    学过 hive 的应该都不陌生，分区的目的主要是降低扫描的范围，优化查询速度
 
 1. 如果不填
 
-只会使用一个分区。
+    只会使用一个分区。
 
 1. 分区目录
 
-MergeTree 是以列文件+索引文件+表定义文件组成的，但是如果设定了分区那么这些文 件就会保存到不同的分区目录中。
+    MergeTree 是以列文件+索引文件+表定义文件组成的，但是如果设定了分区那么这些文 件就会保存到不同的分区目录中。
 
 1. 并行
 
-分区后，面对涉及跨分区的查询统计，ClickHouse 会以分区为单位并行处理。
+    分区后，面对涉及跨分区的查询统计，ClickHouse 会以分区为单位并行处理。
 
 1. 数据写入与分区合并
 
-任何一个批次的数据写入都会产生一个临时分区，不会纳入任何一个已有的分区。写入 后的某个时刻（大概 10-15 分钟后），ClickHouse 会自动执行合并操作（等不及也可以手动 通过 optimize 执行），把临时分区的数据，合并到已有分区中。
+    任何一个批次的数据写入都会产生一个临时分区，不会纳入任何一个已有的分区。写入 后的某个时刻（大概 10-15 分钟后），ClickHouse 会自动执行合并操作（等不及也可以手动 通过 optimize 执行），把临时分区的数据，合并到已有分区中。
 
-```
-optimize table xxxx final;
-```
+    ```
+    optimize table xxxx final;
+    ```
 
 1. 例如
 
-再次执行上面的插入操作
+    再次执行上面的插入操作
 
-```
-insert into t_order_mt values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
-(102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
-(102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_mt values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
+    (102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
+    (102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',600.00,'2020-06-02 12:00:00');
+    ```
 
-查看数据并没有纳入任何分区
+    查看数据并没有纳入任何分区
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_19.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_19.png)
 
-手动 optimize 之后
+    手动 optimize 之后
 
-```
-hadoop102 :) optimize table t_order_mt final;
-```
+    ```
+    hadoop102 :) optimize table t_order_mt final;
+    ```
 
-再次查询
+    再次查询
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_20.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_20.png)
 
 ##### 4.4.2 primary key 主键(可选)
 
@@ -528,46 +528,46 @@ order by 是 MergeTree 中唯一一个必填项，甚至比 primary key 还重�
 
 1. 老版本使用二级索引前需要增加设置
 
-是否允许使用实验性的二级索引（v20.1.2.4 开始，这个参数已被删除，默认开启） set allow_experimental_data_skipping_indices=1;
+    是否允许使用实验性的二级索引（v20.1.2.4 开始，这个参数已被删除，默认开启） set allow_experimental_data_skipping_indices=1;
 
 1. 创建测试表
 
-```
-create table t_order_mt2( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime, 
-    INDEX a total_amount TYPE minmax GRANULARITY 5 
-) engine =MergeTree 
-    partition by toYYYYMMDD(create_time)
-    primary key (id) 
-    order by (id, sku_id);
-```
+    ```
+    create table t_order_mt2( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime, 
+        INDEX a total_amount TYPE minmax GRANULARITY 5 
+    ) engine =MergeTree 
+        partition by toYYYYMMDD(create_time)
+        primary key (id) 
+        order by (id, sku_id);
+    ```
 
-其中 GRANULARITY N 是设定二级索引对于一级索引粒度的粒度。
+    其中 GRANULARITY N 是设定二级索引对于一级索引粒度的粒度。
 
 1. 插入数据
 
-```
-insert into t_order_mt2 values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
-(102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
-(102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_mt2 values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
+    (102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
+    (102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',600.00,'2020-06-02 12:00:00');
+    ```
 
 1. 对比效果
 
-那么在使用下面语句进行测试，可以看出二级索引能够为非主键字段的查询发挥作用。
+    那么在使用下面语句进行测试，可以看出二级索引能够为非主键字段的查询发挥作用。
 
-```
-[atguigu@hadoop102 lib]$ clickhouse-client --send_logs_level=trace <<< 'select * from t_order_mt2 where total_amount > toDecimal32(900., 2)';    
-```
+    ```
+    [atguigu@hadoop102 lib]$ clickhouse-client --send_logs_level=trace <<< 'select * from t_order_mt2 where total_amount > toDecimal32(900., 2)';    
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_22.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_22.png)
 
 ##### 4.4.5 数据 TTL
 
@@ -577,58 +577,58 @@ TTL 即 Time To Live，MergeTree 提供了可以管理数据表或者列的生�
 
 1. 创建测试表
 
-```
-create table t_order_mt3( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2) TTL create_time+interval 10 SECOND, 
-    create_time Datetime 
-) engine =MergeTree 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id, sku_id);
-```
+    ```
+    create table t_order_mt3( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2) TTL create_time+interval 10 SECOND, 
+        create_time Datetime 
+    ) engine =MergeTree 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id, sku_id);
+    ```
 
 1. 插入数据（注意：根据实际时间改变）
 
-```
-insert into t_order_mt3 values 
-(106,'sku_001',1000.00,'2020-06-12 22:52:30'), 
-(107,'sku_002',2000.00,'2020-06-12 22:52:30'), 
-(110,'sku_003',600.00,'2020-06-13 12:00:00');
-```
+    ```
+    insert into t_order_mt3 values 
+    (106,'sku_001',1000.00,'2020-06-12 22:52:30'), 
+    (107,'sku_002',2000.00,'2020-06-12 22:52:30'), 
+    (110,'sku_003',600.00,'2020-06-13 12:00:00');
+    ```
 
 1. 手动合并，查看效果 到期后，指定的字段数据归 0
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_23.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_23.png)
 
 1. 表级 TTL
 
-下面的这条语句是数据会在 create_time 之后 10 秒丢失
+    下面的这条语句是数据会在 create_time 之后 10 秒丢失
 
-```
-alter table t_order_mt3 MODIFY TTL create_time + INTERVAL 10 SECOND;
-```
+    ```
+    alter table t_order_mt3 MODIFY TTL create_time + INTERVAL 10 SECOND;
+    ```
 
-涉及判断的字段必须是 Date 或者 Datetime 类型，推荐使用分区的日期字段。
+    涉及判断的字段必须是 Date 或者 Datetime 类型，推荐使用分区的日期字段。
 
-能够使用的时间周期：
+    能够使用的时间周期：
 
-- SECOND
+    - SECOND
 
-- MINUTE
+    - MINUTE
 
-- HOUR
+    - HOUR
 
-- DAY
+    - DAY
 
-- WEEK
+    - WEEK
 
-- MONTH
+    - MONTH
 
-- QUARTER
+    - QUARTER
 
-- YEAR
+    - YEAR
 
 #### 4.5 ReplacingMergeTree
 
@@ -636,79 +636,79 @@ ReplacingMergeTree 是 MergeTree 的一个变种，它存储特性完全继承 M
 
 1. 去重时机
 
-数据的去重只会在合并的过程中出现。合并会在未知的时间在后台进行，所以你无法预 先作出计划。有一些数据可能仍未被处理。
+    数据的去重只会在合并的过程中出现。合并会在未知的时间在后台进行，所以你无法预 先作出计划。有一些数据可能仍未被处理。
 
 1. 去重范围
 
-如果表经过了分区，去重只会在分区内部进行去重，不能执行跨分区的去重。
+    如果表经过了分区，去重只会在分区内部进行去重，不能执行跨分区的去重。
 
-所以 ReplacingMergeTree 能力有限， ReplacingMergeTree 适用于在后台清除重复的数 据以节省空间，但是它不保证没有重复的数据出现。
+    所以 ReplacingMergeTree 能力有限， ReplacingMergeTree 适用于在后台清除重复的数 据以节省空间，但是它不保证没有重复的数据出现。
 
 1. 案例演示
 
 1. 创建表
 
-```
-create table t_order_rmt( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2) , 
-    create_time Datetime 
-) engine =ReplacingMergeTree(create_time) 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id, sku_id);
-```
+    ```
+    create table t_order_rmt( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2) , 
+        create_time Datetime 
+    ) engine =ReplacingMergeTree(create_time) 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id, sku_id);
+    ```
 
-ReplacingMergeTree() 填入的参数为版本字段，重复数据保留版本字段值最大的。
+    ReplacingMergeTree() 填入的参数为版本字段，重复数据保留版本字段值最大的。
 
-如果不填版本字段，默认按照插入顺序保留最后一条。
+    如果不填版本字段，默认按照插入顺序保留最后一条。
 
 1. 向表中插入数据
 
-```
-insert into t_order_rmt values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
-(102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
-(102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_rmt values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00') , 
+    (102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
+    (102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',600.00,'2020-06-02 12:00:00');
+    ```
 
 1. 执行第一次查询
 
-```
-hadoop102 :) select * from t_order_rmt;
-```
+    ```
+    hadoop102 :) select * from t_order_rmt;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_24.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_24.png)
 
 1. 手动合并
 
-```
-OPTIMIZE TABLE t_order_rmt FINAL;
-```
+    ```
+    OPTIMIZE TABLE t_order_rmt FINAL;
+    ```
 
 1. 再执行一次查询
 
-```
-hadoop102 :) select * from t_order_rmt;
-```
+    ```
+    hadoop102 :) select * from t_order_rmt;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_25.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_25.png)
 
 1. 通过测试得到结论
 
-- 实际上是使用 order by 字段作为唯一键
+    - 实际上是使用 order by 字段作为唯一键
 
-- 去重不能跨分区
+    - 去重不能跨分区
 
-- 只有同一批插入（新版本）或合并分区时才会进行去重
+    - 只有同一批插入（新版本）或合并分区时才会进行去重
 
-- 认定重复的数据保留，版本字段值最大的
+    - 认定重复的数据保留，版本字段值最大的
 
-- 如果版本字段相同则按插入顺序保留最后一笔
+    - 如果版本字段相同则按插入顺序保留最后一笔
 
 #### 4.6 SummingMergeTree
 
@@ -720,84 +720,84 @@ ClickHouse 为了这种场景，提供了一种能够“预聚合”的引擎 Su
 
 1. 创建表
 
-```
-create table t_order_smt( 
-    id UInt32, 
-    sku_id String, total_amount Decimal(16,2) , 
-    create_time Datetime 
-) engine =SummingMergeTree(total_amount) 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id,sku_id );
-```
+    ```
+    create table t_order_smt( 
+        id UInt32, 
+        sku_id String, total_amount Decimal(16,2) , 
+        create_time Datetime 
+    ) engine =SummingMergeTree(total_amount) 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id,sku_id );
+    ```
 
 1. 插入数据
 
-```
-insert into t_order_smt values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
-(102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
-(102,'sku_002',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_smt values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 11:00:00'), 
+    (102,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',12000.00,'2020-06-01 13:00:00'), 
+    (102,'sku_002',600.00,'2020-06-02 12:00:00');
+    ```
 
 1. 执行第一次查询
 
-```
-hadoop102 :) select * from t_order_smt;
-```
+    ```
+    hadoop102 :) select * from t_order_smt;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_26.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_26.png)
 
 1. 手动合并
 
-```
-OPTIMIZE TABLE t_order_smt FINAL;
-```
+    ```
+    OPTIMIZE TABLE t_order_smt FINAL;
+    ```
 
 1. 再执行一次查询
 
-```
-hadoop102 :) select * from t_order_smt;
-```
+    ```
+    hadoop102 :) select * from t_order_smt;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_27.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_27.png)
 
 1. 通过结果可以得到以下结论
 
-- 以 SummingMergeTree（）中指定的列作为汇总数据列
+    - 以 SummingMergeTree（）中指定的列作为汇总数据列
 
-- 可以填写多列必须数字列，如果不填，以所有非维度列且为数字列的字段为汇总数 据列
+    - 可以填写多列必须数字列，如果不填，以所有非维度列且为数字列的字段为汇总数 据列
 
-- 以 order by 的列为准，作为维度列
+    - 以 order by 的列为准，作为维度列
 
-- 其他的列按插入顺序保留第一行
+    - 其他的列按插入顺序保留第一行
 
-- 不在一个分区的数据不会被聚合
+    - 不在一个分区的数据不会被聚合
 
-- 只有在同一批次插入(新版本)或分片合并时才会进行聚合
+    - 只有在同一批次插入(新版本)或分片合并时才会进行聚合
 
 1. 开发建议
 
-设计聚合表的话，唯一键值、流水号可以去掉，所有字段全部是维度、度量或者时间戳。
+    设计聚合表的话，唯一键值、流水号可以去掉，所有字段全部是维度、度量或者时间戳。
 
 1. 问题
 
-能不能直接执行以下 SQL 得到汇总值
+    能不能直接执行以下 SQL 得到汇总值
 
-```
-select total_amount from XXX where province_name=’’ and create_date=’xxx’
-```
+    ```
+    select total_amount from XXX where province_name=’’ and create_date=’xxx’
+    ```
 
-不行，可能会包含一些还没来得及聚合的临时明细
+    不行，可能会包含一些还没来得及聚合的临时明细
 
-如果要是获取汇总值，还是需要使用 sum 进行聚合，这样效率会有一定的提高，但本 身 ClickHouse 是列式存储的，效率提升有限，不会特别明显。
+    如果要是获取汇总值，还是需要使用 sum 进行聚合，这样效率会有一定的提高，但本 身 ClickHouse 是列式存储的，效率提升有限，不会特别明显。
 
-```
-select sum(total_amount) from province_name=’’ and create_date=‘xxx’
-```
+    ```
+    select sum(total_amount) from province_name=’’ and create_date=‘xxx’
+    ```
 
 ### 5. SQL操作
 
@@ -809,15 +809,15 @@ select sum(total_amount) from province_name=’’ and create_date=‘xxx’
 
 1. 标准
 
-```
-insert into [table_name] values(…),(….)
-```
+    ```
+    insert into [table_name] values(…),(….)
+    ```
 
 1. 从表到表的插入
 
-```
-insert into [table_name] select a,b,c from [table_name_2]
-```
+    ```
+    insert into [table_name] select a,b,c from [table_name_2]
+    ```
 
 #### 5.2 Update 和 Delete
 
@@ -829,15 +829,15 @@ ClickHouse 提供了 Delete 和 Update 的能力，这类操作被称为 Mutatio
 
 1. 删除操作
 
-```
-alter table t_order_smt delete where sku_id ='sku_001';
-```
+    ```
+    alter table t_order_smt delete where sku_id ='sku_001';
+    ```
 
 1. 修改操作
 
-```
-alter table t_order_smt update total_amount=toDecimal32(2000.00,2) where id =102;
-```
+    ```
+    alter table t_order_smt update total_amount=toDecimal32(2000.00,2) where id =102;
+    ```
 
 由于操作比较“重”，所以 Mutation 语句分两步执行，同步执行的部分其实只是进行 新增数据新增分区和并把旧分区打上逻辑上的失效标记。直到触发分区合并的时候，才会删 除旧数据释放磁盘空间，一般不会开放这样的功能给用户，由管理员完成。
 
@@ -859,44 +859,44 @@ ClickHouse 基本上与标准 SQL 差别不大
 
 1. 插入数据
 
-```
-hadoop102 :) alter table t_order_mt delete where 1=1; 
-insert into t_order_mt values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
-(101,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(103,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(104,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(105,'sku_003',600.00,'2020-06-02 12:00:00'), 
-(106,'sku_001',1000.00,'2020-06-04 12:00:00'), 
-(107,'sku_002',2000.00,'2020-06-04 12:00:00'), 
-(108,'sku_004',2500.00,'2020-06-04 12:00:00'), 
-(109,'sku_002',2000.00,'2020-06-04 12:00:00'), 
-(110,'sku_003',600.00,'2020-06-01 12:00:00');
-```
+    ```
+    hadoop102 :) alter table t_order_mt delete where 1=1; 
+    insert into t_order_mt values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
+    (101,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (103,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (104,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (105,'sku_003',600.00,'2020-06-02 12:00:00'), 
+    (106,'sku_001',1000.00,'2020-06-04 12:00:00'), 
+    (107,'sku_002',2000.00,'2020-06-04 12:00:00'), 
+    (108,'sku_004',2500.00,'2020-06-04 12:00:00'), 
+    (109,'sku_002',2000.00,'2020-06-04 12:00:00'), 
+    (110,'sku_003',600.00,'2020-06-01 12:00:00');
+    ```
 
 1. with rollup：从右至左去掉维度进行小计
 
-```
-hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with rollup;
-```
+    ```
+    hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with rollup;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_28.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_28.png)
 
 1. with cube : 从右至左去掉维度进行小计，再从左至右去掉维度进行小计
 
-```
-hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with cube;
-```
+    ```
+    hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with cube;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_29.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_29.png)
 
 1. with totals: 只计算合计
 
-```
-hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with totals;
-```
+    ```
+    hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with totals;
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_30.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_30.png)
 
 #### 5.4 alter 操作
 
@@ -904,21 +904,21 @@ hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sk
 
 1. 新增字段
 
-```
-alter table tableName add column newcolname String after col1;
-```
+    ```
+    alter table tableName add column newcolname String after col1;
+    ```
 
 1. 修改字段类型
 
-```
-alter table tableName modify column newcolname String; 
-```
+    ```
+    alter table tableName modify column newcolname String; 
+    ```
 
 1. 删除字段
 
-```
-alter table tableName drop column newcolname;
-```
+    ```
+    alter table tableName drop column newcolname;
+    ```
 
 #### 5.5 导出数据
 
@@ -946,113 +946,113 @@ clickhouse-client --query "select * from t_order_mt where create_time='2020-06-0
 
 1. 在 hadoop102 的/etc/clickhouse-server/config.d 目录下创建一个名为 metrika.xml 的配置文件,内容如下：
 
-注：也可以不创建外部文件，直接在 config.xml 中指定
+    注：也可以不创建外部文件，直接在 config.xml 中指定
 
-```xml
-<?xml version="1.0"?>
-<yandex>
-    <zookeeper-servers>
-        <node index="1">
-            <host>hadoop102</host>
-            <port>2181</port>
-        </node>
-        <node index="2">
-            <host>hadoop103</host>
-            <port>2181</port>
-        </node>
-        <node index="3">
-            <host>hadoop104</host>
-            <port>2181</port>
-        </node>
-    </zookeeper-servers>
-</yandex>
-```
+    ```xml
+    <?xml version="1.0"?>
+    <yandex>
+        <zookeeper-servers>
+            <node index="1">
+                <host>hadoop102</host>
+                <port>2181</port>
+            </node>
+            <node index="2">
+                <host>hadoop103</host>
+                <port>2181</port>
+            </node>
+            <node index="3">
+                <host>hadoop104</host>
+                <port>2181</port>
+            </node>
+        </zookeeper-servers>
+    </yandex>
+    ```
 
 1. 同步到 hadoop103 和 hadoop104 上
 
-```
-sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.d/metrika.xml
-```
+    ```
+    sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.d/metrika.xml
+    ```
 
 1. 在 hadoop102 的/etc/clickhouse-server/config.xml 中增加
 
-```
-<zookeeper incl="zookeeper-servers" optional="true" /> 
-<include_from>/etc/clickhouse-server/config.d/metrika.xml</include_from>
-```
+    ```
+    <zookeeper incl="zookeeper-servers" optional="true" /> 
+    <include_from>/etc/clickhouse-server/config.d/metrika.xml</include_from>
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_32.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_32.png)
 
 1. 同步到 hadoop103 和 hadoop104 上
 
-```
-sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
-```
+    ```
+    sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
+    ```
 
-分别在 hadoop102 和 hadoop103 上启动 ClickHouse 服务
+    分别在 hadoop102 和 hadoop103 上启动 ClickHouse 服务
 
-注意：因为修改了配置文件，如果以前启动了服务需要重启
+    注意：因为修改了配置文件，如果以前启动了服务需要重启
 
-```
-[atguigu@hadoop102|3 ~]$ sudo clickhouse restart
-```
+    ```
+    [atguigu@hadoop102|3 ~]$ sudo clickhouse restart
+    ```
 
-注意：我们演示副本操作只需要在 hadoop102 和 hadoop103 两台服务器即可，上面的 操作，我们 hadoop104 可以你不用同步，我们这里为了保证集群中资源的一致性，做了同 步。
+    注意：我们演示副本操作只需要在 hadoop102 和 hadoop103 两台服务器即可，上面的 操作，我们 hadoop104 可以你不用同步，我们这里为了保证集群中资源的一致性，做了同 步。
 
 1. 在 hadoop102 和 hadoop103 上分别建表
 
-副本只能同步数据，不能同步表结构，所以我们需要在每台机器上自己手动建表
+    副本只能同步数据，不能同步表结构，所以我们需要在每台机器上自己手动建表
 
 1. hadoop102
 
-```
-create table t_order_rep2 ( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime 
-) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_102') 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id,sku_id);
-```
+    ```
+    create table t_order_rep2 ( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime 
+    ) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_102') 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id,sku_id);
+    ```
 
 1. hadoop103
 
-```
-create table t_order_rep2 ( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime 
-) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_103') 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id,sku_id);
-```
+    ```
+    create table t_order_rep2 ( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime 
+    ) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_103') 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id,sku_id);
+    ```
 
 1. 参数解释
 
-ReplicatedMergeTree 中，第一个参数是分片的 zk_path 一般按照：/clickhouse/table/{shard}/{table_name} 的格式写，如果只有一个分片就写 01 即可。
+    ReplicatedMergeTree 中，第一个参数是分片的 zk_path 一般按照：/clickhouse/table/{shard}/{table_name} 的格式写，如果只有一个分片就写 01 即可。
 
-第二个参数是副本名称，相同的分片副本名称不能相同。
+    第二个参数是副本名称，相同的分片副本名称不能相同。
 
 1. 在 hadoop102 上执行 insert 语句
 
-```
-insert into t_order_rep2 values 
-(101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
-(102,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(103,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(104,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(105,'sku_003',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into t_order_rep2 values 
+    (101,'sku_001',1000.00,'2020-06-01 12:00:00'), 
+    (102,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (103,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (104,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (105,'sku_003',600.00,'2020-06-02 12:00:00');
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_33.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_33.png)
 
 1. 在 hadoop103 上执行 select，可以查询出结果，说明副本配置正确
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_34.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_34.png)
 
 ### 7. 分片集群
 
@@ -1130,171 +1130,171 @@ Distributed 表引擎本身不存储数据，有点类似于 MyCat 之于 MySql�
 
 1. 在 hadoop102 的/etc/clickhouse-server/config.d 目录下创建 metrika-shard.xml 文件
 
-注：也可以不创建外部文件，直接在 config.xml 的中指定
+    注：也可以不创建外部文件，直接在 config.xml 的中指定
 
-```xml
-<?xml version="1.0"?>
-<yandex>
-    <remote_servers>
-        <gmall_cluster> <!-- 集群名称-->
-            <shard> <!--集群的第一个分片-->
-                <internal_replication>true</internal_replication>
-                <replica> <!--该分片的第一个副本-->
-                    <host>hadoop102</host>
-                    <port>9000</port>
-                </replica>
-                <replica> <!--该分片的第二个副本-->
-                    <host>hadoop103</host>
-                    <port>9000</port>
-                </replica>
-            </shard>
-            <shard> <!--集群的第二个分片-->
-                <internal_replication>true</internal_replication>
-                <replica> <!--该分片的第一个副本-->
-                    <host>hadoop104</host>
-                    <port>9000</port>
-                </replica>
-            </shard>
-        </gmall_cluster> 
-    </remote_servers> 
-    <zookeeper-servers> 
-        <node index="1"> 
-            <host>hadoop102</host> 
-            <port>2181</port> 
-        </node> 
-        <node index="2"> 
-            <host>hadoop103</host> 
-            <port>2181</port> 
-        </node> 
-        <node index="3"> 
-            <host>hadoop104</host> 
-            <port>2181</port> 
-        </node> 
-    </zookeeper-servers> 
-    <macros> 
-        <shard>01</shard> <!--不同机器放的分片数不一样--> 
-        <replica>rep_1_1</replica> <!--不同机器放的副本数不一样--> 
-    </macros> 
-</yandex>
-```
+    ```xml
+    <?xml version="1.0"?>
+    <yandex>
+        <remote_servers>
+            <gmall_cluster> <!-- 集群名称-->
+                <shard> <!--集群的第一个分片-->
+                    <internal_replication>true</internal_replication>
+                    <replica> <!--该分片的第一个副本-->
+                        <host>hadoop102</host>
+                        <port>9000</port>
+                    </replica>
+                    <replica> <!--该分片的第二个副本-->
+                        <host>hadoop103</host>
+                        <port>9000</port>
+                    </replica>
+                </shard>
+                <shard> <!--集群的第二个分片-->
+                    <internal_replication>true</internal_replication>
+                    <replica> <!--该分片的第一个副本-->
+                        <host>hadoop104</host>
+                        <port>9000</port>
+                    </replica>
+                </shard>
+            </gmall_cluster> 
+        </remote_servers> 
+        <zookeeper-servers> 
+            <node index="1"> 
+                <host>hadoop102</host> 
+                <port>2181</port> 
+            </node> 
+            <node index="2"> 
+                <host>hadoop103</host> 
+                <port>2181</port> 
+            </node> 
+            <node index="3"> 
+                <host>hadoop104</host> 
+                <port>2181</port> 
+            </node> 
+        </zookeeper-servers> 
+        <macros> 
+            <shard>01</shard> <!--不同机器放的分片数不一样--> 
+            <replica>rep_1_1</replica> <!--不同机器放的副本数不一样--> 
+        </macros> 
+    </yandex>
+    ```
 
 1. 将 hadoop102 的 metrika-shard.xml 同步到 103 和 104
 
-```
-sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.d/metrika-shard.xml
-```
+    ```
+    sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.d/metrika-shard.xml
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_38.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_38.png)
 
 1. 修改 103 和 104 中 metrika-shard.xml 宏的配置
 
 1. 103
 
-```
-[atguigu@hadoop103 ~]$ sudo vim /etc/clickhouse-server/config.d/metrika-shard.xml
-```
+    ```
+    [atguigu@hadoop103 ~]$ sudo vim /etc/clickhouse-server/config.d/metrika-shard.xml
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_39.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_39.png)
 
 1. 104
 
-```
-[atguigu@hadoop104 ~]$ sudo vim /etc/clickhouse-server/config.d/metrika-shard.xml
-```
+    ```
+    [atguigu@hadoop104 ~]$ sudo vim /etc/clickhouse-server/config.d/metrika-shard.xml
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_40.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_40.png)
 
 1. 在 hadoop102 上修改/etc/clickhouse-server/config.xml
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_41.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_41.png)
 
 1. 同步/etc/clickhouse-server/config.xml 到 103 和 104
 
-```
-[atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
-```
+    ```
+    [atguigu@hadoop102 ~]$ sudo /home/atguigu/bin/xsync /etc/clickhouse-server/config.xml
+    ```
 
 1. 重启三台服务器上的 ClickHouse 服务
 
-```
-[atguigu@hadoop102 clickhouse-server]$ sudo clickhouse restart [atguigu@hadoop102 clickhouse-server]$ ps -ef |grep click
-```
+    ```
+    [atguigu@hadoop102 clickhouse-server]$ sudo clickhouse restart [atguigu@hadoop102 clickhouse-server]$ ps -ef |grep click
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_42.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_42.png)
 
 1. 在hadoop102 上执行建表语句
 
-- 会自动同步到 hadoop103 和 hadoop104 上
+    - 会自动同步到 hadoop103 和 hadoop104 上
 
-- 集群名字要和配置文件中的一致
+    - 集群名字要和配置文件中的一致
 
-- 分片和副本名称从配置文件的宏定义中获取
+    - 分片和副本名称从配置文件的宏定义中获取
 
-```
-create table st_order_mt on cluster gmall_cluster ( 
-    id UInt32, 
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime 
-) engine =ReplicatedMergeTree('/clickhouse/tables/{shard}/st_order_mt','{replica}') 
-    partition by toYYYYMMDD(create_time) 
-    primary key (id) 
-    order by (id,sku_id);
-```
+    ```
+    create table st_order_mt on cluster gmall_cluster ( 
+        id UInt32, 
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime 
+    ) engine =ReplicatedMergeTree('/clickhouse/tables/{shard}/st_order_mt','{replica}') 
+        partition by toYYYYMMDD(create_time) 
+        primary key (id) 
+        order by (id,sku_id);
+    ```
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_43.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_43.png)
 
-可以到 hadoop103 和 hadoop104 上查看表是否创建成功
+    可以到 hadoop103 和 hadoop104 上查看表是否创建成功
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_44.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_44.png)
 
 1. 在 hadoop102 上创建 Distribute 分布式表
 
-```
-create table st_order_mt_all2 on cluster gmall_cluster ( 
-    id UInt32,
-    sku_id String, 
-    total_amount Decimal(16,2), 
-    create_time Datetime 
-)engine = Distributed(gmall_cluster,default, st_order_mt,hiveHash(sku_id));
-```
+    ```
+    create table st_order_mt_all2 on cluster gmall_cluster ( 
+        id UInt32,
+        sku_id String, 
+        total_amount Decimal(16,2), 
+        create_time Datetime 
+    )engine = Distributed(gmall_cluster,default, st_order_mt,hiveHash(sku_id));
+    ```
 
-参数含义：
+    参数含义：
 
-Distributed（集群名称，库名，本地表名，分片键）
+    Distributed（集群名称，库名，本地表名，分片键）
 
-分片键必须是整型数字，所以用 hiveHash 函数转换，也可以 rand()
+    分片键必须是整型数字，所以用 hiveHash 函数转换，也可以 rand()
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_45.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_45.png)
 
 1. 在 hadoop102 上插入测试数据
 
-```
-insert into st_order_mt_all2 values 
-(201,'sku_001',1000.00,'2020-06-01 12:00:00') , 
-(202,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(203,'sku_004',2500.00,'2020-06-01 12:00:00'), 
-(204,'sku_002',2000.00,'2020-06-01 12:00:00'), 
-(205,'sku_003',600.00,'2020-06-02 12:00:00');
-```
+    ```
+    insert into st_order_mt_all2 values 
+    (201,'sku_001',1000.00,'2020-06-01 12:00:00') , 
+    (202,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (203,'sku_004',2500.00,'2020-06-01 12:00:00'), 
+    (204,'sku_002',2000.00,'2020-06-01 12:00:00'), 
+    (205,'sku_003',600.00,'2020-06-02 12:00:00');
+    ```
 
 1. 通过查询分布式表和本地表观察输出结果
 
 1. 分布式表
 
-```
-SELECT * FROM st_order_mt_all;
-```
+    ```
+    SELECT * FROM st_order_mt_all;
+    ```
 
 1. 本地表
 
-```
-select * from st_order_mt;
-```
+    ```
+    select * from st_order_mt;
+    ```
 
 1. 观察数据的分布
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_46.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-初级_image_46.png)
 
 #### 7.5 项目为了节省资源，就使用单节点，不用集群
 

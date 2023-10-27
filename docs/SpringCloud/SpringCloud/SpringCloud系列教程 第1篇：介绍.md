@@ -31,7 +31,7 @@ Dubbo： Dubbo是一个分布式服务框架，致力于提供高性能和透�
 
 springcloud： springcloud是一整套的微服务解决方案，有一张很有名的对比图可以清晰看到dubbo和springcloud功能对比，如下：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第1篇：介绍_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第1篇：介绍_image_0.png)
 
 如果微服务架构选型选择了dubbo，那么后续一些其他的组件，还需要我们自己去评估目前市面上一些开源的组件是否符合我们的需要，而如果架构选型选择了springcloud，那么就能省心很多，springcloud本身就提供了一整套的微服务的解决方案，虽然有很多组件目前看起来依然不是很成熟，不过这依然大大降低了我们在架构选型上的工作量。
 

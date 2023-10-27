@@ -158,21 +158,21 @@ public class Ch122ConsumerServerApplication {
 
 启动工程provider_server和consumer_server，provider_server修改启动配置，启动两个实例，打开浏览器访问：[http://localhost:9000/helloByFeign](http://localhost:9000/helloByFeign) 和 [http://localhost:9000/helloByRestTemplate](http://localhost:9000/helloByRestTemplate) ，刷新几次，可以看到页面交替显示Hello, port is: 8000和Hello, port is: 8001，说明目前负载均衡正常，现在查看Sentinel控制台，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_0.png)
 
 ## 1.5 流量控制测试
 
 这时选择左侧的簇点流控，点击流控，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_1.png)
 
 这里我们配置一个最简单的规则，配置QPS限制为1，点击新增，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_2.png)
 
 这里解释一下什么是QPS，简单来说QPS是一个每秒访问数，这里我们测试时需要重复快速刷新[http://localhost:9000/helloByFeign](http://localhost:9000/helloByFeign) 和 [http://localhost:9000/helloByRestTemplate](http://localhost:9000/helloByRestTemplate) ，在刷新的过程中，我们可以看到页面会显示错误信息，如：Blocked by Sentinel (flow limiting)，说明我们配置Sentinel已经限流成功，这时我们再看一下Sentinel的控制台，可以看到我们刚才访问的成功和限流的数量，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_3.png)
 
 # 2. 服务降级
 
@@ -239,17 +239,17 @@ public RestTemplate restTemplate() {
 
 顺次启动provider_server和consumer_fallback两个子工程。先在浏览器中交替访问[http://localhost:9090/helloByFeign](http://localhost:9090/helloByFeign) 和 [http://localhost:9090/helloByRestTemplate](http://localhost:9090/helloByRestTemplate) ，而后打开Sentinel控制台，在这两个接口上增加限流信息，注意，这里要将限流信息加在资源上，具体如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_4.png)
 
 在浏览器中刷新两个链接，两个限流信息都可以正常浏览器中显示，测试成功，再次查看Sentinel控制台，也可以看到被拒接的流量统计，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_5.png)
 
 # 3. Sentinel整合服务网关限流
 
 Sentinel目前支持Spring Cloud Gateway、Zuul 等主流的 API Gateway 进行限流。看一下官方的结构图，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_6.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_6.png)
 
 从这张官方的图中，可以看到，Sentinel对Zuul的限流主要是通过3个Filter来完成的，对Spring Cloud Gateway则是通过一个SentinleGatewayFilter和一个BlockRequestHandler来完成的。
 
@@ -361,7 +361,7 @@ public class ZuulConfig {
 
 顺次启动子工程provider_server、consumer_fallback、zuul_server，打开浏览器访问：[http://localhost:18080/consumer/helloByFeign](http://localhost:18080/consumer/helloByFeign) ，然后我们打开Sentinel控制台，查看zuul_server服务，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_7.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_7.png)
 
 我们定制限流策略，依旧是QPS为1，我们再次刷新[http://localhost:18080/consumer/helloByFeign](http://localhost:18080/consumer/helloByFeign) 页面，这时，页面上已经可以正产限流了，限流后显示的内容为：
 
@@ -371,7 +371,7 @@ public class ZuulConfig {
 
 这里注意，定义限流的是资源，千万不要定义错地方，限流定义如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_8.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_8.png)
 
 ## 3.2 Spring Cloud Gateway
 
@@ -504,7 +504,7 @@ public class JsonSentinelGatewayBlockExceptionHandler implements WebExceptionHan
 
 顺次启动provider_server、consumer_server和gateway_server，配置gateway_server jvm启动参数-Dcsp.sentinel.app.type=1，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_9.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第8篇：Sentinel：服务限流高级篇_image_9.png)
 
 打开浏览器访问：[http://localhost:28080/helloByFeign](http://localhost:28080/helloByFeign) ，刷新几次，页面正常返回Hello, port is: 8000，打开Sentinel控制台，配置限流策略，QPS限制为1，再刷新浏览器页面，这时，我们可以看到浏览器返回限流信息：
 

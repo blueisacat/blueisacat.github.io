@@ -243,7 +243,7 @@ public class DynamicRoutingConfig implements ApplicationEventPublisherAware {
 
 Nacos配置如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_0.png)
 
 ```
 {
@@ -286,7 +286,7 @@ Nacos配置如图：
 
 打开在Nacos Server端的UI界面，选择监听查询，选择namespace为springclouddev的栏目，输入DATA_ID为zuul-refresh-dev.json和Group为DEFAULT_GROUP，点击查询，可以看到我们启动的工程gateway-nacos-config正在监听Nacos Server端，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_1.png)
 
 笔者这里的本地ip为：192.168.44.1。监听正常，这时，我们修改刚才创建的配置，将里面的refreshGatewayRoute修改为true，如下：
 
@@ -328,7 +328,7 @@ Nacos配置如图：
 
 我们再次在浏览器中访问链接：[http://localhost:8080/meteor1993](http://localhost:8080/meteor1993) ，可以看到页面正常路由到Github仓库，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第9篇：Gateway基于Nacos动态网关路由_image_2.png)
 
 # 6. 总结
 

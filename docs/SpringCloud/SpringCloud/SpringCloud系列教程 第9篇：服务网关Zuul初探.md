@@ -19,8 +19,7 @@ nav_order: 1.9
 
 简单的微服务架构已经跃然纸面：
 
-
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_0.png)
 
 > 在Spring Cloud微服务系统中，一种常见的负载均衡方式是，客户端的请求首先经过负载均衡（zuul、Ngnix、F5），再到达服务网关（zuul集群），然后再到具体的服务，服务统一注册到高可用的服务注册中心集群，服务的所有的配置文件由配置服务管理，配置服务的配置文件放在git仓库，方便开发人员随时改配置。
 
@@ -31,7 +30,7 @@ nav_order: 1.9
 
 在微服务架构模式下后端服务的实例数一般是动态的，对于客户端而言很难发现动态改变的服务实例的访问地址信息。因此在基于微服务的项目中为了简化前端的调用逻辑，通常会引入API Gateway作为轻量级网关，同时API Gateway中也会实现相关的认证逻辑从而简化内部服务之间相互调用的复杂度。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_1.png)
 
 ## 1.2 数据裁剪以及聚合
 
@@ -43,13 +42,13 @@ nav_order: 1.9
 
 当然我们还可以针对不同的渠道和客户端提供不同的API Gateway,对于该模式的使用由另外一个大家熟知的方式叫Backend for front-end, 在Backend for front-end模式当中，我们可以针对不同的客户端分别创建其BFF，进一步了解BFF可以参考这篇文章：Pattern: Backends For Frontends
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_2.png)
 
 ## 1.4 遗留系统的微服务化改造
 
 对于系统而言进行微服务改造通常是由于原有的系统存在或多或少的问题，比如技术债务，代码质量，可维护性，可扩展性等等。API Gateway的模式同样适用于这一类遗留系统的改造，通过微服务化的改造逐步实现对原有系统中的问题的修复，从而提升对于原有业务响应力的提升。通过引入抽象层，逐步使用新的实现替换旧的实现。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_3.png)
 
 > 在Spring Cloud体系中， Spring Cloud Zuul就是提供负载均衡、反向代理、权限认证的一个API gateway。
 > 
@@ -164,7 +163,7 @@ public class ZuulSimpleApplication {
 
 启动项目，在浏览器访问[http://localhost:8080/baidu/](http://localhost:8080/baidu/)，我们可以看到页面已经跳转到百度首页。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第9篇：服务网关Zuul初探_image_4.png)
 
 再尝试访问[http://localhost:8080/baidu/aa](http://localhost:8080/baidu/aa)，我们可以看到页面跳转至：[https://www.baidu.com/search/error.html](https://www.baidu.com/search/error.html)， 因为[https://www.baidu.com/aa](https://www.baidu.com/aa) 这个链接不存在， 所以百度帮我们跳转到的error页面。
 

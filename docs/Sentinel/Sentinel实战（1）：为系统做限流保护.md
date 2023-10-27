@@ -112,27 +112,27 @@ PS：如果你不想对原有的业务代码进行侵入，也可以通过注解
 
 - default
 
-表示不区分调用者，来自任何调用者的请求都将进行限流统计。
+    表示不区分调用者，来自任何调用者的请求都将进行限流统计。
 
 - {origin}
 
-表示针对特定的调用者，只有来自这个调用者的请求才会进行流量控制。该特定调用者的名称是通过 ContextUtil.entry(origin) 来设置的。
+    表示针对特定的调用者，只有来自这个调用者的请求才会进行流量控制。该特定调用者的名称是通过 ContextUtil.entry(origin) 来设置的。
 
-例如：资源 
+    例如：资源 
 
-NodeA 配置了一条针对调用者 
+    NodeA 配置了一条针对调用者 
 
-NodeA 的请求才会触发流量控制。
+    NodeA 的请求才会触发流量控制。
 
 - other
 
-表示除 {origin} 以外的其余调用方的流量进行流量控制。
+    表示除 {origin} 以外的其余调用方的流量进行流量控制。
 
-例如：资源 
+    例如：资源 
 
-NodeA 配置了一条针对调用者 
+    NodeA 配置了一条针对调用者 
 
-NodeA 的调用，都不能超过 
+    NodeA 的调用，都不能超过 
 
 ### strategy
 
@@ -140,23 +140,23 @@ NodeA 的调用，都不能超过
 
 - STRATEGY_DIRECT
 
-根据调用方进行限流。ContextUtil.enter(resourceName, origin) 方法中的 origin 参数标明了调用方的身份。
+    根据调用方进行限流。ContextUtil.enter(resourceName, origin) 方法中的 origin 参数标明了调用方的身份。
 
-如果 strategy 选择了DIRECT ，则还需要根据限流规则中的 limitApp 字段根据调用方在不同的场景中进行流量控制，包括有：“所有调用方default”、“特定调用方origin”、“除特定调用方origin之外的调用方”。
+    如果 strategy 选择了DIRECT ，则还需要根据限流规则中的 limitApp 字段根据调用方在不同的场景中进行流量控制，包括有：“所有调用方default”、“特定调用方origin”、“除特定调用方origin之外的调用方”。
 
 - STRATEGY_RELATE
 
-根据关联流量限流。当两个资源之间具有资源争抢或者依赖关系的时候，这两个资源便具有了关联，可使用关联限流来避免具有关联关系的资源之间过度的争抢。
+    根据关联流量限流。当两个资源之间具有资源争抢或者依赖关系的时候，这两个资源便具有了关联，可使用关联限流来避免具有关联关系的资源之间过度的争抢。
 
-比如对数据库同一个字段的读操作和写操作存在争抢，读的速度过高会影响写得速度，写的速度过高会影响读的速度。
+    比如对数据库同一个字段的读操作和写操作存在争抢，读的速度过高会影响写得速度，写的速度过高会影响读的速度。
 
-举例来说：read_db 和 write_db 这两个资源分别代表数据库读写，我们可以给 read_db 设置限流规则来达到写优先的目的：设置 FlowRule.strategy 为 RuleConstant.STRATEGY_RELATE，同时设置 FlowRule.refResource 为 write_db。这样当写库操作过于频繁时，读数据的请求会被限流。
+    举例来说：read_db 和 write_db 这两个资源分别代表数据库读写，我们可以给 read_db 设置限流规则来达到写优先的目的：设置 FlowRule.strategy 为 RuleConstant.STRATEGY_RELATE，同时设置 FlowRule.refResource 为 write_db。这样当写库操作过于频繁时，读数据的请求会被限流。
 
 - STRATEGY_CHAIN
 
-根据调用链路入口限流。假设来自入口 Entrance1 和 Entrance2 的请求都调用到了资源 NodeA，Sentinel 允许根据某个入口的统计信息对资源进行限流。
+    根据调用链路入口限流。假设来自入口 Entrance1 和 Entrance2 的请求都调用到了资源 NodeA，Sentinel 允许根据某个入口的统计信息对资源进行限流。
 
-举例来说：我们可以设置 FlowRule.strategy 为 RuleConstant.CHAIN，同时设置 FlowRule.refResource 为 Entrance1 来表示只有从入口 Entrance1 的调用才会记录到 NodeA 的限流统计当中，而对来自 Entrance2 的调用可以放行。
+    举例来说：我们可以设置 FlowRule.strategy 为 RuleConstant.CHAIN，同时设置 FlowRule.refResource 为 Entrance1 来表示只有从入口 Entrance1 的调用才会记录到 NodeA 的限流统计当中，而对来自 Entrance2 的调用可以放行。
 
 为什么要了解 limitApp 和 strategy 呢？主要是因为进行流控阈值判断时所需要用到的 Node 就是通过这两个字段确定的，具体来说可以用下面的表格来表示：
 
@@ -175,21 +175,21 @@ NodeA 的调用，都不能超过
 
 - CONTROL_BEHAVIOR_DEFAULT
 
-这种方式是：
+    这种方式是：
 
-这种方式适用于对系统处理能力确切已知的情况下，比如通过压测确定了系统的准确水位。
+    这种方式适用于对系统处理能力确切已知的情况下，比如通过压测确定了系统的准确水位。
 
 - CONTROL_BEHAVIOR_WARM_UP
 
-这种方式是：
+    这种方式是：
 
-通过"冷启动"，让通过的流量缓慢增加，在一定时间内逐渐增加到阈值上限，给冷系统一个预热的时间，避免冷系统被压垮的情况。
+    通过"冷启动"，让通过的流量缓慢增加，在一定时间内逐渐增加到阈值上限，给冷系统一个预热的时间，避免冷系统被压垮的情况。
 
 - CONTROL_BEHAVIOR_RATE_LIMITER
 
-这种方式是：
+    这种方式是：
 
-这种方式主要用于处理间隔性突发的流量，例如消息队列。想象一下这样的场景，在某一秒有大量的请求到来，而接下来的几秒则处于空闲状态，我们希望系统能够在接下来的空闲期间逐渐处理这些请求，而不是在第一秒直接拒绝多余的请求。
+    这种方式主要用于处理间隔性突发的流量，例如消息队列。想象一下这样的场景，在某一秒有大量的请求到来，而接下来的几秒则处于空闲状态，我们希望系统能够在接下来的空闲期间逐渐处理这些请求，而不是在第一秒直接拒绝多余的请求。
 
 具体的 FlowRule 可以用下面这张图表示：
 

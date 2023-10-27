@@ -218,7 +218,7 @@ db.password=password
 
 ## 2.1 架构图
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第4篇：Nacos集群部署_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第4篇：Nacos集群部署_image_0.png)
 
 ## 2.2 下载源码或者安装包
 

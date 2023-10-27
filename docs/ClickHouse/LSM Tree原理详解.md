@@ -81,19 +81,19 @@ LSM Tree的写入特点我们知道，如果一项数据更新多次，这项数
 
 1. 压缩（Compression）
 
-介绍SSTable时已经提到了，对数据block进行压缩，通过增加占用CPU压缩和解压缩资源来降低数据block磁盘空间占用和读写时间。
+    介绍SSTable时已经提到了，对数据block进行压缩，通过增加占用CPU压缩和解压缩资源来降低数据block磁盘空间占用和读写时间。
 
 1. BloomFilter
 
-描述查找过程时也已经提到了，BloomFilter可以快速确定数据不在SSTable中，而不用读取数据block内容
+    描述查找过程时也已经提到了，BloomFilter可以快速确定数据不在SSTable中，而不用读取数据block内容
 
 1. 缓存（Cache）
 
-因为SSTable是不可变的，非常适合缓存到内存中，这样热点数据不用访问磁盘
+    因为SSTable是不可变的，非常适合缓存到内存中，这样热点数据不用访问磁盘
 
 1. SSTable合并(Compaction)
 
-将多个SSTable合并为一个SSTable，删除旧数据或物理删除已经被删除的数据，降低空间放大；同时减少SSTable数量，降低读放大
+    将多个SSTable合并为一个SSTable，删除旧数据或物理删除已经被删除的数据，降低空间放大；同时减少SSTable数量，降低读放大
 
 其实这些优化措施，除了SSTable合并是LSM Tree独有的，前面三条都是数据库通用的措施，甚至SSTable合并也不是LSM Tree独有的，它与更早出现的lucene的段合并（Segment Merge）的原理和目标其实是有相似的地方的(当然他们的写入和查找过程还是有本质区别的)。下面详细介绍下SSTable合并
 

@@ -22,11 +22,11 @@ nav_order: 1.11
 
 一般的，一个分布式服务跟踪系统，主要有三部分：数据收集、数据存储和数据展示。根据系统大小不同，每一部分的结构又有一定变化。譬如，对于大规模分布式系统，数据存储可分为实时数据和全量数据两部分，实时数据用于故障排查（troubleshooting），全量数据用于系统优化；数据收集除了支持平台无关和开发语言无关系统的数据收集，还包括异步数据收集（需要跟踪队列中的消息，保证调用的连贯性），以及确保更小的侵入性；数据展示又涉及到数据挖掘和分析。虽然每一部分都可能变得很复杂，但基本原理都类似。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_0.png)
 
 服务追踪的追踪单元是从客户发起请求（request）抵达被追踪系统的边界开始，到被追踪系统向客户返回响应（response）为止的过程，称为一个“trace”。每个 trace 中会调用若干个服务，为了记录调用了哪些服务，以及每次调用的消耗时间等信息，在每次调用服务时，埋入一个调用记录，称为一个“span”。这样，若干个有序的 span 就组成了一个 trace。在系统向外界提供服务的过程中，会不断地有请求和响应发生，也就会不断生成 trace，把这些带有span 的 trace 记录下来，就可以描绘出一幅系统的服务拓扑图。附带上 span 中的响应时间，以及请求成功与否等信息，就可以在发生问题的时候，找到异常的服务；根据历史数据，还可以从系统整体层面分析出哪里性能差，定位性能优化的目标。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_1.png)
 
 Spring Cloud Sleuth为服务之间调用提供链路追踪。通过Sleuth可以很清楚的了解到一个服务请求经过了哪些服务，每个服务处理花费了多长。从而让我们可以很方便的理清各微服务间的调用关系。此外Sleuth可以帮助我们：
 
@@ -98,7 +98,7 @@ STORAGE_TYPE=mysql MYSQL_DB=zipkin MYSQL_USER=name MYSQL_PASS=password MYSQL_HOS
 
 至此，zipkin服务应该已经搭建并完成，现在我们可以访问一下默认端口，看一下zipkin-ui具体长什么样子了。
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_2.png)
 
 ## 4.2 Spring Cloud Sleuth
 
@@ -157,18 +157,18 @@ eureka:
 
 这时我们先看zuul的日志，如下图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_3.png)
 
 - 注：这里的0596a362d604fb01就是这个请求的traceID，0596a362d604fb01是spanID。
 
 我们打开zipkin-ui的界面，如下图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_4.png)
 
 这里我们可以看到这个请求的整体耗时，点击这个请求，可以进入到详情页面，查看每个服务的耗时：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_5.png)
 
 点击对应的服务，我们可以看到相应的访问时间，http请求类型、路径、IP、tranceID、spanId等内容，如下图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_6.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第11篇：使用Spring%20Cloud%20Sleuth和Zipkin进行分布式链路跟踪_image_6.png)

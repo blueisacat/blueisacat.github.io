@@ -121,7 +121,7 @@ Seata能够在第一阶段直接提交事务，是因为Seata框架为每一个R
 
 1. RM在同一个本地事务中执行业务SQL和UNDO_LOG数据的插入。在提交这个本地事务前，RM会向TC申请关于这条记录的全局锁。如果申请不到，则说明有其他事务也在对这条记录进行操作，因此它会在一段时间内重试，重试失败则回滚本地事务，并向TC汇报本地事务执行失败。如下图所示：
 
-![](../../assets/images/Seata/attachments/Seata原理解析_image_2.png)
+    ![](../../assets/images/Seata/attachments/Seata原理解析_image_2.png)
 
 1. RM在事务提交前，申请到了相关记录的全局锁，因此直接提交本地事务，并向TC汇报本地事务执行成功。此时全局锁并没有释放，全局锁的释放取决于二阶段是提交命令还是回滚命令。
 
@@ -129,11 +129,11 @@ Seata能够在第一阶段直接提交事务，是因为Seata框架为每一个R
 
 1. RM如果收到TC的提交命令，首先立即释放相关记录的全局锁，然后把提交请求放入一个异步任务的队列中，马上返回提交成功的结果给 TC。异步队列中的提交请求真正执行时，只是删除相应 UNDO LOG 记录而已。
 
-![](../../assets/images/Seata/attachments/Seata原理解析_image_3.png)
+    ![](../../assets/images/Seata/attachments/Seata原理解析_image_3.png)
 
-1. 8. RM如果收到TC的回滚命令，则会开启一个本地事务，通过 XID 和 Branch ID 查找到相应的 UNDO LOG 记录。将 UNDO LOG 中的后镜与当前数据进行比较，如果有不同，说明数据被当前全局事务之外的动作做了修改。这种情况，需要根据配置策略来做处理。否则，根据 UNDO LOG 中的前镜像和业务 SQL 的相关信息生成并执行回滚的语句并执行，然后提交本地事务达到回滚的目的，最后释放相关记录的全局锁。
+1. RM如果收到TC的回滚命令，则会开启一个本地事务，通过 XID 和 Branch ID 查找到相应的 UNDO LOG 记录。将 UNDO LOG 中的后镜与当前数据进行比较，如果有不同，说明数据被当前全局事务之外的动作做了修改。这种情况，需要根据配置策略来做处理。否则，根据 UNDO LOG 中的前镜像和业务 SQL 的相关信息生成并执行回滚的语句并执行，然后提交本地事务达到回滚的目的，最后释放相关记录的全局锁。
 
-![](../../assets/images/Seata/attachments/Seata原理解析_image_4.png)
+    ![](../../assets/images/Seata/attachments/Seata原理解析_image_4.png)
 
 ## 2.3 Seata隔离级别
 

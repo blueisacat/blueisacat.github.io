@@ -316,8 +316,8 @@ public class DubboConsumerApplication {
 
 启动子工程 dubbo_provider 和子工程 dubbo_consumer ，启动完成后，我们可以访问Nacos控制台的服务列表上看到两个服务，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第14篇：Dubbo%20与%20Spring%20Cloud%20完美结合_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第14篇：Dubbo%20与%20Spring%20Cloud%20完美结合_image_0.png)
 
 我们打开浏览器访问：[http://localhost:8080/hello](http://localhost:8080/hello) ，可以看到页面正常显示Hello Dubbo!，测试成功，如图：
 
-![](../../../assets/images/SpringCloud/Spring Cloud Alibaba/attachments/Spring%20Cloud%20Alibaba%20第14篇：Dubbo%20与%20Spring%20Cloud%20完美结合_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第14篇：Dubbo%20与%20Spring%20Cloud%20完美结合_image_1.png)

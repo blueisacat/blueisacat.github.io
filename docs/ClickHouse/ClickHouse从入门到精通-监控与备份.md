@@ -36,16 +36,16 @@ Prometheus 基于 Golang 编写，编译后的软件包，不依赖于任何的�
 
 1. 解压到/opt/module 目录下
 
-```
-[atguigu@hadoop1 software]$ tar -zxvf prometheus-2.26.0.linux-amd64.tar.gz -C /opt/module
-```
+    ```
+    [atguigu@hadoop1 software]$ tar -zxvf prometheus-2.26.0.linux-amd64.tar.gz -C /opt/module
+    ```
 
 1. 修改目录名
 
-```
-[atguigu@hadoop1 ~] cd /opt/module 
-[atguigu@hadoop1 module] mv prometheus-2.26.0.linux-amd64 prometheus-2.26.0
-```
+    ```
+    [atguigu@hadoop1 ~] cd /opt/module 
+    [atguigu@hadoop1 module] mv prometheus-2.26.0.linux-amd64 prometheus-2.26.0
+    ```
 
 ##### 2.1.3 修改配置文件 prometheus.yml
 
@@ -71,19 +71,19 @@ scrape_configs:
 
 1. global 配置块：控制 Prometheus 服务器的全局配置
 
-- scrape_interval：配置拉取数据的时间间隔，默认为 1 分钟。
+    - scrape_interval：配置拉取数据的时间间隔，默认为 1 分钟。
 
-- evaluation_interval：规则验证（生成 alert）的时间间隔，默认为 1 分钟。
+    - evaluation_interval：规则验证（生成 alert）的时间间隔，默认为 1 分钟。
 
 1. rule_files 配置块：规则配置文件
 
 1. scrape_configs 配置块：配置采集目标相关， prometheus 监视的目标。Prometheus 自身 的运行信息可以通过 HTTP 访问，所以 Prometheus 可以监控自己的运行数据。
 
-- job_name：监控作业的名称
+    - job_name：监控作业的名称
 
-- static_configs：表示静态目标配置，就是固定从某个 target 拉取数据
+    - static_configs：表示静态目标配置，就是固定从某个 target 拉取数据
 
-- targets ： 指 定 监 控 的 目 标 ， 其 实 就 是 从 哪 儿 拉 取 数 据 。
+    - targets ： 指 定 监 控 的 目 标 ， 其 实 就 是 从 哪 儿 拉 取 数 据 。
 
 Prometheus 会 从 [http://hadoop1:9090/metrics](http://hadoop1:9090/metrics) 上拉取数据。 Prometheus 是可以在运行时自动加载配置的。启动时需要添加：--web.enable-lifecycle
 
@@ -107,15 +107,15 @@ prometheus 是 up 状态，表示安装启动成功。
 
 1. 将 grafana-7.5.2.linux-amd64.tar.gz 上传至/opt/software/目录下，解压：
 
-```
-[atguigu@hadoop1 software]$ tar -zxvf grafana-7.5.2.linux-amd64.tar.gz -C /opt/module/
-```
+    ```
+    [atguigu@hadoop1 software]$ tar -zxvf grafana-7.5.2.linux-amd64.tar.gz -C /opt/module/
+    ```
 
 1. 更改名字
 
-```
-[atguigu@hadoop1 module]$ mv grafana-7.5.2.linux-amd64 grafana-7.5.2
-```
+    ```
+    [atguigu@hadoop1 module]$ mv grafana-7.5.2.linux-amd64 grafana-7.5.2
+    ```
 
 ##### 2.2.2 启动 Grafana
 
@@ -168,31 +168,31 @@ Float64 – double 建议尽可能以整数形式存储数据。例如，将固�
 
 1. 点击配置，点击 Data Sources：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_2.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_2.png)
 
 1. 点击添加按钮：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_3.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_3.png)
 
 1. 找到 Prometheus，点击 Select
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_4.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_4.png)
 
 1. 配置 Prometheus Server 地址：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_5.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_5.png)
 
 1. 点击下方的 Save&Test：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_6.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_6.png)
 
 1. 出现绿色的提示框，表示与 Prometheus 正常联通：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_7.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_7.png)
 
 1. 点击 Back 返回即可，可以看到 Data Sources 页面，出现了添加的 Prometheus:
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_8.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_8.png)
 
 #### 4.2 添加监控
 
@@ -202,11 +202,11 @@ Grafana 中所有的 Dashboard 通过 JSON 进行共享，下载并且导入这�
 
 1. 点击左侧 ”+”号，选择 import：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_9.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_9.png)
 
 1. 上传 JSON 文件：
 
-![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_10.png)
+    ![](../../assets/images/ClickHouse/attachments/ClickHouse从入门到精通-监控与备份_image_10.png)
 
 ### 5. 备份及恢复
 
@@ -247,37 +247,37 @@ sudo rm -rf /var/lib/clickhouse/shadow/*
 
 1. 模拟删除备份过的表
 
-```
-echo ' drop table t_order_mt ' | clickhouse-client
-```
+    ```
+    echo ' drop table t_order_mt ' | clickhouse-client
+    ```
 
 1. 重新创建表
 
-```
-cat events.sql | clickhouse-client
-```
+    ```
+    cat events.sql | clickhouse-client
+    ```
 
 1. 将备份复制到 detached 目录
 
-```
-sudo cp -rl backup/my-backup-name/1/store/cb1/cb176503-cd88-4ea8-8b17-6503cd888ea8/* data/default/t_order_mt/detached/
-```
+    ```
+    sudo cp -rl backup/my-backup-name/1/store/cb1/cb176503-cd88-4ea8-8b17-6503cd888ea8/* data/default/t_order_mt/detached/
+    ```
 
-ClickHouse 使用文件系统硬链接来实现即时备份，而不会导致 ClickHouse 服务停机（或 锁定）。这些硬链接可以进一步用于有效的备份存储。在支持硬链接的文件系统（例如本地 文件系统或 NFS）上，将 cp 与-l 标志一起使用（或将 rsync 与–hard-links 和–numeric-ids 标志 一起使用）以避免复制数据。
+    ClickHouse 使用文件系统硬链接来实现即时备份，而不会导致 ClickHouse 服务停机（或 锁定）。这些硬链接可以进一步用于有效的备份存储。在支持硬链接的文件系统（例如本地 文件系统或 NFS）上，将 cp 与-l 标志一起使用（或将 rsync 与–hard-links 和–numeric-ids 标志 一起使用）以避免复制数据。
 
-注意：仅拷贝分区目录，注意目录所属的用户要是 clickhouse
+    注意：仅拷贝分区目录，注意目录所属的用户要是 clickhouse
 
 1. 执行 attach
 
-```
-echo 'alter table t_order_mt attach partition 20200601' | clickhouse-client
-```
+    ```
+    echo 'alter table t_order_mt attach partition 20200601' | clickhouse-client
+    ```
 
 1. 查看数据
 
-```
-echo 'select count() from t_order_mt' | clickhouse-client
-```
+    ```
+    echo 'select count() from t_order_mt' | clickhouse-client
+    ```
 
 #### 5.2 使用 clickhouse-backup
 
@@ -303,49 +303,49 @@ echo 'select count() from t_order_mt' | clickhouse-client
 
 1. 查看可用命令
 
-```
-[atguigu@hadoop1 ~]$ clickhouse-backup help
-```
+    ```
+    [atguigu@hadoop1 ~]$ clickhouse-backup help
+    ```
 
 1. 显示要备份的表
 
-```
-[atguigu@hadoop1 ~]$ clickhouse-backup tables
-```
+    ```
+    [atguigu@hadoop1 ~]$ clickhouse-backup tables
+    ```
 
 1. 创建备份
 
-```
-[atguigu@hadoop1 ~]$ sudo clickhouse-backup create
-```
+    ```
+    [atguigu@hadoop1 ~]$ sudo clickhouse-backup create
+    ```
 
 1. 查看现有的本地备份
 
-```
-[atguigu@hadoop1 ~]$ sudo clickhouse-backup list
-```
+    ```
+    [atguigu@hadoop1 ~]$ sudo clickhouse-backup list
+    ```
 
-备份存储在中/var/lib/clickhouse/backup/BACKUPNAME。备份名称默认为时间戳，但是 可以选择使用–name 标志指定备份名称。备份包含两个目录：一个“metadata”目录，其中包 含重新创建架构所需的 DDL SQL 语句；以及一个“shadow”目录，其中包含作为 ALTER TABLE ... FREEZE 操作结果的数据。
+    备份存储在中/var/lib/clickhouse/backup/BACKUPNAME。备份名称默认为时间戳，但是 可以选择使用–name 标志指定备份名称。备份包含两个目录：一个“metadata”目录，其中包 含重新创建架构所需的 DDL SQL 语句；以及一个“shadow”目录，其中包含作为 ALTER TABLE ... FREEZE 操作结果的数据。
 
 ##### 5.2.4 从备份恢复数据
 
 1. 模拟删除备份过的表
 
-```
-echo 'drop table t_order_rmt' | clickhouse-client
-```
+    ```
+    echo 'drop table t_order_rmt' | clickhouse-client
+    ```
 
 1. 从备份还原
 
-```
-sudo clickhouse-backup restore 2021-07-25T23-14-50
-```
+    ```
+    sudo clickhouse-backup restore 2021-07-25T23-14-50
+    ```
 
---schema 参数：只还原表结构。
+    --schema 参数：只还原表结构。
 
---data 参数：只还原数据。
+    --data 参数：只还原数据。
 
---table 参数：备份（或还原）特定表。也可以使用一个正则表达式，例如，针对特定的 数据库：--table=dbname.*。
+    --table 参数：备份（或还原）特定表。也可以使用一个正则表达式，例如，针对特定的 数据库：--table=dbname.*。
 
 ##### 5.2.5 其他说明
 
@@ -355,14 +355,14 @@ sudo clickhouse-backup restore 2021-07-25T23-14-50
 
 1. 远程备份
 
-- 较新版本才支持，需要设置 config 里的 s3 相关配置
+    - 较新版本才支持，需要设置 config 里的 s3 相关配置
 
-- 上传到远程存储：sudo clickhouse-backup upload xxxx
+    - 上传到远程存储：sudo clickhouse-backup upload xxxx
 
-- 从远程存储下载：sudo clickhouse-backup download xxxx
+    - 从远程存储下载：sudo clickhouse-backup download xxxx
 
-- 保存周期：
+    - 保存周期：
 
-backups_to_keep_local，本地保存周期，单位天
+        backups_to_keep_local，本地保存周期，单位天
 
-backups_to_keep_remote，远程存储保存周期，单位天 0 均表示不删除
+        backups_to_keep_remote，远程存储保存周期，单位天 0 均表示不删除

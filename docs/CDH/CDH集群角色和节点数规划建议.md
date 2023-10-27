@@ -44,18 +44,18 @@ Hadoop 集群服务器按照节点任务的不同可以分为管理节点和工�
 
 1. 实时流处理服务集群：
 
-由于性能的原因， Hadoop 实时流处理对节点内存和 CPU 有较高要求，基于 Spark Streaming 的流处理消息吞吐量可随节点数量增加而线性增长，配置可参考下图：
+    由于性能的原因， Hadoop 实时流处理对节点内存和 CPU 有较高要求，基于 Spark Streaming 的流处理消息吞吐量可随节点数量增加而线性增长，配置可参考下图：
 
-![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_2.png)
+    ![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_2.png)
 
 1. 在线分析业务集群：
 
-在线分析业务一般基于Impala等 MPP SQL 引擎，复杂的 SQL计算对内存容量有较高要求，因此需要128GB至更多的内存的硬件，推荐配置如下：
+    在线分析业务一般基于Impala等 MPP SQL 引擎，复杂的 SQL计算对内存容量有较高要求，因此需要128GB至更多的内存的硬件，推荐配置如下：
 
-![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_3.png)
+    ![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_3.png)
 
 1. 云存储业务集群：
 
-存储业务主要面向海量数据和文件的存储和计算，强调单节点存储容量和成本，因此配置相对廉价的SATA 硬盘，满足成本和容量的需求，推荐配置如下：
+    存储业务主要面向海量数据和文件的存储和计算，强调单节点存储容量和成本，因此配置相对廉价的SATA 硬盘，满足成本和容量的需求，推荐配置如下：
 
-![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_4.png)
+    ![](../../assets/images/CDH/attachments/CDH集群角色和节点数规划建议_image_4.png)

@@ -34,31 +34,31 @@ parent: Kubernetes
 
 1. K8S没有自身的用户管理能力
 
-什么是用户管理能力呢?我们无法像操作Pod一样，通过API的方式创建删除一个用户实例。同时我们也无法在Etcd中找到用户对应的存储对象。
+    什么是用户管理能力呢?我们无法像操作Pod一样，通过API的方式创建删除一个用户实例。同时我们也无法在Etcd中找到用户对应的存储对象。
 
 1. K8S中的用户通常是通过请求凭证设置
 
-在K8S的访问控制流程中用户模型是如何产生的呢?答案就是在请求方的访问控制凭证中，也就是我们平时使用的kube-config中的证书，或者是Pod中引入的ServerAccount。经过K8S认证流程之后，apiserver会将请求中凭证中的用户身份转化为对应的User和Groups这样的用户模型。在随后的鉴权操作和审计操作流程中，apiserver都会使用到该用户模型实例。
+    在K8S的访问控制流程中用户模型是如何产生的呢?答案就是在请求方的访问控制凭证中，也就是我们平时使用的kube-config中的证书，或者是Pod中引入的ServerAccount。经过K8S认证流程之后，apiserver会将请求中凭证中的用户身份转化为对应的User和Groups这样的用户模型。在随后的鉴权操作和审计操作流程中，apiserver都会使用到该用户模型实例。
 
 1. K8S支持的请求认证方式主要包括：
 
-- Basic认证
+    - Basic认证
 
-该认证方式下，管理员会将Username和Password组成的白名单放置在apiserver读取的静态配置文件上面进行认证，该方式一般用于测试场景，在安全方面是不推荐且不可拓展的一种方式。
+    该认证方式下，管理员会将Username和Password组成的白名单放置在apiserver读取的静态配置文件上面进行认证，该方式一般用于测试场景，在安全方面是不推荐且不可拓展的一种方式。
 
-- X509证书认证
+    - X509证书认证
 
-该方式是apiserver中相对应用较多的使用方式，首先访问者会使用由集群CA签发的，或是添加在apiserver Client CA中授信CA签发的客户端证书去访问apiserver。apiserver服务端在接收到请求后，会进行TLS的握手流程。除了验证证书的合法性，apiserver还会校验客户端证书的请求源地址等信息。开启双向认证，X509认证是一个比较安全的方式，也是K8S组件之间默认使用的认证方式，同时也是kubectl客户端对应的kube-config中经常使用到的访问凭证。
+    该方式是apiserver中相对应用较多的使用方式，首先访问者会使用由集群CA签发的，或是添加在apiserver Client CA中授信CA签发的客户端证书去访问apiserver。apiserver服务端在接收到请求后，会进行TLS的握手流程。除了验证证书的合法性，apiserver还会校验客户端证书的请求源地址等信息。开启双向认证，X509认证是一个比较安全的方式，也是K8S组件之间默认使用的认证方式，同时也是kubectl客户端对应的kube-config中经常使用到的访问凭证。
 
-- Bearer Tokens(JWT)
+    - Bearer Tokens(JWT)
 
-- Service Accouont
+    - Service Accouont
 
-- OpenID Connect
+    - OpenID Connect
 
-- Webhooks
+    - Webhooks
 
-该方式的Tokens是通过JWT的形式，其中包含了签发者、用户的身份、过期时间等多种元信息。它的认证方式也是常见的私钥加签，公钥验签的一个基本流程。基于Token的认证使用场景也很广泛，比如K8S Pod应用中经常使用道德Service Account，其中就是自动绑定一个签名后JWT Token用于请求apiserver。
+    该方式的Tokens是通过JWT的形式，其中包含了签发者、用户的身份、过期时间等多种元信息。它的认证方式也是常见的私钥加签，公钥验签的一个基本流程。基于Token的认证使用场景也很广泛，比如K8S Pod应用中经常使用道德Service Account，其中就是自动绑定一个签名后JWT Token用于请求apiserver。
 
 ### 三、K8S鉴权-RBAC
 

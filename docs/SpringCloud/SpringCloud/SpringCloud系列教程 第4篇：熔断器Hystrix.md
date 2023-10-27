@@ -19,7 +19,7 @@ nav_order: 1.4
 
 如下图所示：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第4篇：熔断器Hystrix_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第4篇：熔断器Hystrix_image_0.png)
 
 相信大家都知道家用电闸，原来老式的电闸是使用保险丝的（现在很多都是空气开关了），当家里用电量过大的时候，保险丝经常烧断，这么做是保护家里的用电器，防止过载。
 
@@ -27,7 +27,7 @@ nav_order: 1.4
 
 熔断器模式就像是那些容易导致错误的操作的一种代理。这种代理能够记录最近调用发生错误的次数，然后决定使用允许操作继续，或者立即返回错误。 Hystrix会有一个熔断时间窗口，具体转换逻辑如下：
 
-![](../../../assets/images/SpringCloud/Spring Cloud/attachments/SpringCloud系列教程%20第4篇：熔断器Hystrix_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第4篇：熔断器Hystrix_image_1.png)
 
 熔断器就是保护服务高可用的最后一道防线。
 
