@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel实战（2）：使用控制台管理规则
 parent: Sentinel
-nav_order: 1.2
+nav_order: 2
 ---
 
 # Sentinel 实战：使用控制台管理规则

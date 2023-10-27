@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel原理（4）：滑动窗口
 parent: Sentinel
-nav_order: 2.4
+nav_order: 10
 ---
 
 # Sentinel原理：滑动窗口

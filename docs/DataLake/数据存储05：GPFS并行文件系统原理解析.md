@@ -2,7 +2,7 @@
 layout: default
 title: 数据存储05：GPFS并行文件系统原理解析
 parent: DataLake
-nav_order: 2.5
+nav_order: 10
 ---
 
 ### 1. GPFS历史背景及发展

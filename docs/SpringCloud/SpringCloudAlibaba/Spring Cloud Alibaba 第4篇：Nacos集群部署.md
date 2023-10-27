@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第4篇：Nacos集群部署
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.4
+nav_order: 4
 ---
 
 # 1. Nacos支持三种部署模式
@@ -218,7 +218,7 @@ db.password=password
 
 ## 2.1 架构图
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第4篇：Nacos集群部署_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第4篇：Nacos集群部署_image_0.png)
 
 ## 2.2 下载源码或者安装包
 

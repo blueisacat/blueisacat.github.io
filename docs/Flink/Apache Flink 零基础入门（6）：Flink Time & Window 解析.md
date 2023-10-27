@@ -2,7 +2,7 @@
 layout: default
 title: Apache Flink 零基础入门（6）：Flink Time & Window 解析
 parent: Flink
-nav_order: 5.5
+nav_order: 20
 ---
 
 # 一、Window & Time 介绍
@@ -11,9 +11,9 @@ Apache Flink（以下简称 Flink） 是一个天然支持无限流数据处理�
 
 下面的代码是在 Flink 中使用 Window 的两个示例
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_0.png)
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_1.png)
 
 # 二、Window API 使用
 
@@ -21,7 +21,7 @@ Apache Flink（以下简称 Flink） 是一个天然支持无限流数据处理�
 
 代码来自 flink-examples
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_2.png)
 
 上面的例子中我们首先会对每条数据进行时间抽取，然后进行 keyby，接着依次调用 window()，evictor(), trigger() 以及 maxBy()。下面我们重点来看 window(), evictor() 和 trigger() 这几个方法。
 
@@ -29,19 +29,19 @@ Apache Flink（以下简称 Flink） 是一个天然支持无限流数据处理�
 
 window 方法接收的输入是一个WindowAssigner， WindowAssigner 负责将每条输入的数据分发到正确的 window 中（一条数据可能同时分发到多个 Window 中），Flink 提供了几种通用的 WindowAssigner：tumbling window(窗口间的元素无重复），sliding window（窗口间的元素可能重复），session window 以及 global window。如果需要自己定制数据分发策略，则可以实现一个 class，继承自 WindowAssigner。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_3.png)
 
 ### Tumbling Window
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_4.png)
 
 ### Sliding Window
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_5.png)
 
 ### Session Window
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_6.png)
 
 ### Global Window
 
@@ -83,7 +83,7 @@ trigger 用来判断一个窗口是否需要被触发，每个 WindowAssigner �
 
 我们知道在分布式环境中 Time 是一个很重要的概念，在 Flink 中 Time 可以分为三种Event-Time，Processing-Time 以及 Ingestion-Time，三者的关系我们可以从下图中得知：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_7.png)
 
 Event Time、Ingestion Time、Processing Time
 
@@ -97,17 +97,17 @@ Event-Time 表示事件发生的时间，Processing-Time 则表示处理消息�
 
 那我们怎么保证基于 event-time 的窗口在销毁的时候，已经处理完了所有的数据呢？这就是 watermark 的功能所在。watermark 会携带一个单调递增的时间戳 t，watermark(t) 表示所有时间戳不大于 t 的数据都已经到来了，未来小于等于t的数据不会再来，因此可以放心地触发和销毁窗口了。下图中给了一个乱序数据流中的 watermark 例子
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_8.png)
 
 ## 2.3 迟到的数据
 
 上面的 watermark 让我们能够应对乱序的数据，但是真实世界中我们没法得到一个完美的 watermark 数值 — 要么没法获取到，要么耗费太大，因此实际工作中我们会使用近似 watermark — 生成 watermark(t) 之后，还有较小的概率接受到时间戳 t 之前的数据，在 Flink 中将这些数据定义为 “late elements”, 同样我们可以在 window 中指定是允许延迟的最大时间（默认为 0），可以使用下面的代码进行设置
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_9.png)
 
 设置 allowedLateness 之后，迟来的数据同样可以触发窗口，进行输出，利用 Flink 的 side output 机制，我们可以获取到这些迟到的数据，使用方式如下：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_10.png)
 
 需要注意的是，设置了 allowedLateness 之后，迟到的数据也可能触发窗口，对于 Session window 来说，可能会对窗口进行合并，产生预期外的行为。
 
@@ -115,7 +115,7 @@ Event-Time 表示事件发生的时间，Processing-Time 则表示处理消息�
 
 在讨论 Window 内部实现的时候，我们再通过下图回顾一下 Window 的生命周期
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_11.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_11.png)
 
 每条数据过来之后，会由 WindowAssigner 分配到对应的 Window，当 Window 被触发之后，会交给 Evictor（如果没有设置 Evictor 则跳过），然后处理 UserFunction。其中 WindowAssigner，Trigger，Evictor 我们都在上面讨论过，而 UserFunction 则是用户编写的代码。
 
@@ -123,7 +123,7 @@ Event-Time 表示事件发生的时间，Processing-Time 则表示处理消息�
 
 首先给出具体的答案：从接口上可以认为没有区别，但是每个 Window 会属于不同的 namespace，而非 Window 场景下，则都属于 VoidNamespace ，最终由 State/Checkpoint 来保证数据的 Exactly Once 语义，下面我们从 org.apache.flink.streaming.runtime.operators.windowing.WindowOperator 摘取一段代码进行阐述
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（6）：Flink%20Time%20&%20Window%20解析_image_12.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（6）：FlinkTime&Window解析_image_12.png)
 
 从上面我们可以知道，Window 中的的元素同样是通过 state 进行维护，然后由 Checkpoint 机制保证 Exactly Once 语义。
 

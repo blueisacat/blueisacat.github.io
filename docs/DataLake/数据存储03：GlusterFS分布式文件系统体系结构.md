@@ -2,7 +2,7 @@
 layout: default
 title: 数据存储03：GlusterFS分布式文件系统体系结构
 parent: DataLake
-nav_order: 2.3
+nav_order: 8
 ---
 
 ### 1. GlusterFS概述

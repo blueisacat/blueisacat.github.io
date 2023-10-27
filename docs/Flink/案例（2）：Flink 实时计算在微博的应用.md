@@ -2,14 +2,14 @@
 layout: default
 title: 案例（2）：Flink 实时计算在微博的应用
 parent: Flink
-nav_order: 1.2
+nav_order: 2
 ---
 
 # 一、微博介绍
 
 本次给大家带来的分享是 Flink 实时计算在微博的应用。微博是中国领先的社交媒体平台，目前的日活跃用户是 2.41 亿，月活跃用户是 5.5 亿，其中移动用户占比超过了 94%。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_0.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_0.png)
 
 # 二、数据计算平台介绍
 
@@ -30,7 +30,7 @@ nav_order: 1.2
 
 - 数据的输出是采用数仓、特征工程这些数据中台的组建，对外提供数据输出。整体上来说，目前我们在线跑的实时计算的作业将近 1000 多个，离线作业超过了 5000 多个，每天处理的数据量超过了 3 PB。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_1.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_1.png)
 
 ## 2. 数据计算
 
@@ -40,13 +40,13 @@ nav_order: 1.2
 
 - 离线计算主要包括 SQL 计算。主要包括 SQL 的即席查询、数据生成、数据查询和表管理。表管理主要就是数仓的管理，包括表的元数据的管理，表的使用权限，还有表的上下游的血缘关系。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_2.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_2.png)
 
 ## 3. 实时特征
 
 如下图所示，我们基于 Flink 和 Storm 构建了一个实时特征生成的服务。整体上来说，它会分为作业详情、输入源特征生成、输出和资源配置。用户按照我们事先定义好的接口去开发特征生成的 UDF 就可以。其他的像输入、特征写入，都是平台自动提供的，用户只需要在页面上配置就好。另外，平台会提供输入数据源的监控、作业的异常监控、特征写入监控、特征读取监控等，这些都是自动生成的。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_3.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_3.png)
 
 ## 4. 流批一体
 
@@ -62,7 +62,7 @@ nav_order: 1.2
 
 - 第四，批流统一调度，提高集群利用率。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_4.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_4.png)
 
 ## 5. 数据仓库
 
@@ -70,7 +70,7 @@ nav_order: 1.2
 
 - 针对实时数仓，我们通过 FlinkSQL 对这些原始日志做流式的一个 ETL，再通过一个流式汇总将最终的数据结果写到数据的服务层，同时也会把它存储到各种实时存储，比如 ES、Hbase、Redis、ClickHouse 中去。我们可以通过实时存储对外提供数据的查询。还提供数据进一步数据计算的能力。也就是说，建立实时数仓主要是去解决离线特征生成的周期长的问题。另外就是使用 FlinkSQL 去解决 streaming 作业开发周期比较长的问题。其中的一个关键点还是离线数仓跟实时数仓的元数据的管理。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_5.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_5.png)
 
 # 三、Flink 在数据计算平台的典型应用
 
@@ -82,7 +82,7 @@ nav_order: 1.2
 
 - 模型实时化是要根据线上样本实时训练模型，及时反映对象的线上变化情况。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_6.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_6.png)
 
 ### 微博流式机器学习的特点：
 
@@ -104,7 +104,7 @@ nav_order: 1.2
 
 - 另外一个是它的数据规模大，包括海量的用户日志，样本规模和模型规模。我们调研了常用的实时计算框架，最终选择了 Flink 去解决这个问题。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_7.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_7.png)
 
 ### 流式机器学习流程：
 
@@ -120,13 +120,13 @@ nav_order: 1.2
 
 - 离线模型训练的计算压力是比较集中的，而实时的计算压力比较分散。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_8.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_8.png)
 
 ### 样本
 
 这里简单介绍一下我们流式机器学习样本的发展历程。2018年10月，我们上线了第一个流式样本作业，是通过Storm和外部存储Redis去做的。2019年5月，我们使用新的实时计算框架Flink，采用union+timer方案替代window计算来实现多个数据流的join操作。2019年10月，上线了一个xx样本作业，单个作业的qps达到了几十万。在今年4月份，把样本生成流程平台化。到今年6月份，平台化做了一个迭代，支持样本的落盘，包括样本库，还有样本的各种监控指标的完善。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_9.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_9.png)
 
 流式机器学习所谓的样本生成，其实就是多个数据流按照相同的 key 做一个拼接。比如说，我们有三个数据流，数据清洗后的结果存储为 <k , v>, k 是聚合的 key，v 是样本中需要的值。数据 union 后做 KeyBy 聚合，聚合后将数据存储在内存区域 value state 中。如下图所示：
 
@@ -134,7 +134,7 @@ nav_order: 1.2
 
 - 如果 k1 存在，就从 state 中把它给拿出来，更新之后再存进去。到最后它的 timer 到期之后，就会将这条数据输出，并且从 state 中清除掉。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_10.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_10.png)
 
 ### 样本平台
 
@@ -152,19 +152,19 @@ nav_order: 1.2
 
 资源由平台方审核并配置。另外，整个平台提供基础的一些监控，包括输入数据的监控、样本指标的监控、作业异常监控、样本输出量的监控。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_11.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_11.png)
 
 ### 流式机器学习项目的样本 UI
 
 下图为流式机器学习项目的样本。左边是样本生成的作业配置，右边是样本库。样本库主要是做样本的管理展示，包括样本的说明权限，样本的共享情况等等。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_12.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_12.png)
 
 ### 流式机器学习的应用
 
 最后介绍一下流式机器学习应用的效果。目前我们支持实时样本拼接，QPS 达到百万级别。支持流式模型训练，可以同时支持几百个模型训练，模型实时性支持小时级/分钟级 模型更新。流式学习全流程容灾，支持全链路自动监控。近期在做的一个事情是流式的深度学习，增加实时模型的表达能力。还有强化学习这一块，探索一些新的应用场景。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_13.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_13.png)
 
 ## 2. 多模态内容理解
 
@@ -182,19 +182,19 @@ nav_order: 1.2
 
 举个例子，我们一开始做视频分类的时候只用到了视频抽帧后的那些帧，也就是图片。后来第二次优化的时候，加入了音频相关的东西，还有视频对应的博文相关的东西，相当于把音频、图片、文本，多模态的融合考虑，更精准的去生成这个视频的分类标签。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_14.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_14.png)
 
 ### 平台
 
 下图为多模态内容理解的平台架构。中间这部分是 Flink 实时计算，实时的接收图片流、视频流、发博流这些数据，然后通过模型插件调用下边的基础服务，深度学习模型服务。调用服务之后，会返回内容特征。然后我们把特征存储到特征工程，通过数据中台对外提供给各个业务方。整个作业运行过程中全链路监控报警，异常情况第一时间响应。平台自动提供日志收集，指标统计，CASE 追踪等功能。中间这一块使用 zk 做服务发现，解决实时计算和深度学习模型之间服务状态同步的问题。另外，除了状态同步，也会有一些负载均衡的策略。最下边就是使用数据-对账系统，进一步提高数据处理成功率。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_15.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_15.png)
 
 ### UI
 
 多模态内容理解的 UI，主要包括作业信息、输入源信息、模型信息、输出信息、资源配置。这块通过配置化的开发，去提高开发效率。然后会自动生成模型调用的一些监控指标，包括模型调用的成功率和耗时。当作业提交之后，会自动生成一个用于指标统计的作业。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_16.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_16.png)
 
 ## 3. 内容去重服务
 
@@ -202,13 +202,13 @@ nav_order: 1.2
 
 在推荐场景下，如果给用户一直推重复的内容，是很影响用户体验的。基于这个考虑，结合 Flink 实时流计算平台、分布式向量检索系统和深度学习模型服务构建的一套内容去重服务平台,具有低延迟、高稳定性、高召回率的特点。目前支持多个业务方，稳定性达到 99.9+%。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_17.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_17.png)
 
 ### 架构
 
 下图为内容去重服务的架构图。最下边是多媒体的模型训练。这块做离线的训练。比如说我们会拿到一些样本数据，然后去做样本处理，样本处理完之后把样本存到样本库中去。当我需要做模型训练的时候，我从样本库中去拉取样本，然后做模型训练，训练好的结果会保存到模型库中去。
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_18.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_18.png)
 
 内容去重这里主要用到的模型是向量生成模型。包括图片的向量、文本的向量、视频的向量。
 
@@ -224,7 +224,7 @@ nav_order: 1.2
 
 - 第三，推荐流物料去重 - 稳定性 99%，处理延迟秒级，准确率达到 90%
 
-![](../../assets/images/Flink/attachments/案例（2）：Flink%20实时计算在微博的应用_image_19.png)
+![](../../assets/images/Flink/attachments/案例（2）：Flink实时计算在微博的应用_image_19.png)
 
 ### 最后
 

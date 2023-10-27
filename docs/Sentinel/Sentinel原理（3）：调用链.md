@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel原理（3）：调用链
 parent: Sentinel
-nav_order: 2.3
+nav_order: 9
 ---
 
 # Sentinel原理：调用链

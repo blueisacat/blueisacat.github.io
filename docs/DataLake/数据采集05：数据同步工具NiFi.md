@@ -2,7 +2,7 @@
 layout: default
 title: 数据采集05：数据同步工具NiFi
 parent: DataLake
-nav_order: 1.5
+nav_order: 5
 ---
 
 ### 1. NiFi是什么

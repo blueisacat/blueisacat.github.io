@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第6篇：Sentinel：分布式系统的流量防卫兵初探
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.6
+nav_order: 6
 ---
 
 # 1. Sentinel 是什么？
@@ -43,11 +43,11 @@ Sentinel 以流量为切入点，从流量控制、熔断降级、系统负载�
 
 - 完善的 SPI 扩展点： Sentinel 提供简单易用、完善的 SPI 扩展接口。您可以通过实现扩展接口来快速地定制逻辑。例如定制规则管理、适配动态数据源等。
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第6篇：Sentinel：分布式系统的流量防卫兵初探_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第6篇：Sentinel：分布式系统的流量防卫兵初探_image_0.png)
 
 # 3. Sentinel 的开源生态
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第6篇：Sentinel：分布式系统的流量防卫兵初探_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第6篇：Sentinel：分布式系统的流量防卫兵初探_image_1.png)
 
 Sentinel 分为两个部分:
 

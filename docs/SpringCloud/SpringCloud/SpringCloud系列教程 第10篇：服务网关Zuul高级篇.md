@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第10篇：服务网关Zuul高级篇
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.10
+nav_order: 10
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -18,7 +18,7 @@ nav_order: 1.10
 
 Zuul的核心是Filter，用来实现对外服务的控制。分别是“PRE”、“ROUTING”、“POST”、“ERROR”，整个生命周期可以用下图来表示。
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第10篇：服务网关Zuul高级篇_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第10篇：服务网关Zuul高级篇_image_0.png)
 
 Zuul大部分功能都是通过过滤器来实现的。Zuul中定义了四种标准过滤器类型，这些过滤器类型对应于请求的典型生命周期。
 
@@ -323,6 +323,6 @@ eureka:
 
 # 6. Zuul高可用
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第10篇：服务网关Zuul高级篇_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第10篇：服务网关Zuul高级篇_image_1.png)
 
 我们实际使用Zuul的方式如上图，不同的客户端使用不同的负载将请求分发到后端的Zuul，Zuul在通过Eureka调用后端服务，最后对外输出。因此为了保证Zuul的高可用性，前端可以同时启动多个Zuul实例进行负载，在Zuul的前端使用Nginx或者F5进行负载转发以达到高可用性。

@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第16篇：微服务利剑之APM平台（二）Pinpoint
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.16
+nav_order: 16
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -37,7 +37,7 @@ Pinpoint是一个由韩国人编写的为大型分布式系统服务的链路跟
 
 先看一下官方提供的架构图，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_0.png)
 
 Pinpoint主要包含了4个组件：
 
@@ -160,7 +160,7 @@ export JAVA_HOME=/opt/jdk1.8.0_221
 
 也可以打开浏览器访问：[http://ip:16010/master-status](http://ip:16010/master-status) ，结果如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_1.png)
 
 接下来我们先把Pinpoint的HBase的构建脚本导入，进入HBase的bin目录下执行如下语句：
 
@@ -170,7 +170,7 @@ export JAVA_HOME=/opt/jdk1.8.0_221
 
 数据导入成功我们在HBase的UI界面上可以看到，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_2.png)
 
 后面的目录是笔者用来存放HBase初始化脚本的路径，各位读者可根据情况自行替换，至此，HBase环境准备完成，接下来开始部署Collector和Web UI。
 
@@ -180,7 +180,7 @@ export JAVA_HOME=/opt/jdk1.8.0_221
 
 浏览器访问链接：[https://github.com/naver/pinpoint/releases/](https://github.com/naver/pinpoint/releases/) ，直接下载当前最新Release版本即可，笔者现在看到的最新版本是1.8.4，如图，需要下载的内容有pinpoint-agent-1.8.4.tar.gz、pinpoint-collector-1.8.4.war和pinpoint-web-1.8.4.war。
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_3.png)
 
 首先需要准备两个tomcat，笔者这里下载的tomcat8，解压两份后并重命名为apache-tomcat-pinpoint-collector和apache-tomcat-pinpoint-web。
 
@@ -198,7 +198,7 @@ export JAVA_HOME=/opt/jdk1.8.0_221
 
 当Collector和Web UI都启动成功后，就可以使用打开浏览器访问：[http://ip:28080/#/main](http://ip:28080/#/main) ，初次访问如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_4.png)
 
 1. Agent启用
 
@@ -219,7 +219,7 @@ java -javaagent:/opt/pinpoint-bootstrap-1.8.4.jar -Dpinpoint.agentId=zuul-servic
 
 首先打开浏览器访问：[http://192.168.44.129:8080/client/hello?name=spring](http://192.168.44.129:8080/client/hello?name=spring) ，页面正常显示Hello, name is spring，查看Pinpoint的Web UI，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_5.png)
 
 图清楚的显示了我们当前系统的拓扑结构，横线上面的数字代表了调用次数，右边部分，最上面显示的是成功和失败的情况，中间部分显示的是响应时间，下面显示的是加载所使用的时间。
 
@@ -227,11 +227,11 @@ java -javaagent:/opt/pinpoint-bootstrap-1.8.4.jar -Dpinpoint.agentId=zuul-servic
 
 Heap信息的使用情况，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_6.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_6.png)
 
 系统CPU、活动线程、响应时间等信息如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第16篇：微服务利剑之APM平台（二）Pinpoint_image_7.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第16篇：微服务利剑之APM平台（二）Pinpoint_image_7.png)
 
 更多Pinpoint的信息，读者可以通过官方Demo（[http://125.209.240.10:10123/#/main](http://125.209.240.10:10123/#/main) ）或者自行构建试验来查看结果，这里不再一一赘述。至此，Spring Cloud和Pinpoint的使用介绍也就完成了。更多有关Pinpoint的信息各位读者可以前往Github的官网进行查阅，地址为：[https://github.com/naver/pinpoint](https://github.com/naver/pinpoint) 。
 

@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第20篇：Spring Cloud 之 okhttp
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.20
+nav_order: 20
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -64,7 +64,7 @@ okhttp 的设计初衷就是简单和高效，这也是我们选择它的重要�
 
 - feign-okhttp 这里无需指定版本，目前引入的 feign-okhttp 版本为 10.2.3 ，而 okhttp 的版本为 3.8.1 ,如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第20篇：Spring%20Cloud%20之%20okhttp_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第20篇：SpringCloud之okhttp_image_0.png)
 
 ## 4.2 配置文件 application.yml
 

@@ -2,7 +2,7 @@
 layout: default
 title: 案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践
 parent: Flink
-nav_order: 1.1
+nav_order: 1
 ---
 
 # 一、Threat Hunting 平台的架构与设计
@@ -17,7 +17,8 @@ nav_order: 1.1
 
 ## 1. 平台的演进
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_0.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_0.png)
+
 
 我们认为所有技术的演化和革新都需要具体的商业问题来驱动，以下是我们团队近几年基于 Flink 开发的几款产品：
 
@@ -29,7 +30,7 @@ nav_order: 1.1
 
 - 2020 年随着客户数据量的增大，很多已经达到了 PB 级，过往的解决方案导致离线的数据检索性能远远低于预期，安全分析人员习惯使用 like 和全文检索等模糊匹配操作，造成查询延时非常大。于是从今年开始，我们着重优化 HQL 的离线检索能力，并推出了全新的 Threat Hunting 平台。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_1.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_1.png)
 
 通过调查发现，拥有 PB 级数据规模的客户往往有以下几个商业需求：
 
@@ -41,7 +42,7 @@ nav_order: 1.1
 
 ## 2. 架构设计
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_2.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_2.png)
 
 首先，数据是来自于已经存储在 ES 中的历史数据和 kafka 里的实时数据，其中 ES 里的历史数据我们通过自己开发的同步工具来同步，kafka 里的实时数据我们则通过 Streaming File Sink 写 orc 文件到存储集群。在数据同步的同时，我们会将这批数据的索引信息更新到数据库中。
 
@@ -63,7 +64,7 @@ nav_order: 1.1
 
 ## 3. 深入探索索引结构
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_3.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_3.png)
 
 数据库为了加速数据检索，我们往往会事先为数据创建索引，再在扫描数据之前通过索引定位到数据的起始位置，从而加速数据检索。而传统数据库常见的是行索引，通过一个或若干字段创建索引，索引结果以树形结构存储，此类索引能够精确到行级别，索引效率最高。
 
@@ -71,7 +72,7 @@ nav_order: 1.1
 
 所以我们选择性价比更高的块索引方案，已经能够支撑目前的应用场景。目前通过客户数据来看, 索引能够为 85% 的语句提供 90% 以上的裁剪率，基本满足延时要求。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_4.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_4.png)
 
 某些大数据平台是将索引数据以文件的形式存储在磁盘上，外加一些 cache 机制来加速数据访问，而我们是将索引数据直接存在了数据库中。主要有以下两个方面的考虑：
 
@@ -79,17 +80,17 @@ nav_order: 1.1
 
 - 第二是性能。数据库拥有较强的读写和检索能力，甚至可以将谓词下推到数据库来完成，数据库的高压缩比也能进一步节省存储。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_5.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_5.png)
 
 上图为块索引的设计。在我们的索引数据库中，我们把这些数据分为不同类别数据源，比如终端数据为一类数据源，网络数据为一类数据源，我们分类数据源的逻辑是他们是否拥有统一的 Schema。就单个数据源来说，它以日期作为 Partition，Partition 内部是大量的 ORC 小文件，具体到索引结构，我们会为每一个字段建 min/max 索引，基数小于 0.001 的字段我们建 Bloom 索引。
 
 上文提到过，安全人员比较喜欢用 like 和全文检索。对于 like 这一块，我们也做了一些优化。全文检索方面，我们会为数据来做分词，来构建倒排索引，同时也会对于单个分词过后的单个 item 来做文件分布层面的位图索引。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_6.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_6.png)
 
 上图是一个索引大小的大致的比例假设，JSON 格式的原始日志大有 50PB，转化成 ORC 大概是 1PB 左右。我们的 Index 数据是 508GB， 其中 8GB 为 Min/Max 索引，500GB 为 Bloom。加上上文提到的位图以及倒排，这个索引数据的占比会进一步加大。基于此，我们采用的是分布式的索引方案。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_7.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_7.png)
 
 我们知道日志是在不断的进行变化的，对于有的数据员来说，他有时会增加字段或者减少字段，甚至有时字段类型也会发生变化。
 
@@ -99,7 +100,7 @@ nav_order: 1.1
 
 上文介绍了为什么要选择块索引，那么接下来将具体介绍如何使用块索引。块索引的核心可以落在两个字上：“裁剪”。裁剪就是在查询语句被真正执行前就将无关的文件给过滤掉，尽可能减少进入计算引擎的数据量，从数据源端进行节流。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_8.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_8.png)
 
 这张图展示了整个系统使用 IndexDB 来做裁剪流程：
 
@@ -111,7 +112,7 @@ nav_order: 1.1
 
 同时，构建 source 的时候，我们在细节上做了一些优化。比如在将 filter 传给 ORC reader 的时候，清除掉已经 pushdown 了的 filter， 避免在引擎侧进行二次过滤。当然, 这里并不是将所有 filter 都清除掉了，我们保留了 like 表达式，关于 like 的 filter pushdown 会在后文介绍。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_9.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_9.png)
 
 接下来着重介绍一下四大优化点：
 
@@ -125,7 +126,7 @@ nav_order: 1.1
 
 ## 1. 裁剪率的理论上限及 Hilbert 空间填充曲线
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_10.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_10.png)
 
 裁剪可以抽象成 N 个球扔进 M 个桶的概率问题，在这里我们直接说结论。假设行在块中随机均匀分布，所有块的总行数固定，查询条件命中的总行数也固定，则块命中率直接与 “命中的总行数 / 总块数” 正相关。
 
@@ -135,7 +136,7 @@ nav_order: 1.1
 
 - 第二点，假设命中总行数固定，那么大幅度减少每块中的行数来增加总块数，也能提升块修剪率。所以我们缩小了块大小。根据测试结果，我们设定每个文件的大小为：16M。缩小文件大小是很简单的。针对排序，我们引入了 hilbert 空间填充曲线。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_11.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_11.png)
 
 为什么使用 hilbert 曲线？主要是基于两点：
 
@@ -145,13 +146,13 @@ nav_order: 1.1
 
 hilbert 用法，就是实现一个 UDF，输入列值，输出坐标值，然后根据坐标值排序。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_12.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_12.png)
 
 我们抽样了客户环境所使用的 1500 条 SQL 语句，过滤掉了其中裁剪率为分之 100% 的相关语句，也就是没有命中文件的无效语句。然后还剩下 1148 条，我们使用这些语句做了裁剪率排序后，对裁剪率进行了对比，裁剪率 95 百分位从之前的 68% 提升到了 87%，提升了 19%。可能大家会觉得 19% 这个数值不是特别高，但如果我们带上一个基数，比如说 10 万个文件，这样看的话就会很可观了。
 
 ## 2. 字典索引上 Like 的优化
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_13.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_13.png)
 
 之前也有讲到安全行业的特殊性，我们做威胁检测的时候会严重依赖 like 查询。鉴于此，我们也对它做了优化。
 
@@ -163,7 +164,7 @@ hilbert 用法，就是实现一个 UDF，输入列值，输出坐标值，然�
 
 ## 3. 基于索引对 join 的优化
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_14.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_14.png)
 
 威胁情报的匹配中大量使用 join 操作，如果要加速 join 的性能，仅仅是 where 条件的 filter pushdown 是远远不够的。
 
@@ -177,7 +178,7 @@ Flink 中已经内置了许多 join 算法，比如 broadcast join, hash join �
 
 对于 hash join，正如我们看到的，我们可以预先对 join key 的文件级 bloom 做 “预 join” 操作，具体就是将左表所属的某个文件的 bloom 依次与右表所属文件的 bloom 做 “与” 操作，只保留左右表能 ”与后结果条数不为 0“ 的文件，再让各表剩余的文件进入引擎做后续计算。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_15.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_15.png)
 
 比如说图上的这三张表，分别是 table1、 table2 和 table3 。我们可以从 index DB 中获取到表的统计信息，也就是文件个数或者说是文件表的大小。图上就直接列的是文件个数：table 1 是 1000 个， 然后 table 2 是 5 万个文件， table 3 是 3 万个文件。
 
@@ -185,7 +186,7 @@ Flink 中已经内置了许多 join 算法，比如 broadcast join, hash join �
 
 ## 4. Alluxio 作为对象存储的缓存
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_16.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_16.png)
 
 因为底层文件存储系统的多种多样，所以我们选取了 Alluxio 数据编排系统，Alluxio 的优点是让数据更靠近计算框架，利用内存或者 SSD 多级缓存机制加速文件访问，如果在完全命中 cache 的情况下，能够达到内存级 IO 的文件访问速度，减少直接从底层文件系统读文件的频次，很大程度上缓解了底层文件系统的压力。
 
@@ -193,7 +194,7 @@ Flink 中已经内置了许多 join 算法，比如 broadcast join, hash join �
 
 如果这些文件在之前的查询中已经被 load 到 cache 里面，就能够大幅度的提升查询速度。
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_17.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_17.png)
 
 在做完这些优化以后，我们做了性能对比测试。我们选取了一个规模为 249TB 的 es 集群。它使用了 20 台服务器，Flink 使用了两台服务器，为了在图标上看到更直观的对比效果，我们选取了 16 条测试结果。
 
@@ -203,6 +204,6 @@ Flink 中已经内置了许多 join 算法，比如 broadcast join, hash join �
 
 # 三、未来规划
 
-![](../../assets/images/Flink/attachments/案例（1）：360%20政企安全集团基于%20Flink%20的%20PB%20级数据即席查询实践_image_18.png)
+![](../../assets/images/Flink/attachments/案例（1）：360政企安全集团基于Flink的PB级数据即席查询实践_image_18.png)
 
 上图是未来规划。因为客户现场经常会涉及到很多的 BI Dashboard 运算和长周期运算报告的需求，所以我们下一步会考虑做 BI 预算，以及苏军提到的容器化和 JVM 预热，当然还有对标 es，以及提升多用户并发查询的能力。

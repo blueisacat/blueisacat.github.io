@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第10篇：微服务分布式事务之Seata
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.10
+nav_order: 10
 ---
 
 # 1. 概述
@@ -14,11 +14,11 @@ nav_order: 1.10
 
 首先，设想一个传统的单体应用，无论多少内部调用，最后终归是在同一个数据库上进行操作来完成一向业务操作，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_0.png)
 
 随着业务量的发展，业务需求和架构发生了巨大的变化，整体架构由原来的单体应用逐渐拆分成为了微服务，原来的3个服务被从一个单体架构上拆开了，成为了3个独立的服务，分别使用独立的数据源，也不在之前共享同一个数据源了，具体的业务将由三个服务的调用来完成，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_1.png)
 
 此时，每一个服务的内部数据一致性仍然有本地事务来保证。但是面对整个业务流程上的事务应该如何保证呢？这就是在微服务架构下面临的挑战，如何保证在微服务中的数据一致性。
 
@@ -36,9 +36,9 @@ nav_order: 1.10
 
 - 所有节点不会永久性损坏，即使损坏后仍然可以恢复。
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_2.png)
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_3.png)
 
 ## 3.2 TCC 方案
 
@@ -80,7 +80,7 @@ Seata 的方案其实一个 XA 两阶段提交的改进版，具体区别如下�
 
 架构的层面：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_4.png)
 
 XA 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身（通过提供支持 XA 的驱动程序来供应用使用）。
 
@@ -90,13 +90,13 @@ XA 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身�
 
 两阶段提交：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_5.png)
 
 无论 Phase2 的决议是 commit 还是 rollback，事务性资源的锁都要保持到 Phase2 完成才释放。
 
 设想一个正常运行的业务，大概率是 90% 以上的事务最终应该是成功提交的，我们是否可以在 Phase1 就将本地事务提交呢？这样 90% 以上的情况下，可以省去 Phase2 持锁的时间，整体提高效率。
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_6.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_6.png)
 
 - 分支事务中数据的 本地锁 由本地事务管理，在分支事务 Phase1 结束时释放。
 
@@ -112,7 +112,7 @@ XA 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身�
 
 在本节，我们将通过一个实战案例来具体介绍Seata的使用方式，我们将模拟一个简单的用户购买商品下单场景，创建3个子工程，分别是 order-server （下单服务）、storage-server（库存服务）和 pay-server （支付服务），具体流程图如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_7.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_7.png)
 
 ## 5.2 环境准备
 
@@ -185,7 +185,7 @@ service.vgroup_mapping.spring-cloud-storage-server=default
 
 这里我们只是做演示，理论上上面三个业务服务应该分属不同的数据库，这里我们只是在同一台数据库下面创建三个 Schema ，分别为 db_account 、 db_order 和 db_storage ，具体如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_8.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_8.png)
 
 ### 5.2.5 服务启动
 
@@ -198,7 +198,7 @@ sh nacos-config.sh 192.168.0.128
 
 执行成功后可以打开Nacos的控制台，在配置列表中，可以看到初始化了很多 Group 为 SEATA_GROUP 的配置，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_9.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_9.png)
 
 初始化成功后，可以使用下面的命令启动Seata的Server端：
 
@@ -423,19 +423,19 @@ spring:
 
 使用 PostMan 发送测试请求，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_10.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_10.png)
 
 数据库初始化余额为 10 ，这里每次下单将会消耗 5 ，我们可以正常下单两次，第三次应该下单失败，并且回滚 db_order 中的数据。数据库中数据如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_11.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_11.png)
 
 我们进行第三次下单操作，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_12.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_12.png)
 
 这里看到直接报错500，查看数据库 db_order 中的数据，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第10篇：微服务分布式事务之Seata_image_13.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第10篇：微服务分布式事务之Seata_image_13.png)
 
 可以看到，这里的数据并未增加，我们看下子工程_rder-server的控制台打印：
 

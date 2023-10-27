@@ -2,7 +2,7 @@
 layout: default
 title: 数据存储04：Lustre并行文件系统体系结构
 parent: DataLake
-nav_order: 2.4
+nav_order: 9
 ---
 
 Lustre架构是一种集群存储体系结构，其核心组件就是Lustre文件系统。该文件系统可在Linux操作系统上运行，并提供了符合POSIX标准的UNIX文件系统接口。

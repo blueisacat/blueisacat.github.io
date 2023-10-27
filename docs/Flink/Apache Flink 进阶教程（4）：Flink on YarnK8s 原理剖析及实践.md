@@ -2,20 +2,20 @@
 layout: default
 title: Apache Flink 进阶教程（4）：Flink on YarnK8s 原理剖析及实践
 parent: Flink
-nav_order: 4.4
+nav_order: 9
 ---
 
 # Flink 架构概览
 
 ## Flink 架构概览–Job
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_0.png)
 
 用户通过 DataStream API、DataSet API、SQL 和 Table API 编写 Flink 任务，它会生成一个JobGraph。JobGraph 是由 source、map()、keyBy()/window()/apply() 和 Sink 等算子组成的。当 JobGraph 提交给 Flink 集群后，能够以 Local、Standalone、Yarn 和 Kubernetes 四种模式运行。
 
 ## Flink 架构概览–JobManager
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_1.png)
 
 JobManager的功能主要有：
 
@@ -31,7 +31,7 @@ JobManager的功能主要有：
 
 ## Flink 架构概览–TaskManager
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_2.png)
 
 TaskManager 是负责具体任务的执行过程，在 JobManager 申请到资源之后开始启动。TaskManager 里面的主要组件有：
 
@@ -43,7 +43,7 @@ TaskManager 是负责具体任务的执行过程，在 JobManager 申请到资�
 
 TaskManager 被分成很多个 TaskSlot，每个任务都要运行在一个 TaskSlot 里面，TaskSlot 是调度资源里的最小单位。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_3.png)
 
 在介绍 Yarn 之前先简单的介绍一下 Flink Standalone 模式，这样有助于更好地了解 Yarn 和 Kubernetes 架构。
 
@@ -73,7 +73,7 @@ TaskManager 被分成很多个 TaskSlot，每个任务都要运行在一个 Task
 
 Yarn 模式在国内使用比较广泛，基本上大多数公司在生产环境中都使用过 Yarn 模式。首先介绍一下 Yarn 的架构原理，因为只有足够了解 Yarn 的架构原理，才能更好的知道 Flink 是如何在 Yarn 上运行的。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_4.png)
 
 Yarn 的架构原理如上图所示，最重要的角色是 ResourceManager，主要用来负责整个资源的管理，Client 端是负责向 ResourceManager 提交任务。
 
@@ -93,7 +93,7 @@ Yarn 集群中的组件包括：
 
 ## Yarn 架构原理–交互
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_5.png)
 
 以在 Yarn 上运行 MapReduce 任务为例来讲解下 Yarn 架构的交互原理：
 
@@ -111,7 +111,7 @@ Yarn 集群中的组件包括：
 
 ## Flink on Yarn–Per Job
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_6.png)
 
 Flink on Yarn 中的 Per Job 模式是指每次提交一个任务，然后任务运行完成之后资源就会被释放。在了解了 Yarn 的原理之后，Per Job 的流程也就比较容易理解了，具体如下：
 
@@ -123,7 +123,7 @@ Flink on Yarn 中的 Per Job 模式是指每次提交一个任务，然后任务
 
 ## Flink on Yarn–Session
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_7.png)
 
 在 Per Job 模式中，执行完任务后整个资源就会释放，包括 JobManager、TaskManager 都全部退出。而 Session 模式则不一样，它的 Dispatcher 和 ResourceManager 是可以复用的。Session 模式下，当 Dispatcher 在收到请求之后，会启动 JobManager(A)，让 JobManager(A) 来完成启动 TaskManager，接着会启动 JobManager(B) 和对应的 TaskManager 的运行。当 A、B 任务运行完成后，资源并不会释放。Session 模式也称为多线程模式，其特点是资源会一直存在不会释放，多个 JobManager 共享一个 Dispatcher，而且还共享 Flink-YARN ResourceManager。
 
@@ -159,7 +159,7 @@ Pod 运行于 Node 节点上，是若干相关容器的组合。在 K8s 里面 P
 
 ## Kubernetes–架构图
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_8.png)
 
 Kubernetes 的架构如图所示，从这个图里面能看出 Kubernetes 的整个运行过程。
 
@@ -183,7 +183,7 @@ Kubernetes 中比较重要的概念有：
 
 ## Flink on Kubernetes–架构
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_9.png)
 
 Flink on Kubernetes 的架构如图所示，Flink 任务在 Kubernetes 上运行的步骤有：
 
@@ -211,7 +211,7 @@ TaskManager 也是通过 Deployment 来进行描述，保证 n 个副本的 Cont
 
 ## Flink on Kubernetes–交互
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_10.png)
 
 整个交互的流程比较简单，用户往 Kubernetes 集群提交定义好的资源描述文件即可，例如 deployment、configmap、service 等描述。后续的事情就交给 Kubernetes 集群自动完成。Kubernetes 集群会按照定义好的描述来启动 pod，运行用户程序。各个组件的具体工作如下：
 
@@ -244,7 +244,7 @@ TaskManager 也是通过 Deployment 来进行描述，保证 n 个副本的 Cont
 
 首先启动 Session Cluster，执行上述三条启动命令就可以将 Flink 的 JobManager-service、jobmanager-deployment、taskmanager-deployment 启动起来。启动完成之后用户可以通过接口进行访问，然后通过端口进行提交任务。若想销毁集群，直接用 kubectl delete 即可，整个资源就可以销毁。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_11.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_11.png)
 
 Flink 官方提供的例子如图所示 图中左侧为 jobmanager-deployment.yaml 配置，右侧为 taskmanager-deployment.yaml 配置。
 
@@ -252,7 +252,7 @@ Flink 官方提供的例子如图所示 图中左侧为 jobmanager-deployment.ya
 
 右图为 taskmanager-deployment.yaml 配置，taskmanager-deployment.yaml 配置与 jobmanager-deployment.yaml 相似，但 taskmanager-deployment.yaml 的副本数是 2 个。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（4）：Flink%20on%20YarnK8s%20原理剖析及实践_image_12.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（4）：FlinkonYarnK8s原理剖析及实践_image_12.png)
 
 接下来是 jobmanager-service.yaml 的配置，jobmanager-service.yaml 的资源类型为 Service，在 Service 中的配置相对少一些，spec 中配置需要暴露的服务端口的 port，在 selector 中，通过标签选取 jobmanager 的 pod。
 

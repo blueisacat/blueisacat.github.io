@@ -2,6 +2,7 @@
 layout: default
 title: ClickHouse从入门到精通-高级
 parent: ClickHouse
+nav_order: 2
 ---
 
 ### 1. Explain 查看执行计划

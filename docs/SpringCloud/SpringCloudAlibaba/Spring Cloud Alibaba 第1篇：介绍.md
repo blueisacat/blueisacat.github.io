@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第1篇：介绍
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.1
+nav_order: 1
 ---
 
 # 1. Spring Cloud Alibaba是什么？

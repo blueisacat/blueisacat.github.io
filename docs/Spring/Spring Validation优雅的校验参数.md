@@ -91,23 +91,23 @@ public String add(UserVO userVO) {
 
 1. 自定义分组
 
-![](../../assets/images/Spring/attachments/Spring%20Validation优雅的校验参数_image_0.png)
+![](../../assets/images/Spring/attachments/SpringValidation优雅的校验参数_image_0.png)
 
-![](../../assets/images/Spring/attachments/Spring%20Validation优雅的校验参数_image_1.png)
+![](../../assets/images/Spring/attachments/SpringValidation优雅的校验参数_image_1.png)
 
 注意：继承Default并不是必须的。只是说，如果继承了Default，那么@Validated(value = Create.class)的校验范畴就为【Create】和【Default】；如果没继承Default，那么@Validated(value = Create.class)的校验范畴只为【Create】，而@Validated(value = {Create.class, Default.class})的校验范畴才为【Create】和【Default】。
 
 1. 设置分组
 
-![](../../assets/images/Spring/attachments/Spring%20Validation优雅的校验参数_image_2.png)
+![](../../assets/images/Spring/attachments/SpringValidation优雅的校验参数_image_2.png)
 
 注意：Default组和无参构造机制类似，当没有指定分组时，会默认当前校验属于Default组,但是一旦主动给当前校验指定了分组(如上图中的name字段，主动指定了属于Create组)，那么就不会再额外指定属于Default组了。
 
 3. 指定分组
 
-![](../../assets/images/Spring/attachments/Spring%20Validation优雅的校验参数_image_3.png)
+![](../../assets/images/Spring/attachments/SpringValidation优雅的校验参数_image_3.png)
 
-![](../../assets/images/Spring/attachments/Spring%20Validation优雅的校验参数_image_4.png)
+![](../../assets/images/Spring/attachments/SpringValidation优雅的校验参数_image_4.png)
 
 #### 2.5 递归校验
 

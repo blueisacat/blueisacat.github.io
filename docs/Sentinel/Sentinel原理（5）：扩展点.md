@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel原理（5）：扩展点
 parent: Sentinel
-nav_order: 2.5
+nav_order: 11
 ---
 
 # Sentinel原理：扩展点

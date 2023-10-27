@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第7篇：Sentinel：服务限流基础篇
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.7
+nav_order: 7
 ---
 
 # 1. Sentinel控制台概述
@@ -28,7 +28,7 @@ Sentinel控制台部署有两种方案：
 
 直接使用官方编译好的Release版本部署启动，下载地址：[https://github.com/alibaba/Sentinel/releases](https://github.com/alibaba/Sentinel/releases) ，目前最新版本是v1.6.3，下载sentinel-dashboard-1.6.3.jar ，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第7篇：Sentinel：服务限流基础篇_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第7篇：Sentinel：服务限流基础篇_image_0.png)
 
 ## 2.2 启动
 
@@ -45,7 +45,7 @@ nohup java -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dp
 
 -Dserver.port=8080 用于指定 Sentinel 控制台端口为 8080。启动完成后，使用浏览器访问：[http://ip:8080/](http://ip:8080/) ，这时会进入登录页面，从 Sentinel 1.6.0 起，Sentinel 控制台引入基本的登录功能，默认用户名和密码都是sentinel，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第7篇：Sentinel：服务限流基础篇_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第7篇：Sentinel：服务限流基础篇_image_1.png)
 
 Sentinel Dashboard可以通过如下参数进行配置：
 
@@ -184,7 +184,7 @@ public class HelloController {
 
 启动子工程web_mvc，启动成功后打开浏览器访问：[http://localhost:8000/hello](http://localhost:8000/hello) ，可以看到页面正常显示Hello Web MVC，多次刷新后打开Sentinel Dashboard，在Sentinel控制台上已经可以看到我们的web-mvc应用了，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第7篇：Sentinel：服务限流基础篇_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第7篇：Sentinel：服务限流基础篇_image_2.png)
 
 - 注意：请确保客户端有访问量，Sentinel 会在客户端首次调用的时候进行初始化，开始向控制台发送心跳包。
 
@@ -238,4 +238,4 @@ public class HelloController {
 
 启动子工程web_flux，打开浏览器访问：[http://localhost:9000/hello](http://localhost:9000/hello) ，页面正常显示Hello Web Flux，多次刷新页面后打开Sentinel控制台，可以看到web_flux工程正常注册，测试成功，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第7篇：Sentinel：服务限流基础篇_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第7篇：Sentinel：服务限流基础篇_image_3.png)

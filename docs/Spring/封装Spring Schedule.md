@@ -10,7 +10,7 @@ parent: Spring
 
 比较对常用的几种定时任务框架进行一个比较：
 
-![](../../assets/images/Spring/attachments/封装Spring%20Schedule_image_0.png)
+![](../../assets/images/Spring/attachments/封装SpringSchedule_image_0.png)
 
 其中Spring Schedule开发起来简单，稍作改造也可以进行任务持久化。
 
@@ -58,11 +58,11 @@ public class ScheduleApplication {
 
 类似于Linux下的Cron表达式时间定义规则。Cron表达式由6或7个空格分隔的时间字段组成，如下图：
 
-![](../../assets/images/Spring/attachments/封装Spring%20Schedule_image_1.png)
+![](../../assets/images/Spring/attachments/封装SpringSchedule_image_1.png)
 
 常用表达式：
 
-![](../../assets/images/Spring/attachments/封装Spring%20Schedule_image_2.png)
+![](../../assets/images/Spring/attachments/封装SpringSchedule_image_2.png)
 
 举个栗子：
 

@@ -2,6 +2,7 @@
 layout: default
 title: ClickHouse从入门到精通-初级
 parent: ClickHouse
+nav_order: 1
 ---
 
 ### 1. ClickHouse入门

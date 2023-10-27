@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel原理（2）：重要概念
 parent: Sentinel
-nav_order: 2.2
+nav_order: 8
 ---
 
 # Sentinel原理：重要概念

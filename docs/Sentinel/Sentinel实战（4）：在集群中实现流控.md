@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel实战（4）：在集群中实现流控
 parent: Sentinel
-nav_order: 1.4
+nav_order: 4
 ---
 
 # Sentinel实战：在集群中实现流控

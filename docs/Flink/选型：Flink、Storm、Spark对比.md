@@ -2,7 +2,7 @@
 layout: default
 title: 选型：Flink、Storm、Spark对比
 parent: Flink
-nav_order: 3
+nav_order: 5
 ---
 
 # 一、Flink、Storm、Spark对比

@@ -20,7 +20,7 @@ parent: Other
 上面 URL 中，response_type参数表示要求返回授权码（code），client_id参数让 B 知道是谁在请求，redirect_uri参数是 B 接受或拒绝请求后的跳转网址，scope参数表示要求的授权范围（这里是只读）。
 
 
-![](../../assets/images/Other/attachments/OAuth%202.0_image_0.png)
+![](../../assets/images/Other/attachments/OAuth2.0_image_0.png)
 
 第二步，用户跳转后，B 网站会要求用户登录，然后询问是否同意给予 A 网站授权。用户表示同意，这时 B 网站就会跳回redirect_uri参数指定的网址。跳转时，会传回一个授权码，就像下面这样。
 
@@ -31,7 +31,7 @@ parent: Other
 上面 URL 中，code参数就是授权码。
 
 
-![](../../assets/images/Other/attachments/OAuth%202.0_image_1.png)
+![](../../assets/images/Other/attachments/OAuth2.0_image_1.png)
 
 第三步，A 网站拿到授权码以后，就可以在后端，向 B 网站请求令牌。
 
@@ -42,7 +42,7 @@ parent: Other
 上面 URL 中，client_id参数和client_secret参数用来让 B 确认 A 的身份（client_secret参数是保密的，因此只能在后端发请求），grant_type参数的值是AUTHORIZATION_CODE，表示采用的授权方式是授权码，code参数是上一步拿到的授权码，redirect_uri参数是令牌颁发后的回调网址。
 
 
-![](../../assets/images/Other/attachments/OAuth%202.0_image_2.png)
+![](../../assets/images/Other/attachments/OAuth2.0_image_2.png)
 
 第四步，B 网站收到请求以后，就会颁发令牌。具体做法是向redirect_uri指定的网址，发送一段 JSON 数据。
 
@@ -61,7 +61,7 @@ parent: Other
 
 上面 JSON 数据中，access_token字段就是令牌，A 网站在后端拿到了。
 
-![](../../assets/images/Other/attachments/OAuth%202.0_image_3.png)
+![](../../assets/images/Other/attachments/OAuth2.0_image_3.png)
 
 ## 隐藏式
 
@@ -81,7 +81,7 @@ parent: Other
 注意，令牌的位置是 URL 锚点（fragment），而不是查询字符串（querystring），这是因为 OAuth 2.0 允许跳转网址是 HTTP 协议，因此存在"中间人攻击"的风险，而浏览器跳转时，锚点不会发到服务器，就减少了泄漏令牌的风险。
 
 
-![](../../assets/images/Other/attachments/OAuth%202.0_image_4.png)
+![](../../assets/images/Other/attachments/OAuth2.0_image_4.png)
 
 
 这种方式把令牌直接传给前端，是很不安全的。因此，只能用于一些安全要求不高的场景，并且令牌的有效期必须非常短，通常就是会话期间（session）有效，浏览器关掉，令牌就失效了。

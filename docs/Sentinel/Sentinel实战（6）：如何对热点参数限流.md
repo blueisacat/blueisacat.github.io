@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel实战（6）：如何对热点参数限流
 parent: Sentinel
-nav_order: 1.6
+nav_order: 6
 ---
 
 # Sentinel实战：如何对热点参数限流

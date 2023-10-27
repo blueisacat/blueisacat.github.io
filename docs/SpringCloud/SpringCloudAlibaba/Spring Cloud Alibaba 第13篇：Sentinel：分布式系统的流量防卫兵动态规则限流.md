@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.13
+nav_order: 13
 ---
 
 前面几篇文章较为详细的介绍了Sentinel的使用姿势，还没看过的小伙伴可以访问以下链接查看：
@@ -146,7 +146,7 @@ public class HelloController {
 
 配置内容如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流_image_0.png)
 
 注意其中配置的Data ID和Group要和程序中配置的保持一致。格式选择JSON，填入的内容如下：
 
@@ -190,7 +190,7 @@ Blocked by Sentinel (flow limiting)
 
 正面限流配置成功，这时我们打开Sentinel控制台，看一下流量规则限制，已经有一条数据了，是我们在Nacos中配置的数据，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第13篇：Sentinel：分布式系统的流量防卫兵动态规则限流_image_1.png)
 
 注意：
 

@@ -2,7 +2,7 @@
 layout: default
 title: Mybatis源码(5)-数据读写
 parent: Mybatis
-nav_order: 1.5
+nav_order: 5
 ---
 
 ### 数据读写的本质

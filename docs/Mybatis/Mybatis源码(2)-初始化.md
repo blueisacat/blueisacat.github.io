@@ -2,7 +2,7 @@
 layout: default
 title: Mybatis源码(2)-初始化
 parent: Mybatis
-nav_order: 1.2
+nav_order: 2
 ---
 
 Mybatis 初始化是由SqlSessionFactoryBuilder来完成的，主要的工作解析XML文件，并将解析的类容封装到Configuration类中，最后将Configuration类封装到SqlSessionFactory中并返回，自此初始化完成。

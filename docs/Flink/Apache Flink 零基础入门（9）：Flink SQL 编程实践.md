@@ -2,7 +2,7 @@
 layout: default
 title: Apache Flink 零基础入门（9）：Flink SQL 编程实践
 parent: Flink
-nav_order: 5.8
+nav_order: 23
 ---
 
 # 通过本课你能学到什么？
@@ -27,7 +27,7 @@ nav_order: 5.8
 
 注意：Docker 默认配置的资源可能不太够，会导致运行 Flink Job 时卡死。因此推荐配置 Docker 资源到 3-4 GB，3-4 CPUs。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_0.png)
 
 本次教程的环境使用 Docker Compose 来安装，包含了所需的各种服务的容器，包括：
 
@@ -60,7 +60,7 @@ docker-compose up -d
 
 docker-compose 命令会启动所有所需的容器。第一次运行的时候，Docker 会自动地从 Docker Hub 下载镜像，这可能会需要一段时间（将近 2.3GB）。之后运行的话，几秒钟就能启动起来了。运行成功的话，会在命令行中看到以下输出，并且也可以在 [http://localhost:8081](http://localhost:8081) 访问到 Flink Web UI。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_1.png)
 
 # 运行 Flink SQL CLI 客户端
 
@@ -72,7 +72,7 @@ docker-compose exec sql-client ./sql-client.sh
 
 该命令会在容器中启动 Flink SQL CLI 客户端。然后你会看到如下的欢迎界面。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_2.png)
 
 # 数据介绍
 
@@ -106,7 +106,7 @@ SELECT * FROM Rides WHERE isInNYC(lon, lat);
 
 SQL CLI 便会提交一个 SQL 任务到 Docker 集群中，从数据源（Rides 流存储在Kafka中）不断拉取数据，并通过 
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_3.png)
 
 也可以到 [http://localhost:8081](http://localhost:8081) 查看 Flink 作业的运行情况。
 
@@ -125,7 +125,7 @@ GROUP BY psgCnt;
 
 SQL CLI 的可视化结果如下所示，结果每秒都在发生变化。不过最大的乘客数不会超过 6 人。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_4.png)
 
 # 实例3：Window Aggregate
 
@@ -150,7 +150,7 @@ HAVING COUNT(*) >= 5;
 
 在 SQL CLI 中运行后，其可视化结果如下所示，每个 area + window_end 的结果输出后就不会再发生变化，但是会每隔 5 分钟会输出一批新窗口的结果。因为 Docker 环境中的source我们做了10倍的加速读取（相对于原始速度），所以演示的时候，大概每隔30秒就会输出一批新窗口。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_5.png)
 
 # Window Aggregate 与 Group Aggregate 的区别
 
@@ -158,7 +158,7 @@ HAVING COUNT(*) >= 5;
 
 另外一个区别是，window 由于有 watermark ，可以精确知道哪些窗口已经过期了，所以可以及时清理过期状态，保证状态维持在稳定的大小。而 Group Aggregate 因为不知道哪些数据是过期的，所以状态会无限增长，这对于生产作业来说不是很稳定，所以建议对 Group Aggregate 的作业配上 State TTL 的配置。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_6.png)
 
 例如统计每个店铺每天的实时PV，那么就可以将 TTL 配置成 24+ 小时，因为一天前的状态一般来说就用不到了。
 
@@ -198,7 +198,7 @@ GROUP BY TUMBLE(rideTime, INTERVAL '10' MINUTE);
 
 我们可以监控到 TenMinPsgCnts topic 的数据以 JSON 的形式写入到了 Kafka 中：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（9）：Flink%20SQL%20编程实践_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（9）：FlinkSQL编程实践_image_7.png)
 
 # 实例5：将 Update 流写入 ElasticSearch
 

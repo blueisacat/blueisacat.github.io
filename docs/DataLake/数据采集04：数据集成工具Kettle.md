@@ -2,7 +2,7 @@
 layout: default
 title: 数据采集04：数据集成工具Kettle
 parent: DataLake
-nav_order: 1.4
+nav_order: 4
 ---
 
 ### 1. Kettle是什么

@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第15篇：Dubbo Spring Cloud 之 HTTP 实战
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.15
+nav_order: 15
 ---
 
 上一篇文章《Spring Cloud Alibaba | Dubbo 与 Spring Cloud 完美结合》我们介绍了Dubbo Spring Cloud的基本使用，使用的服务中心为Spring Cloud Alibaba提供的Nacos，Dubbo内部提供了基于Dubbo的RPC调用，同时，Dubbo Spring Cloud在整合了Spring Cloud之后，可以直接提供HTTP接口，同Spring Cloud无缝衔接，直接支持Feign、RestTemplate等方式的远程调用，在提供HTTP服务的同时可以提供Dubbo服务。Dubbo Spring Cloud支持HTTP远程调用级大的方便了我们的对接外部系统，无需对Dubbo再做二次封装。
@@ -217,20 +217,20 @@ public class UserController {
 
 我们使用测试工具PostMan进行测试，顺次启动三个子工程provider_web、spring_cloud_consumer和dubbo_consumer，首先测试组件Feign访问，使用PostMan向：[http://localhost:8080/saveByFeign](http://localhost:8080/saveByFeign) 发送 POST 请求，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_0.png)
 
 测试链接：[http://localhost:8080/findAllByFeign](http://localhost:8080/findAllByFeign) ，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_1.png)
 
 测试 RestTemplate 访问，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_2.png)
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_3.png)
 
 至此，spring_cloud_consumer测试成功，下面继续测试dubbo_consumer，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_4.png)
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第15篇：Dubbo%20Spring%20Cloud%20之%20HTTP%20实战_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第15篇：DubboSpringCloud之HTTP实战_image_5.png)

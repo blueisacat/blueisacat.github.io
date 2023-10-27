@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel实战（5）：集群限流环境搭建
 parent: Sentinel
-nav_order: 1.5
+nav_order: 5
 ---
 
 ## Sentinel实战：集群限流环境搭建

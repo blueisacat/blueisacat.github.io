@@ -2,7 +2,7 @@
 layout: default
 title: Mybatis源码(3)-代理模块
 parent: Mybatis
-nav_order: 1.3
+nav_order: 3
 ---
 
 ### Mybatis代理模块

@@ -2,18 +2,18 @@
 layout: default
 title: Apache Flink 零基础入门（4）：DataStream API 编程
 parent: Flink
-nav_order: 5.3
+nav_order: 18
 ---
 
 # 1. 流处理基本概念
 
 对于什么是流处理，从不同的角度有不同的定义。其实流处理与批处理这两个概念是对立统一的，它们的关系有点类似于对于 Java 中的 ArrayList 中的元素，是直接看作一个有限数据集并用下标去访问，还是用迭代器去访问。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_0.png)
 
 流处理系统本身有很多自己的特点。一般来说，由于需要支持无限数据集的处理，流处理系统一般采用一种数据驱动的处理方式。它会提前设置一些算子，然后等到数据到达后对数据进行处理。为了表达复杂的计算逻辑，包括 Flink 在内的分布式流处理引擎一般采用 DAG 图来表示整个计算逻辑，其中 DAG 图中的每一个点就代表一个基本的逻辑单元，也就是前面说的算子。由于计算逻辑被组织成有向图，数据会按照边的方向，从一些特殊的 Source 节点流入系统，然后通过网络传输、本地传输等不同的数据传输方式在算子之间进行发送和处理，最后会通过另外一些特殊的 Sink 节点将计算结果发送到某个外部系统或数据库中。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_1.png)
 
 对于实际的分布式流处理引擎，它们的实际运行时物理模型要更复杂一些，这是由于每个算子都可能有多个实例。如图 2 所示，作为 Source 的 A 算子有两个实例，中间算子 C 也有两个实例。在逻辑模型中，A 和 B 是 C 的上游节点，而在对应的物理逻辑中，C 的所有实例和 A、B 的所有实例之间可能都存在数据交换。在物理模型中，我们会根据计算逻辑，采用系统自动优化或人为指定的方式将计算工作分布到不同的实例中。只有当算子实例分布到不同进程上时，才需要通过网络进行数据传输，而同一进程中的多个实例之间的数据传输通常是不需要通过网络的。
 
@@ -56,11 +56,11 @@ env.execute("Streaming WordCount");
 
 基于流式 Word Count 的例子可以看出，基于 Flink 的 DataStream API 来编写流处理程序一般需要三步：通过 Source 接入数据、进行一系统列的处理以及将数据写出。最后，不要忘记显式调用 Execute 方式，否则前面编写的逻辑并不会真正执行。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_2.png)
 
 从上面的例子中还可以看出，Flink DataStream API 的核心，就是代表流数据的 DataStream 对象。整个计算逻辑图的构建就是围绕调用 DataStream 对象上的不同操作产生新的 DataStream 对象展开的。整体来说，DataStream 上的操作可以分为四类。第一类是对于单条记录的操作，比如筛除掉不符合要求的记录（Filter 操作），或者将每条记录都做一个转换（Map 操作）。第二类是对多条记录的操作。比如说统计一个小时内的订单总成交量，就需要将一个小时内的所有订单记录的成交量加到一起。为了支持这种类型的操作，就得通过 Window 将需要的记录关联到一起进行处理。第三类是对多个流进行操作并转换为单个流。例如，多个流可以通过 Union、Join 或 Connect 等操作合到一起。这些操作合并的逻辑不同，但是它们最终都会产生了一个新的统一的流，从而可以进行一些跨流的操作。最后， DataStream 还支持与合并对称的操作，即把一个流按一定规则拆分为多个流（Split 操作），每个流是之前流的一个子集，这样我们就可以对不同的流作不同的处理。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_3.png)
 
 为了支持这些不同的流操作，Flink 引入了一组不同的流类型，用来表示某些操作的中间流数据集类型。完整的类型转换关系如图4所示。首先，对于一些针对单条记录的操作，如 Map 等，操作的结果仍然是是基本的 DataStream 类型。然后，对于 Split 操作，它会首先产生一个 SplitStream，基于 SplitStream 可以使用 Select 方法来筛选出符合要求的记录并再将得到一个基本的流。
 
@@ -70,7 +70,7 @@ env.execute("Streaming WordCount");
 
 对于普通的 DataStream，我们必须使用 allWindow 操作，它代表对整个流进行统一的 Window 处理，因此是不能使用多个算子实例进行同时计算的。针对这一问题，就需要我们首先使用 KeyBy 方法对记录按 Key 进行分组，然后才可以并行的对不同 Key 对应的记录进行单独的 Window 操作。KeyBy 操作是我们日常编程中最重要的操作之一，下面我们会更详细的介绍。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_4.png)
 
 基本 DataStream 对象上的 allWindow 与 KeyedStream 上的 Window 操作的对比如图5所示。为了能够在多个并发实例上并行的对数据进行处理，我们需要通过 KeyBy 将数据进行分组。KeyBy 和 Window 操作都是对数据进行分组，但是 KeyBy 是在水平分向对流进行切分，而 Window 是在垂直方式对流进行切分。
 
@@ -96,11 +96,11 @@ env.execute("Streaming WordCount");
 
 - PartitionCustomer：当上述内置分配方式不满足需求时，用户还可以选择自定义分组方式。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_5.png)
 
 除分组方式外，Flink DataStream API 中另一个重要概念就是类型系统。图 7 所示，Flink DataStream 对像都是强类型的，每一个 DataStream 对象都需要指定元素的类型，Flink 自己底层的序列化机制正是依赖于这些信息对序列化等进行优化。具体来说，在 Flink 底层，它是使用 TypeInformation 对象对类型进行描述的，TypeInformation 对象定义了一组类型相关的信息供序列化框架使用。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_6.png)
 
 Flink 内置了一部分常用的基本类型，对于这些类型，Flink 也内置了它们的TypeInformation，用户一般可以直接使用而不需要额外的声明，Flink 自己可以通过类型推断机制识别出相应的类型。但是也会有一些例外的情况，比如，Flink DataStream API 同时支持 Java 和 Scala，Scala API 许多接口是通过隐式的参数来传递类型信息的，所以如果需要通过 Java 调用 Scala 的 API，则需要把这些类型信息通过隐式参数传递过去。另一个例子是 Java 中对泛型存在类型擦除，如果流的类型本身是一个泛型的话，则可能在擦除之后无法推断出类型信息，这时候也需要显式的指定。
 
@@ -172,7 +172,7 @@ public class GroupedProcessingTimeWindowSample {
 
 需要指出的是，这个例子主要是用来演示 DataStream API 的用法，实际上还会有更高效的写法，此外，更上层的 Table / SQL 还支持 Retraction 机制，可以更好的处理这种情况。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（4）：DataStream%20API%20编程_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（4）：DataStreamAPI编程_image_7.png)
 
 最后，我们对 DataStream API 的原理进行简要的介绍。当我们调用 DataStream#map 算法时，Flink 在底层会创建一个 Transformation 对象，这一对象就代表我们计算逻辑图中的节点。它其中就记录了我们传入的 MapFunction，也就是 UDF（User Define Function）。随着我们调用更多的方法，我们创建了更多的 DataStream 对象，每个对象在内部都有一个 Transformation 对象，这些对象根据计算依赖关系组成一个图结构，就是我们的计算图。后续 Flink 将对这个图结构进行进一步的转换，从而最终生成提交作业所需要的 JobGraph。
 

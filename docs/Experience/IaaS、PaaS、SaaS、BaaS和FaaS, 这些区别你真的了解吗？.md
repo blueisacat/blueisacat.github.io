@@ -6,7 +6,7 @@ parent: Experience
 
 IaaS、PaaS、SaaS、BaaS、FaaS，这些名词后面都带着aas三个字母，aas 是 As-a-Service，即为服务的意思。我们看下面这个架构图：
 
-![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,%20这些区别你真的了解吗？_image_0.png)
+![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,这些区别你真的了解吗？_image_0.png)
 
 IaaS、PaaS、SaaS
 
@@ -28,7 +28,7 @@ IaaS、PaaS、SaaS
 
 网上流传着一个用开披萨店来解释云服务的例子：
 
-![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,%20这些区别你真的了解吗？_image_1.png)
+![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,这些区别你真的了解吗？_image_1.png)
 
 请设想你是一个餐饮业者，打算做披萨生意。你可以从头到尾，自己生产披萨，但是这样比较麻烦，需要准备的东西多，因此你决定外包一部分工作，采用他人的服务。你有三个方案。
 
@@ -46,13 +46,13 @@ IaaS、PaaS、SaaS
 
 三种方案总结如下图：
 
-![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,%20这些区别你真的了解吗？_image_2.png)
+![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,这些区别你真的了解吗？_image_2.png)
 
 披萨即服务
 
 从左到右，自己承担的工作量（上图蓝色部分）越来越少，IaaS > PaaS > SaaS。对应软件开发，则是下面这张图：
 
-![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,%20这些区别你真的了解吗？_image_3.png)
+![](../../assets/images/Experience/attachments/IaaS、PaaS、SaaS、BaaS和FaaS,这些区别你真的了解吗？_image_3.png)
 
 披萨云架构图
 

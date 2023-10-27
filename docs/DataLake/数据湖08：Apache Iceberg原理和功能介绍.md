@@ -2,7 +2,7 @@
 layout: default
 title: 数据湖08：Apache Iceberg原理和功能介绍
 parent: DataLake
-nav_order: 3.8
+nav_order: 18
 ---
 
 在使用不同的引擎进行大数据计算时，需要将数据根据计算引擎进行适配。这是一个相当棘手的问题，为此出现了一种新的解决方案：介于上层计算引擎和底层存储格式之间的一个中间层。这个中间层不是数据存储的方式，只是定义了数据的元数据组织方式，并向计算引擎提供统一的类似传统数据库中"表"的语义。它的底层仍然是Parquet、ORC等存储格式。
@@ -13,7 +13,7 @@ nav_order: 3.8
 
 Iceberg是一种开放的数据湖表格式。可以简单理解为是基于计算层（Flink , Spark）和存储层（ORC，Parqurt，Avro）的一个中间层，用Flink或者Spark将数据写入Iceberg，然后再通过其他方式来读取这个表，比如Spark，Flink，Presto等。
 
-![](../../assets/images/DataLake/attachments/数据湖08：Apache%20Iceberg原理和功能介绍_image_0.png)
+![](../../assets/images/DataLake/attachments/数据湖08：ApacheIceberg原理和功能介绍_image_0.png)
 
 在文件Format（parquet/avro/orc等）之上实现Table语义：
 
@@ -41,7 +41,7 @@ Table Format向下管理在存储系统上的文件，向上为计算层提供�
 
 表和表格式是两个概念。表是一个具象的概念，应用层面的概念，我们天天说的表是简单的行和列的组合。而表格式是数据库系统实现层面一个抽象的概念，它定义了一个表的Scheme定义：包含哪些字段，表下面文件的组织形式（Partition方式）、元数据信息（表相关的统计信息，表索引信息以及表的读写API），如下图左侧所示：
 
-![](../../assets/images/DataLake/attachments/数据湖08：Apache%20Iceberg原理和功能介绍_image_1.png)
+![](../../assets/images/DataLake/attachments/数据湖08：ApacheIceberg原理和功能介绍_image_1.png)
 
 上图右侧是Iceberg在数据仓库生态中的位置，和它差不多相当的一个组件是Metastore。不过Metastore是一个服务，而Iceberg就是一系列jar包。对于Table Format，可以认为主要包含4个层面的含义，分别是表schema定义（是否支持复杂数据类型），表中文件的组织形式，表相关统计信息、表索引信息以及表的读写API信息。
 
@@ -111,7 +111,7 @@ Apache Iceberg设计初衷是为了解决Hive离线数仓计算慢的问题，�
 
 先了解一下Iceberg在文件系统中的布局，总体来讲Iceberg分为两部分数据，第一部分是数据文件，如下图中的 parquet 文件。第二部分是表元数据文件（Metadata 文件），包含 Snapshot 文件（snap-
 
-![](../../assets/images/DataLake/attachments/数据湖08：Apache%20Iceberg原理和功能介绍_image_2.png)
+![](../../assets/images/DataLake/attachments/数据湖08：ApacheIceberg原理和功能介绍_image_2.png)
 
 #### 6.1 元数据文件
 

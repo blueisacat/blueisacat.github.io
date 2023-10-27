@@ -2,7 +2,7 @@
 layout: default
 title: Apache Flink 零基础入门（8）：Table API 编程
 parent: Flink
-nav_order: 5.7
+nav_order: 22
 ---
 
 # 一、什么是 Table API
@@ -11,11 +11,11 @@ nav_order: 5.7
 
 ## 1. Flink API 总览
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_0.png)
 
 如图，Flink 根据使用的便捷性和表达能力的强弱提供了 3 层 API，由上到下，表达能力逐渐增强，比如 processFunction，是最底层的 API，表达能力最强，我们可以用他来操作 state 和 timer 等复杂功能。Datastream API 相对于 processFunction 来说，又进行了进一步封装，提供了很多标准的语义算子给大家使用，比如我们常用的 window 算子（包括 Tumble, slide,session 等）。那么最上面的 SQL 和 Table API 使用最为便捷，具有自身的很多特点，重点归纳如下：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_1.png)
 
 第一，Table API & SQL 是一种声明式的 API。用户只需关心做什么，不用关心怎么做，比如图中的 WordCount 例子，只需要关心按什么维度聚合，做哪种类型的聚合，不需要关心底层的实现。
 
@@ -31,7 +31,7 @@ nav_order: 5.7
 
 上一小节介绍了 Table API 和 SQL 一些共有的特性，这个小节重点介绍下 Table API 自身的特性。主要可以归纳为以下两点：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_2.png)
 
 第一，Table API 使得多声明的数据处理写起来比较容易。
 
@@ -79,7 +79,7 @@ public class JavaBatchWordCount {   // line:10
 
 这里需要注意的是，ExecutionEnvironment 跟 BatchTableEnvironment 都是对应 Java 的版本，对于 scala 程序，这里需要是一个对应 scala 版本的 environment。这也是初学者一开始可能会遇到的问题，因为 environent 有很多且容易混淆。为了让大家更好区分这些 environment，下面对 environment 进行了一些归纳。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_3.png)
 
 这里从 batch/stream，还有 Java/scala，对 environment 进行了分类，对于这些 environment 使用时需要特别注意，不要 import 错了。environment 的问题，社区已经进行了一些讨论，如上图下方的**[链接](https://mail.google.com/mail/u/0/?tab=wm#search/label%3Aflink-dev+table+environment/FMfcgxvzMBlhTWVjxlzCnVZsLvvDkmph%C2%A0https://cwiki.apache.org/confluence/display/FLINK/FLIP-32%3A+Restructure+flink-table+for+future+contributions)**，这里不再具体展开。
 
@@ -109,13 +109,13 @@ tEnv.toDataSet(result, Row.class).print();
 
 获取 Table 大体可以分为两步，第一步，注册对应的 TableSource；第二步，调用 Table environement 的 scan 方法获取 Table 对象。注册 Table Source 又有3种方法：通过 Table descriptor 来注册，通过自定义 source 来注册，或者通过 DataStream 来注册。具体的注册方式如下图所示：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_4.png)
 
 ## 3. 如何输出一个Table
 
 对应输出 Table，我们也有类似的3种方法：Table descriptor, 自定义 Table sink 以及输出成一个 DataStream。如下图所示：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_5.png)
 
 ## 4. 如何操作一个Table
 
@@ -123,13 +123,13 @@ tEnv.toDataSet(result, Row.class).print();
 
 第2、3节介绍了如何获取和输出一个 Table，本节主要介绍如何对 Table 进行操作。Table 上有很多操作，比如一些 projection 操作 select、filter、where；聚合操作，如 groupBy、flatAggrgate；还有join操作，等等。我们以一个具体的例子来介绍下 Table 上各操作的转换流程。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_6.png)
 
 如上图，当我们拿到一个 Table 后，调用 groupBy 会返回一个 GroupedTable。GroupedTable 里只有 select 方法，对 GroupedTable 调用 select 方法会返回一个 Table。拿到这个 Table 后，我们可以再调用 Table 上的方法。图中其他 Table，如 OverWindowedTable 也是类似的流程。值得注意的是，引入各个类型的 Table 是为了保证 API 的合法性和便利性，比如 groupBy 之后只有 select 操作是有意义的，在编辑器上可以直接点出来。
 
 前面我们提到，可以将 Table API 看成是 SQL 的超集，因此我们也可以对 Table 里的操作按此进行分类，大致分为三类，如下图所示：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_7.png)
 
 第一类，是跟 SQL 对齐的一些操作，比如 select, filter, join 等。第二类，是一些提升 Table API 易用性的操作。第三类，是增强 Table API 功能的一些操作。第一类操作由于和 SQL 类似，比较容易理解，其次，也可以查看官方的文档，了解具体的方法，所以这里不再展开介绍。下面的章节会重点介绍后两类操作，这些操作也是 Table API 独有的。
 
@@ -137,17 +137,17 @@ tEnv.toDataSet(result, Row.class).print();
 
 介绍易用性之前，我们先来看一个问题。假设我们有一张很大的表，里面有一百列，此时需要去掉一列，那么SQL怎么写？我们需要 select 剩下的 99 列！显然这会给用户带来不小的代价。为了解决这个问题，我们在Table上引入了一个 dropColumns 方法。利用 dropColumns 方法，我们便可以只写去掉的列。与此对应，还引入了 addColumns, addOrReplaceColumns 和 renameColumns 方法，如下图所示：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_8.png)
 
 解决了刚才的问题后，我们再看下面另一个问题：假设还是一张100列的表，我们需要选第20到第80列，那么我们如何操作呢？为了解决这个问题，我们又引入了 withColumns 和 withoutColumns 方法。对于刚才的问题，我们可以简单地写成 table.select(“withColumns(20 to 80)”)。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_9.png)
 
 ### 4.3 增强功能相关操作
 
 该小节会介绍下 TableAggregateFunction 的功能和用法。在引入 TableAggregateFunction 之前，Flink 里有三种自定义函数：ScalarFunction，TableFunction 和 AggregateFunction。我们可以从输入和输出的维度对这些自定义函数进行分类。如下图所示，ScalarFunction 是输入一行，输出一行；TableFunction 是输入一行，输出多行；AggregateFunction 是输入多行输出一行。为了让语义更加完整，Table API 新加了 TableAggregateFunction，它可以接收和输出多行。TableAggregateFunction 添加后，Table API 的功能可以得到很大的扩展，某种程度上可以用它来实现自定义 operator。比如，我们可以用 TableAggregateFunction 来实现 TopN。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20零基础入门（8）：Table%20API%20编程_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（8）：TableAPI编程_image_10.png)
 
 TableAggregateFunction 使用也很简单，方法签名和用法如下图所示：
 

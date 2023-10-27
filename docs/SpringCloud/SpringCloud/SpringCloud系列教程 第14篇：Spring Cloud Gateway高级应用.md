@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第14篇：Spring Cloud Gateway高级应用
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.14
+nav_order: 14
 ---
 
 > Springboot: 2.1.6.RELEASE

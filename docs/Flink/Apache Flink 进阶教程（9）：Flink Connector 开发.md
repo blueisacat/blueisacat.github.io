@@ -2,7 +2,7 @@
 layout: default
 title: Apache Flink 进阶教程（9）：Flink Connector 开发
 parent: Flink
-nav_order: 4.9
+nav_order: 14
 ---
 
 # Flink Streaming Connector
@@ -19,13 +19,13 @@ Flink 是新一代流批统一的计算引擎，它需要从不同的第三方�
 
 下面分别简单介绍一下这四种数据读写的方式。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_0.png)
 
 ## 1. 预定义的 source 和 sink
 
 Flink 里预定义了一部分 source 和 sink。在这里分了几类。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_1.png)
 
 ### 基于文件的 source 和 sink
 
@@ -61,13 +61,13 @@ Flink 里已经提供了一些绑定的 Connector，例如 kafka source 和 sink
 
 虽然该部分是 Flink 项目源代码里的一部分，但是真正意义上不算作 Flink 引擎相关逻辑，并且该部分没有打包在二进制的发布包里面。所以在提交 Job 时候需要注意， job 代码 jar 包中一定要将相应的 connetor 相关类打包进去，否则在提交作业时就会失败，提示找不到相应的类，或初始化某些类异常。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_2.png)
 
 ## 3. Apache Bahir 中的连接器
 
 Apache Bahir 最初是从 Apache Spark 中独立出来项目提供，以提供不限于 Spark 相关的扩展/插件、连接器和其他可插入组件的实现。通过提供多样化的流连接器（streaming connectors）和 SQL 数据源扩展分析平台的覆盖面。如有需要写到 flume、redis 的需求的话，可以使用该项目提供的 connector。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_3.png)
 
 ## 4. Async I/O
 
@@ -75,19 +75,19 @@ Apache Bahir 最初是从 Apache Spark 中独立出来项目提供，以提供�
 
 Async 的原理可参考官方文档：[https://ci.apache.org/projects/flink/flink-docs-release-1.3/dev/stream/asyncio.html](https://ci.apache.org/projects/flink/flink-docs-release-1.3/dev/stream/asyncio.html)
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_4.png)
 
 # Flink Kafka Connector
 
 本章重点介绍生产环境中最常用到的 Flink kafka connector。使用 Flink 的同学，一定会很熟悉 kafka，它是一个分布式的、分区的、多副本的、 支持高吞吐的、发布订阅消息系统。生产环境环境中也经常会跟 kafka 进行一些数据的交换，比如利用 kafka consumer 读取数据，然后进行一系列的处理之后，再将结果写出到 kafka 中。这里会主要分两个部分进行介绍，一是 Flink kafka Consumer，一个是 Flink kafka Producer。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_5.png)
 
 首先看一个例子来串联下 Flink kafka connector。代码逻辑里主要是从 kafka 里读数据，然后做简单的处理，再写回到 kafka 中。
 
 分别用红框框出如何构造一个 Source sink Function。Flink 提供了现成的构造FlinkKafkaConsumer、Producer 的接口，可以直接使用。这里需要注意，因为 kafka 有多个版本，多个版本之间的接口协议会不同。Flink 针对不同版本的 kafka 有相应的版本的 Consumer 和 Producer。例如：针对 08、09、10、11 版本，Flink 对应的 consumer 分别是 FlinkKafkaConsumer 08、09、010、011，producer 也是。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_6.png)
 
 ## 1. Flink kafka Consumer
 
@@ -97,7 +97,7 @@ Async 的原理可参考官方文档：[https://ci.apache.org/projects/flink/fli
 
 另外 Flink 中也提供了一些常用的序列化反序列化的 schema 类。例如，SimpleStringSchema，按字符串方式进行序列化、反序列化。TypeInformationSerializationSchema，它可根据 Flink 的 TypeInformation 信息来推断出需要选择的 schema。JsonDeserializationSchema 使用 jackson 反序列化 json 格式消息，并返回 ObjectNode，可以使用 .get(“property”) 方法来访问相应字段。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_7.png)
 
 ### 消费起始位置设置
 
@@ -115,7 +115,7 @@ Async 的原理可参考官方文档：[https://ci.apache.org/projects/flink/fli
 
 一些具体的使用方法可以参考下图。需要注意的是，因为 Flink 框架有容错机制，如果作业故障，如果作业开启 checkpoint，会从上一次 checkpoint 状态开始恢复。或者在停止作业的时候主动做 savepoint，启动作业时从 savepoint 开始恢复。这两种情况下恢复作业时，作业消费起始位置是从之前保存的状态中恢复，与上面提到跟 kafka 这些单独的配置无关。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_8.png)
 
 ### topic 和 partition 动态发现
 
@@ -123,7 +123,7 @@ Async 的原理可参考官方文档：[https://ci.apache.org/projects/flink/fli
 
 针对上面的两种场景，首先需要在构建 FlinkKafkaConsumer 时的 properties 中设置 flink.partition-discovery.interval-millis 参数为非负值，表示开启动态发现的开关，以及设置的时间间隔。此时 FlinkKafkaConsumer 内部会启动一个单独的线程定期去 kafka 获取最新的 meta 信息。针对场景一，还需在构建 FlinkKafkaConsumer 时，topic 的描述可以传一个正则表达式描述的 pattern。每次获取最新 kafka meta 时获取正则匹配的最新 topic 列表。针对场景二，设置前面的动态发现参数，在定期获取 kafka 最新 meta 信息时会匹配新的 partition。为了保证数据的正确性，新发现的 partition 从最早的位置开始读取。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_9.png)
 
 ### commit offset 方式
 
@@ -133,7 +133,7 @@ Flink kafka consumer commit offset 方式需要区分是否开启了 checkpoint�
 
 如果开启 checkpoint，这个时候作业消费的 offset 是 Flink 在 state 中自己管理和容错。此时提交 offset 到 kafka，一般都是作为外部进度的监控，想实时知道作业消费的位置和 lag 情况。此时需要 setCommitOffsetsOnCheckpoints 为 true 来设置当 checkpoint 成功时提交 offset 到 kafka。此时 commit offset 的间隔就取决于 checkpoint 的间隔，所以此时从 kafka 一侧看到的 lag 可能并非完全实时，如果 checkpoint 间隔比较长 lag 曲线可能会是一个锯齿状。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_10.png)
 
 ### Timestamp Extraction/Watermark 生成
 
@@ -141,7 +141,7 @@ Flink kafka consumer commit offset 方式需要区分是否开启了 checkpoint�
 
 FlinkKakfaConsumer 构造的 source 后直接调用 assignTimestampsAndWatermarks 函数设置水位生成器的好处是此时是每个 partition 一个 watermark assigner，如下图。source 生成的时戳为多个 partition 时戳对齐后的最小时戳。此时在一个 source 读取多个 partition，并且 partition 之间数据时戳有一定差距的情况下，因为在 source 端 watermark 在 partition 级别有对齐，不会导致数据读取较慢 partition 数据丢失。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_11.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_11.png)
 
 ## 2. Flink kafka Producer
 
@@ -153,7 +153,7 @@ FlinkKakfaConsumer 构造的 source 后直接调用 assignTimestampsAndWatermark
 
 - 如果构建 FlinkKafkaProducer 时，partition 设置为 null，此时会使用 kafka producer 默认分区方式，非 key 写入的情况下，使用 round-robin 的方式进行分区，每个 task 都会轮循的写下游的所有 partition。该方式下游的 partition 数据会比较均衡，但是缺点是 partition 个数过多的情况下需要维持过多的网络连接，即每个 task 都会维持跟所有 partition 所在 broker 的连接。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_12.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_12.png)
 
 ## 3. 容错
 
@@ -161,7 +161,7 @@ Flink kafka 09、010 版本下，通过 setLogFailuresOnly 为 false，setFlushO
 
 Flink kafka 011 版本下，通过两阶段提交的 sink 结合 kafka 事务的功能，可以保证端到端精准一次。详细原理可以参考：[https://www.ververica.com/blog/end-to-end-exactly-once-processing-apache-flink-apache-kafka](https://www.ververica.com/blog/end-to-end-exactly-once-processing-apache-flink-apache-kafka)
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（9）：Flink%20Connector%20开发_image_13.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（9）：FlinkConnector开发_image_13.png)
 
 # 一些疑问与解答
 

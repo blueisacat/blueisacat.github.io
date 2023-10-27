@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第5篇：熔断监控Hystrix Dashboard和Turbine
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.5
+nav_order: 5
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -158,7 +158,7 @@ feign:
 
 又到了测试时间，我们先把昨天的eureka和producer CV到今天的工作目录下，顺次启动服务，HystrixDashboard最后启动，启动完成后我们访问：[http://localhost:8081/hystrix](http://localhost:8081/hystrix)，将会看到如下界面：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第5篇：熔断监控Hystrix%20Dashboard和Turbine_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第5篇：熔断监控HystrixDashboard和Turbine_image_0.png)
 
 图中会有一些提示：
 
@@ -194,11 +194,11 @@ data: {"type":...}
 
 到了监控页面就会显示如下图所示：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第5篇：熔断监控Hystrix%20Dashboard和Turbine_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第5篇：熔断监控HystrixDashboard和Turbine_image_1.png)
 
 其实就是[http://localhost:8081/hystrix.stream](http://localhost:8081/hystrix.stream)返回结果的图形化显示，Hystrix Dashboard Wiki上详细说明了图上每个指标的含义，如下图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第5篇：熔断监控Hystrix%20Dashboard和Turbine_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第5篇：熔断监控HystrixDashboard和Turbine_image_2.png)
 
 到此单个应用的熔断监控已经完成。
 

@@ -2,7 +2,7 @@
 layout: default
 title: Sentinel原理（6）：控制台是如何获取到实时数据的
 parent: Sentinel
-nav_order: 2.6
+nav_order: 12
 ---
 
 # Sentinel原理：控制台是如何获取到实时数据的

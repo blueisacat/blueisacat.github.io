@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第2篇：Nacos服务中心初探
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.2
+nav_order: 2
 ---
 
 # 1. 什么是Nacos？
@@ -18,7 +18,7 @@ Nacos 更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是�
 
 Nacos全景图：
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_0.png)
 
 目前Nacos的最新稳定版本为V1.1.0，开源团队对Nacos的规划如下：
 
@@ -36,15 +36,15 @@ Nacos全景图：
 
 - Dubbo 4.0 + Nacos 2.0 开放的服务平台
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_1.png)
 
 - Kubernetes + Spring Cloud 统一服务管理
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_2.png)
 
 # 2. Nacos 架构及概念
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_3.png)
 
 ## 2.1 服务 (Service)
 
@@ -139,11 +139,11 @@ cmd startup.cmd
 
 服务启动后，访问地址：[http://ip:port/nacos](http://ip:port/nacos)
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_4.png)
 
 使用nacos/nacos登录
 
-![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/Spring%20Cloud%20Alibaba%20第2篇：Nacos服务中心初探_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloudAlibaba/attachments/SpringCloudAlibaba第2篇：Nacos服务中心初探_image_5.png)
 
 Nacos单机版服务就启动成功了。
 

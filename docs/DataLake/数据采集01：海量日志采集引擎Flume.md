@@ -2,7 +2,7 @@
 layout: default
 title: 数据采集01：海量日志采集引擎Flume
 parent: DataLake
-nav_order: 1.1
+nav_order: 1
 ---
 
 ### 1. 概述

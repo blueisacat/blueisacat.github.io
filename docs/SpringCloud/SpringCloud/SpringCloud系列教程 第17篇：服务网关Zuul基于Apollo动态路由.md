@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第17篇：服务网关Zuul基于Apollo动态路由
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.17
+nav_order: 17
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -92,7 +92,7 @@ apollo:
 
 其余的配置都配置在Apollo中，具体如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第17篇：服务网关Zuul基于Apollo动态路由_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第17篇：服务网关Zuul基于Apollo动态路由_image_0.png)
 
 ## 3.3 启动主类Chapter16Application.java如下：
 
@@ -148,6 +148,6 @@ public class ZuulProxyRefresher implements ApplicationContextAware {
 
 我们启动Client-Apollo工程和Zuul-Apollo工程，打开浏览器访问：[http://localhost:9091/client/hello](http://localhost:9091/client/hello) ，页面可以正常显示，我们在Apollo中修改路由信息，具体如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第17篇：服务网关Zuul基于Apollo动态路由_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第17篇：服务网关Zuul基于Apollo动态路由_image_1.png)
 
 修改完后点击发布，待发布成功后，我们刷新浏览器，之前的路由访问已经报错404，我们使用修改过后的路由[http://localhost:9091/client_new/hello](http://localhost:9091/client_new/hello) ，页面可以正常显示Hello, i am dev from apollo update.，测试成功，我们通过Apollo实现了Zuul的路由信息动态刷新。

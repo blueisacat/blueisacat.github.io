@@ -2,7 +2,7 @@
 layout: default
 title: 数据采集03：数据集成工具DataX
 parent: DataLake
-nav_order: 1.3
+nav_order: 3
 ---
 
 ### 1. DataX是什么

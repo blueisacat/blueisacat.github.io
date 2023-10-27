@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第19章：Spring Cloud 组件 Docker 化
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.19
+nav_order: 19
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -146,7 +146,7 @@ mvn clean package
 
 执行以上命令需本地配置 maven 环境变量，否则会报错 mvn 命令找不到。笔者使用 idea 提供的 package 命令，具体操作如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第19章：Spring%20Cloud%20组件%20Docker%20化_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第19章：SpringCloud组件Docker化_image_0.png)
 
 直接双击，可以看到控制台开始执行打包命令，在打包完成后会将 target/${project.build.finalName}.jar 打包成 Docker 镜像，我们可以看到控制台输出的命令：
 
@@ -230,9 +230,9 @@ registry.cn-shanghai.aliyuncs.com/springcloud-book/eureka_server:0.0.1-SNAPSHOT
 
 启动成功后打开浏览器分别访问路径：[http://localhost:8761/](http://localhost:8761/) 、 [http://localhost:8762/](http://localhost:8762/) ，结果如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第19章：Spring%20Cloud%20组件%20Docker%20化_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第19章：SpringCloud组件Docker化_image_1.png)
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第19章：Spring%20Cloud%20组件%20Docker%20化_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第19章：SpringCloud组件Docker化_image_2.png)
 
 # 3. 小结
 

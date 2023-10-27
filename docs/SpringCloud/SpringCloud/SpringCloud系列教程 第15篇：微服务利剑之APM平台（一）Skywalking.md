@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第15篇：微服务利剑之APM平台（一）Skywalking
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.15
+nav_order: 15
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -55,7 +55,7 @@ Skywalking与2016年11月2日由国人吴晟在Github上传v1.0版本，用于�
 
 先看一下官方提供的架构图，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_0.png)
 
 Skywalking总体由四个部分agent、collector、webapp-ui、storage组成。图10-11从上到下是应用层接入，可以使用无入侵性的agent探针接入，通过HTTP或者gRPC讲数据发送至Skywalking分析平台collector，collector对接受到的数据进行聚合分析，最后存储至storage中，这里支持多种存储方式，比较常用的有H2和ElasticSearch，最后可以由webapp-ui对所有的数据进行展示。
 
@@ -133,7 +133,7 @@ docker ps
 
 结果如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_1.png)
 
 ElasticSearch6.5.0单节点版已经构建完成，为了方便后续操作，需要修改一个ElasticSearch的命名，输入命令docker exec -it es /bin/bash进入容器文件目录，输入vi config/elasticsearch.yml进入ElasticSearch配置文件，修改cluster.name的值，笔者这里修改为CollectorDBCluster，修改完成后，保存当前修改，输入exit退出容器文件目录，输入docker restart es重启当前容器，在浏览器输入[http://192.168.44.128:9200/](http://192.168.44.128:9200/)，看到如下信息可以证明ElasticSearch6.5.0单节点版已经在正常的运行了。
 
@@ -159,11 +159,11 @@ ElasticSearch6.5.0单节点版已经构建完成，为了方便后续操作，�
 
 Skywalking构建，进入Skywalking官网，进入下载页面（[http://skywalking.apache.org/downloads/](http://skywalking.apache.org/downloads/) ），如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_2.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_2.png)
 
 因为我们是要在CentOS上运行，所以这里选择Linux二进制版，就是已经编译好的版本，无需我们自己编译，下载至我们的CentOS后，解压可以看到目录结构，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_3.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_3.png)
 
 - agent：探针相关，后面会做更加详细的介绍。
 
@@ -171,7 +171,7 @@ Skywalking构建，进入Skywalking官网，进入下载页面（[http://skywalk
 
 - config：这里主要存放的是collector的配置信息，我们需要修改这里的application.yml中的有关ElasticSearch的配置，如下图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_4.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_4.png)
 
 修改storage.elasticsearch.nameSpace为我们前面构建ElasticSearch设置的cluster.name，笔者这里的值为CollectorDBCluster，同时修改storage.elasticsearch.clusterNodes为我们当前构建的ElasticSearch的地址。
 
@@ -183,11 +183,11 @@ Skywalking中默认使用的端口有8080、11800、12800，请保证这些端�
 
 接下来启动collector和webapp-ui，进入bin目录中，执行命令./startup.sh，如：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_5.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_5.png)
 
 打开浏览器访问[http://192.168.44.128:8080/](http://192.168.44.128:8080/)，可以看到webapp-ui的仪表盘，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_6.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_6.png)
 
 Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如何与Skywalking整合使用。
 
@@ -197,7 +197,7 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 整体架构图如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_7.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_7.png)
 
 具体实现代码列出，各位读者可以参考GitHub仓库（[https://github.com/meteor1993/SpringCloudLearning/tree/master/chapter15](https://github.com/meteor1993/SpringCloudLearning/tree/master/chapter15)），下面我们介绍Spring Cloud是如何与Skywalking整合的。
 
@@ -211,7 +211,7 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_8.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_8.png)
 
 还可以使用java -jar的方式来加载agent探针，我们将整个maven项目打包，运行mvn install的命令，使用java -jar的方式来启动，启动命令中增加启动参数，如下：
 
@@ -221,7 +221,7 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 顺次启动四个工程后，使用浏览器访问：[http://localhost:8080/client/hello?name=spring](http://localhost:8080/client/hello?name=spring)，多刷新几次后，我们再使用浏览器访问[http://192.168.44.128:8080/](http://192.168.44.128:8080/)，如：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_9.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_9.png)
 
 - all_heatmap：所有服务响应时间的热点图
 
@@ -229,19 +229,19 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 点击上边栏的拓扑图，可以看到当前我们工程的一个依赖拓扑关系，如：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_10.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_10.png)
 
 点击上边栏的追踪，可以看到左边是当前所有的访问请求，随便点击一个，可以在右边看到一个详细的链路追踪过程，如：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_11.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_11.png)
 
 点击链路，可以看到一些标记信息，包含端点、跨度类型、成功还是失败，以及一些Exception信息，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_12.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_12.png)
 
 点击仪表盘页面的Service，可以看到一些服务相关的信息，如平均响应时间、平均吞吐量、平均时延统计，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_13.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_13.png)
 
 - service_instance_sla：服务实例的成功率
 
@@ -251,7 +251,7 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 点击仪表盘页面的Endpoint，可以看到一些端点相关的信息，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_14.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_14.png)
 
 - endpoint_cpm：端点每分钟调用次数
 
@@ -263,7 +263,7 @@ Skywalking部署到这里就结束了，下面我们开始介绍Spring Cloud如�
 
 点击仪表盘页面的Instance，可以看到一些JVM相关的信息，如图：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第15篇：微服务利剑之APM平台（一）Skywalking_image_15.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第15篇：微服务利剑之APM平台（一）Skywalking_image_15.png)
 
 至此，Spring Cloud与Skywalking的介绍就结束了，感兴趣的朋友可以前往Github的官方网站进行查询。
 

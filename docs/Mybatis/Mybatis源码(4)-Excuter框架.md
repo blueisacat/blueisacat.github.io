@@ -2,7 +2,7 @@
 layout: default
 title: Mybatis源码(4)-Excuter框架
 parent: Mybatis
-nav_order: 1.4
+nav_order: 4
 ---
 
 Mybatis会将所有数据库操作转换成iBatis编程模型，通过门面类SqlSession来操作数据库，但是我们深入SqlSession源码我们会发现，SqlSession啥都没干，它将数据库操作都委托给你了Excuter，如图：

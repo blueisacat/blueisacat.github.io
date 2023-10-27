@@ -2,20 +2,20 @@
 layout: default
 title: Apache Flink 进阶教程（2）：Time 深度解析
 parent: Flink
-nav_order: 4.2
+nav_order: 7
 ---
 
 # 前言
 
 Flink 的 API 大体上可以划分为三个层次：处于最底层的 ProcessFunction、中间一层的 DataStream API 和最上层的 SQL/Table API，这三层中的每一层都非常依赖于时间属性。时间属性是流处理中最重要的一个方面，是流处理系统的基石之一，贯穿这三层 API。在 DataStream API 这一层中因为封装方面的原因，我们能够接触到时间的地方不是很多，所以我们将重点放在底层的 ProcessFunction 和最上层的 SQL/Table API。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_0.png)
 
 # Flink 时间语义
 
 在不同的应用场景中时间语义是各不相同的，Flink 作为一个先进的分布式流处理引擎，它本身支持不同的时间语义。其核心是 Processing Time 和 Event Time（Row Time），这两类时间主要的不同点如下表所示：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_1.png)
 
 Processing Time 是来模拟我们真实世界的时间，其实就算是处理数据的节点本地时间也不一定就是完完全全的我们真实世界的时间，所以说它是用来模拟真实世界的时间。而 Event Time 是数据世界的时间，就是我们要处理的数据流世界里面的时间。关于他们的获取方式，Process Time 是通过直接去调用本地机器的时间，而 Event Time 则是根据每一条处理记录所携带的时间戳来判定。
 
@@ -23,7 +23,7 @@ Processing Time 是来模拟我们真实世界的时间，其实就算是处理�
 
 因此在判断应该使用 Processing Time 还是 Event Time 的时候，可以遵循一个原则：当你的应用遇到某些问题要从上一个 checkpoint 或者 savepoint 进行重放，是不是希望结果完全相同。如果希望结果完全相同，就只能用 Event Time；如果接受结果不同，则可以用 Processing Time。Processing Time 的一个常见的用途是，我们要根据现实时间来统计整个系统的吞吐，比如要计算现实时间一个小时处理了多少条数据，这种情况只能使用 Processing Time。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_2.png)
 
 ## 时间的特性
 
@@ -33,17 +33,17 @@ Processing Time 是来模拟我们真实世界的时间，其实就算是处理�
 
 - 而在用 Event Time 的时候因为时间是绑定在每一条的记录上的，由于网络延迟、程序内部逻辑、或者其他一些分布式系统的原因，数据的时间可能会存在一定程度的乱序，比如上图的例子。在 Event Time 场景下，我们把每一个记录所包含的时间称作 Record Timestamp。如果 Record Timestamp 所得到的时间序列存在乱序，我们就需要去处理这种情况。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_3.png)
 
 如果单条数据之间是乱序，我们就考虑对于整个序列进行更大程度的离散化。简单地讲，就是把数据按照一定的条数组成一些小批次，但这里的小批次并不是攒够多少条就要去处理，而是为了对他们进行时间上的划分。经过这种更高层次的离散化之后，我们会发现最右边方框里的时间就是一定会小于中间方框里的时间，中间框里的时间也一定会小于最左边方框里的时间。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_4.png)
 
 这个时候我们在整个时间序列里插入一些类似于标志位的一些特殊的处理数据，这些特殊的处理数据叫做 watermark。一个 watermark 本质上就代表了这个 watermark 所包含的 timestamp 数值，表示以后到来的数据已经再也没有小于或等于这个时间的了。
 
 # Timestamp 和 Watermark 行为概览
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_5.png)
 
 接下来我们重点看一下 Event Time 里的 Record Timestamp（简写成 timestamp）和 watermark 的一些基本信息。绝大多数的分布式流计算引擎对于数据都是进行了 DAG 图的抽象，它有自己的数据源，有处理算子，还有一些数据汇。数据在不同的逻辑算子之间进行流动。watermark 和 timestamp 有自己的生命周期，接下来我会从 watermark 和 timestamp 的产生、他们在不同的节点之间的传播、以及在每一个节点上的处理，这三个方面来展开介绍。
 
@@ -57,7 +57,7 @@ Flink 支持两种 watermark 生成方式。第一种是在 SourceFunction 中�
 
 总体上而言生成器可以分为两类：第一类是定期生成器；第二类是根据一些在流处理数据流中遇到的一些特殊记录生成的。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_6.png)
 
 两者的区别主要有三个方面，首先定期生成是现实时间驱动的，这里的“定期生成”主要是指 watermark（因为 timestamp 是每一条数据都需要有的），即定期会调用生成逻辑去产生一个 watermark。而根据特殊记录生成是数据驱动的，即是否生成 watermark 不是由现实时间来决定，而是当看到一些特殊的记录就表示接下来可能不会有符合条件的数据再发过来了，这个时候相当于每一次分配 Timestamp 之后都会调用用户实现的 watermark 生成方法，用户需要在生成方法中去实现 watermark 的生成逻辑。
 
@@ -65,7 +65,7 @@ Flink 支持两种 watermark 生成方式。第一种是在 SourceFunction 中�
 
 ## Watermark 传播
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_7.png)
 
 具体的传播策略基本上遵循这三点。
 
@@ -97,7 +97,7 @@ ProcessFunction 和时间相关的功能主要有三点：
 
 ## Watermark 处理
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_8.png)
 
 一个算子的实例在收到 watermark 的时候，首先要更新当前的算子时间，这样的话在 ProcessFunction 里方法查询这个算子时间的时候，就能获取到最新的时间。第二步它会遍历计时器队列，这个计时器队列就是我们刚刚说到的 timer，你可以同时注册很多 timer，Flink 会把这些 Timer 按照触发时间放到一个优先队列中。第三步 Flink 得到一个时间之后就会遍历计时器的队列，然后逐一触发用户的回调逻辑。 通过这种方式，Flink 的某一个任务就会将当前的 watermark 发送到下游的其他任务实例上，从而完成整个 watermark 的传播，从而形成一个闭环。
 
@@ -109,7 +109,7 @@ ProcessFunction 和时间相关的功能主要有三点：
 
 其实之前社区就怎么在 Table/SQL 中去使用时间这个问题做过一定的讨论，是把获取当前 Processing Time 的方法是作为一个特殊的 UDF，还是把这一个列物化到整个的 schema 里面，最终采用了后者。我们这里就分开来讲一讲 Processing Time 和 Event Time 在使用的时候怎么在 Table 中指定。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_9.png)
 
 对于 Processing Time，我们知道要得到一个 Table 对象（或者注册一个 Table）有两种手段：
 
@@ -125,7 +125,7 @@ ProcessFunction 和时间相关的功能主要有三点：
 
 ## 时间列和 Table 操作
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（2）：Time%20深度解析_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（2）：Time深度解析_image_10.png)
 
 指定完了时间列之后，当我们要真正去查询时就会涉及到一些具体的操作。这里我列举的这些操作都是和时间列紧密相关，或者说必须在这个时间列上才能进行的。比如说“Over 窗口聚合”和“Group by 窗口聚合”这两种窗口聚合，在写 SQL 提供参数的时候只能允许你在这个时间列上进行这种聚合。第三个就是时间窗口聚合，你在写条件的时候只支持对应的时间列。最后就是排序，我们知道在一个无尽的数据流上对数据做排序几乎是不可能的事情，但因为这个数据本身到来的顺序已经是按照时间属性来进行排序，所以说我们如果要对一个 DataStream 转化成 Table 进行排序的话，你只能是按照时间列进行排序，当然同时你也可以指定一些其他的列，但是时间列这个是必须的，并且必须放在第一位。
 

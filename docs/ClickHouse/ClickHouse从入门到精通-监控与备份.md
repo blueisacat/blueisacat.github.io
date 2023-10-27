@@ -2,6 +2,7 @@
 layout: default
 title: ClickHouse从入门到精通-监控与备份
 parent: ClickHouse
+nav_order: 3
 ---
 
 ### 1. ClickHouse 监控概述

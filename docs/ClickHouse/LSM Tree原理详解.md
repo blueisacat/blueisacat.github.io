@@ -2,6 +2,7 @@
 layout: default
 title: LSM Tree原理详解
 parent: ClickHouse
+nav_order: 4
 ---
 
 ### 0 前言
@@ -12,7 +13,7 @@ parent: ClickHouse
 
 LSM Tree的全称为Log-Structured Merge Tree，是一个分层、有序、针对块存储设备（机械硬盘和SSD）特点而设计的数据存储结构。它的核心理论基础还是磁盘的顺序写速度比随机写速度快非常多，即使是SSD，由于块擦除和垃圾回收的影响，顺序写速度还是比随机写速度快很多。
 
-![](../../assets/images/ClickHouse/attachments/LSM%20Tree原理详解_image_0.png)
+![](../../assets/images/ClickHouse/attachments/LSMTree原理详解_image_0.png)
 
 LSM Tree将存储数据切分为一系列的SSTable（Sorted String Table），一个SSTable内的数据是有序的任意字节组（即arbitrary byte string，并不是指编程语言中的String字符串），而且，SSTable一但写入磁盘中，就像日志一样不能再修改（这就是Log-Structured Merge Tree名字中Log-Structured一词的由来）。当要修改现有数据时，LSM Tree并不直接修改旧数据，而是直接将新数据写入新的SSTable中。同样的，删除数据时，LSM Tree也不直接删除旧数据，而是写一个相应数据的删除标记的记录到一个新的SSTable中。这样一来，LSM Tree写数据时对磁盘的操作都是顺序块写入操作，而没有随机写操作。
 
@@ -22,7 +23,7 @@ LSM Tree这种独特的写入方式，导致在查找数据时，LSM Tree就不�
 
 #### 2.1 LSM Tree框架图
 
-![](../../assets/images/ClickHouse/attachments/LSM%20Tree原理详解_image_1.png)
+![](../../assets/images/ClickHouse/attachments/LSMTree原理详解_image_1.png)
 
 上图中，WAL（Write Ahead LOG）严格来说本身并不是LSM Tree数据结构的一部分，但是实际系统中，WAL是数据库不可或缺的一部分，把WAL包括进来才能更准确的理解LSM Tree。
 
@@ -109,7 +110,7 @@ SSTable合并其实就是在空间放大、写放大、读放大几个相互制�
 
 leveled compaction为每层level的SSTable数据总大小设置一个阈值，level数越大，阈值设置的也越大，比如level0阈值为10MB、level1阈值设置为100MB、level2阈值设置为1000MB。当某level层的数据总量大小超过设置的阈值时，则选取一个SSTable合并入高一级level层的一个或多个SSTable中。高level层涉及的SSTable的选择处决于数据的分布，以合并后高level层中的所有SSTable数据是整体有序的为准（one sorted run），也就是说数据在同一层中不存在重叠的现象。
 
-![](../../assets/images/ClickHouse/attachments/LSM%20Tree原理详解_image_2.png)
+![](../../assets/images/ClickHouse/attachments/LSMTree原理详解_image_2.png)
 
 leveled compaction因为会将SSTable合并入多个SSTable中，能保证同一层的SSTable中数据不会重叠，所以是一种最小化空间放大的策略。但是，合并时需要读取多个SSTable，然后写入多个更新后的SSTable，导致更大的写放大和读放大。但是在数据查找过程中，由于减少了需要查找SSTable的数量，降低了数据查找时的读放大，提升了数据查找的性能。所以，leveled compaction适合比较关注数据查询速度和控制磁盘空间占用的场景。比如，数据写入一次，但是会被频繁反复查询；数据经常被修改，但是需要控制磁盘空间大小和保证数据查询速度。
 
@@ -119,7 +120,7 @@ Cassandra的LCS（Leveled Compaction Strategy）和RocksDB的Classic Leveled Com
 
 tiered compaction当某level层的SSTable数量达到设定的阈值时，则将该层的多个SSTable合并为一个新的SSTable，并放入高一层level中。
 
-![](../../assets/images/ClickHouse/attachments/LSM%20Tree原理详解_image_3.png)
+![](../../assets/images/ClickHouse/attachments/LSMTree原理详解_image_3.png)
 
 tiered compaction比较偏重于控制写放大在一定程度的前提下降低空间放大和提升数据查询性能。但是在同一层的SSTable中还是存在数据重叠，数据查询性能不如leveled compaction。尤其是随着level数越来越大，单个SSTable数据量也越来越大，合并触发条件也越来越难，这些巨型SSTable中的重叠数据和被删除的数据占用的空间也就越来越难被释放掉。tiered compaction比较适合数据修改频率不高，且最近写入的数据查询频率比较高的场景。
 

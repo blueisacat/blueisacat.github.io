@@ -2,14 +2,14 @@
 layout: default
 title: Apache Flink 进阶教程（6）：Flink 作业执行深度解析
 parent: Flink
-nav_order: 4.6
+nav_order: 11
 ---
 
 # Flink 四层转化流程
 
 Flink 有四层转换流程，第一层为 Program 到 StreamGraph；第二层为 StreamGraph 到 JobGraph；第三层为 JobGraph 到 ExecutionGraph；第四层为 ExecutionGraph 到物理执行计划。通过对 Program 的执行，能够生成一个 DAG 执行图，即逻辑执行图。如下：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_0.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_0.png)
 
 第一部分将先讲解四层转化的流程，然后将以详细案例讲解四层的具体转化。
 
@@ -31,13 +31,13 @@ Program 转换成 StreamGraph 具体分为三步：
 
 - 通过 StreamEdge 连接 StreamNode。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_1.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_1.png)
 
 通过 WindowWordCount 来看代码到 StreamGraph 的转化，在 flatMap transform 设置 slot 共享组为 flatMap_sg，并发设置为 4，在聚合的操作中设置 slot 共享组为 sum_sg， sum() 和 counts() 并发设置为 3，这样设置主要是为了演示后面如何嵌到一起的，跟上下游节点的并发以及上游的共享组有关。
 
 WindowWordCount 代码中可以看到，在 readTextFile() 中会生成一个 transform，且 transform 的 ID 是 1；然后到 flatMap() 会生成一个 transform， transform 的 ID 是 2；接着到 keyBy() 生成一个 transform 的 ID 是 3；再到 sum() 生成一个 transform 的 ID 是 4；最后到 counts()生成 transform 的 ID 是 5。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_2.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_2.png)
 
 transform 的结构如图所示，第一个是 flatMap 的 transform，第二个是 window 的 transform，第三个是 SinkTransform 的 transform。除此之外，还能在 transform 的结构中看到每个 transform 的 input 是什么。
 
@@ -47,23 +47,23 @@ transform 的结构如图所示，第一个是 flatMap 的 transform，第二个
 
 - StreamEdge 是用来描述两个 operator 逻辑的链接边，其关键变量有 sourceVertex、targetVertex。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_3.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_3.png)
 
 WindowWordCount transform 到 StreamGraph 转化如图所示，StreamExecutionEnvironment 的 transformations 存在 3 个 transform，分别是 Flat Map（Id 2）、Window（Id 4）、Sink（Id 5）。
 
 transform 的时候首先递归处理 transform 的 input，生成 StreamNode，然后通过 StreamEdge 链接上下游 StreamNode。需要注意的是，有些 transform 操作并不会生成StreamNode 如 PartitionTransformtion，而是生成个虚拟节点。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_4.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_4.png)
 
 在转换完成后可以看到，streamNodes 有四种 transform 形式，分别为 Source、Flat Map、Window、Sink。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_5.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_5.png)
 
 每个 streamNode 对象都携带并发个数、slotSharingGroup、执行类等运行信息。
 
 ## StreamGraph 到 JobGraph 的转化
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_6.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_6.png)
 
 StreamGraph 到 JobGraph 的转化步骤：
 
@@ -99,7 +99,7 @@ StreamGraph 到 JobGraph 的转化步骤：
 
 - 可以进行节点连接操作。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_7.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_7.png)
 
 JobGraph 对象结构如上图所示，taskVertices 中只存在 Window、Flat Map、Source 三个 TaskVertex，Sink operator 被嵌到 window operator 中去了。
 
@@ -121,7 +121,7 @@ Flink 任务失败的时候，各个 operator 是能够从 checkpoint 中恢复�
 
 ## JobGraph 到 ExecutionGraph 以及物理执行计划
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_8.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_8.png)
 
 JobGraph 到 ExecutionGraph 以及物理执行计划的流程：
 
@@ -135,7 +135,7 @@ JobGraph 到 ExecutionGraph 以及物理执行计划的流程：
 
 ## Flink On Yarn 模式
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_9.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_9.png)
 
 基于 Yarn 层面的架构类似 Spark on Yarn 模式，都是由 Client 提交 App 到 RM 上面去运行，然后 RM 分配第一个 container 去运行 AM，然后由 AM 去负责资源的监督和管理。需要说明的是，Flink 的 Yarn 模式更加类似 Spark on Yarn 的 cluster 模式，在 cluster 模式中，dirver 将作为 AM 中的一个线程去运行。Flink on Yarn 模式也是会将 JobManager 启动在 container 里面，去做个 driver 类似的任务调度和分配，Yarn AM 与 Flink JobManager 在同一个 Container 中，这样 AM 可以知道 Flink JobManager 的地址，从而 AM 可以申请 Container 去启动 Flink TaskManager。待 Flink 成功运行在 Yarn 集群上，Flink Yarn Client 就可以提交 Flink Job 到 Flink JobManager，并进行后续的映射、调度和计算处理。
 
@@ -159,13 +159,13 @@ JobGraph 到 ExecutionGraph 以及物理执行计划的流程：
 
 ## 资源调度模型重构下的 Flink On Yarn 模式
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_10.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_10.png)
 
 ### 没有 Dispatcher job 运行过程
 
 客户端提交 JobGraph 以及依赖 jar 包到 YarnResourceManager，接着 Yarn ResourceManager 分配第一个 container 以此来启动 AppMaster，Application Master 中会启动一个 FlinkResourceManager 以及 JobManager，JobManager 会根据 JobGraph 生成的 ExecutionGraph 以及物理执行计划向 FlinkResourceManager 申请 slot，FlinkResoourceManager 会管理这些 slot 以及请求，如果没有可用 slot 就向 Yarn 的 ResourceManager 申请 container，container 启动以后会注册到 FlinkResourceManager，最后 JobManager 会将 subTask deploy 到对应 container 的 slot 中去。
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_11.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_11.png)
 
 ### 在有 Dispatcher 的模式下
 
@@ -183,7 +183,7 @@ JobGraph 到 ExecutionGraph 以及物理执行计划的流程：
 
 ## 新的资源调度框架下 single cluster job on Yarn 流程介绍
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_12.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_12.png)
 
 single cluster job on Yarn 模式涉及三个实例对象：
 
@@ -208,7 +208,7 @@ single cluster job on Yarn 模式涉及三个实例对象：
 
 整个任务运行代码调用流程如下图：
 
-![](../../assets/images/Flink/attachments/Apache%20Flink%20进阶教程（6）：Flink%20作业执行深度解析_image_13.png)
+![](../../assets/images/Flink/attachments/ApacheFlink进阶教程（6）：Flink作业执行深度解析_image_13.png)
 
 ## subTask 在执行时是怎么运行的？
 

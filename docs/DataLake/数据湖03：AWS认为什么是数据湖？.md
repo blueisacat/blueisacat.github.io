@@ -2,7 +2,7 @@
 layout: default
 title: 数据湖03：AWS认为什么是数据湖？
 parent: DataLake
-nav_order: 3.3
+nav_order: 13
 ---
 
 ### 1. 什么是数据湖？

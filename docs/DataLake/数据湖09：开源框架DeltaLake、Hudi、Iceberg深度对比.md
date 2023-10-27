@@ -2,7 +2,7 @@
 layout: default
 title: 数据湖09：开源框架DeltaLake、Hudi、Iceberg深度对比
 parent: DataLake
-nav_order: 3.9
+nav_order: 19
 ---
 
 ### 1. 数据湖框架

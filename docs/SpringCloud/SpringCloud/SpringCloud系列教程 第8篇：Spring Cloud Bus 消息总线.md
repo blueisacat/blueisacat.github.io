@@ -3,7 +3,7 @@ layout: default
 title: SpringCloud系列教程 第8篇：Spring Cloud Bus 消息总线
 parent: SpringCloud系列教程
 grand_parent: SpringCloud
-nav_order: 1.8
+nav_order: 8
 ---
 
 > Springboot: 2.1.6.RELEASE
@@ -20,7 +20,7 @@ Spring cloud bus通过轻量消息代理连接各个分布的节点。这会用�
 
 大家可以将它理解为管理和传播所有分布式项目中的消息既可，其实本质是利用了MQ的广播机制在分布式的系统中传播消息，目前常用的有Kafka和RabbitMQ。利用bus的机制可以做很多的事情，其中配置中心客户端刷新就是典型的应用场景之一，我们用一张图来描述bus在配置中心使用的机制。
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第8篇：Spring%20Cloud%20Bus%20消息总线_image_0.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第8篇：SpringCloudBus消息总线_image_0.png)
 
 根据此图我们可以看出利用Spring Cloud Bus做配置更新的步骤:
 
@@ -105,7 +105,7 @@ curl -X POST
 
 我们可以将上面的流程改进一下：
 
-![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程%20第8篇：Spring%20Cloud%20Bus%20消息总线_image_1.png)
+![](../../../assets/images/SpringCloud/SpringCloud/attachments/SpringCloud系列教程第8篇：SpringCloudBus消息总线_image_1.png)
 
 这时Spring Cloud Bus做配置更新步骤如下:
 

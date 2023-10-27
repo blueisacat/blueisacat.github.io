@@ -3,7 +3,7 @@ layout: default
 title: Spring Cloud Alibaba 第5篇：Nacos配置管理
 parent: SpringCloudAlibaba系列教程
 grand_parent: SpringCloud
-nav_order: 1.5
+nav_order: 5
 ---
 
 上一篇《Spring Cloud Alibaba | Nacos服务注册与发现》我们聊了Nacos服务注册与发现，这一篇我们接着聊Nacos配置管理。
