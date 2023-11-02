@@ -4,4 +4,4 @@ title: SQL优化
 parent: MySQL
 ---
 
-![](attachments/SQL优化_image_0.png)
+![](../../assets/images/MySQL/attachments/SQL优化_image_0.png)
