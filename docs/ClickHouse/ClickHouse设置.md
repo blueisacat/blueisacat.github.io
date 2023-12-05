@@ -2977,23 +2977,23 @@ compiled_expression_cache_size
 
 ***
 
-## proxy
+## 代理
 
 为 HTTP 和 HTTPS 请求定义代理服务器，目前由 S3 存储、S3 表函数和 URL 函数支持。
 
 定义代理服务器有三种方法：环境变量、代理列表和远程代理解析器。
 
-### Environment variables
+### 环境变量
 
 `http_proxy` 和 `https_proxy` 环境变量允许您为给定协议指定代理服务器。如果您在系统上设置了它，它应该可以无缝运行。
 
 如果给定协议只有一个代理服务器并且该代理服务器不会更改，则这是最简单的方法。
 
-### Proxy lists
+### 代理列表
 
 这种方法允许您为协议指定一个或多个代理服务器。如果定义了多个代理服务器，ClickHouse 会循环使用不同的代理，平衡服务器之间的负载。如果某个协议有多个代理服务器并且代理服务器列表不会更改，则这是最简单的方法。
 
-### Configuration template
+### 配置模板
 
 ```xml
 <proxy>
@@ -3017,11 +3017,11 @@ compiled_expression_cache_size
 
 * `<uri>` - 代理的 URI
 
-### Remote proxy resolvers
+### 远程代理解析器
 
 代理服务器可能会动态更改。在这种情况下，您可以定义解析器的端点。ClickHouse 向该端点发送一个空的 GET 请求，远程解析器应返回代理主机。ClickHouse 将使用它来使用以下模板形成代理 URI：`{proxy_scheme}://{proxy_host}:{proxy_port}`
 
-### Configuration template
+### 配置模板
 
 ```xml
 <proxy>
@@ -3066,7 +3066,7 @@ compiled_expression_cache_size
 
 * `<proxy_cache_time>` - ClickHouse 应缓存来自解析器的值的时间（以秒为单位）。将此值设置为 0 会导致 ClickHouse 为每个 HTTP 或 HTTPS 请求联系解析器。
 
-### Precedence
+### 优先级
 
 代理设置按以下顺序确定：
 
@@ -3078,6 +3078,217 @@ compiled_expression_cache_size
 
 ClickHouse 将检查请求协议的最高优先级解析器类型。如果未定义，它将检查下一个最高优先级的解析器类型，直到到达环境解析器。这也允许混合使用解析器类型。
 
-### disable_tunneling_for_https_requests_over_http_proxy
+### 禁用通过 http 代理的 https 请求的隧道
 
 默认情况下，隧道（即 `HTTP CONNECT`）用于通过 `HTTP` 代理发出 `HTTPS` 请求。此设置可用于禁用它。
+
+# 查询级别设置项
+
+有多种方法可以设置 ClickHouse 查询级别设置。设置按层进行配置，每个后续层都会重新定义设置的先前值。
+
+定义设置的优先级顺序是：
+
+1. 直接或在设置配置文件中将设置应用于用户
+
+    * SQL（推荐）
+
+    * 将一个或多个 XML 或 YAML 文件添加到 `/etc/clickhouse-server/users.d`
+
+2. 会话设置
+
+    * 从 ClickHouse Cloud SQL 控制台或 `clickhouse 客户端`以交互模式发送 `SET setting=value`。同样，您可以在 HTTP 协议中使用 ClickHouse 会话。为此，您需要指定 `session_id` HTTP 参数。
+
+3. 查询设置
+
+    * 非交互方式启动`clickhouse客户端`时，设置启动参数`--setting=value`。
+
+    * 使用 HTTP API 时，传递 CGI 参数（`URL?setting_1=value&setting_2=value...`）。
+
+    * 在 SELECT 查询的 SETTINGS 子句中定义设置。设置值仅应用于该查询，并在执行查询后重置为默认值或之前的值。
+
+*** 
+
+## 例子
+
+这些示例均将 `async_insert` 设置的值设置为 `1`，并展示如何检查正在运行的系统中的设置。
+
+### 使用 SQL 将设置直接应用于用户
+
+这将使用设置 `async_inset = 1` 创建用户摄取器：
+
+```sql
+CREATE USER ingester
+IDENTIFIED WITH sha256_hash BY '7e099f39b84ea79559b3e85ea046804e63725fd1f46b37f281276aae20f86dc3'
+SETTINGS async_insert = 1
+```
+
+### 检查设置配置文件和分配
+
+```sql
+SHOW ACCESS
+```
+
+```sql
+┌─ACCESS─────────────────────────────────────────────────────────────────────────────┐
+│ ...                                                                                │
+│ CREATE USER ingester IDENTIFIED WITH sha256_password SETTINGS async_insert = true  │
+│ ...                                                                                │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 使用 SQL 创建设置配置文件并分配给用户
+
+这将使用设置 `async_inset = 1` 创建配置文件 `log_ingest`：
+
+```sql
+CREATE
+SETTINGS PROFILE log_ingest SETTINGS async_insert = 1
+```
+
+这将创建用户 `ingest` 并为用户分配设置配置文件 `log_ingest`：
+
+```sql
+CREATE USER ingester
+IDENTIFIED WITH sha256_hash BY '7e099f39b84ea79559b3e85ea046804e63725fd1f46b37f281276aae20f86dc3'
+SETTINGS PROFILE log_ingest
+```
+
+使用 XML 创建设置配置文件和用户
+
+```bash
+/etc/clickhouse-server/users.d/users.xml
+```
+
+```xml
+<clickhouse>
+    <profiles>
+        <log_ingest>
+            <async_insert>1</async_insert>
+        </log_ingest>
+    </profiles>
+
+    <users>
+        <ingester>
+            <password_sha256_hex>7e099f39b84ea79559b3e85ea046804e63725fd1f46b37f281276aae20f86dc3</password_sha256_hex>
+            <profile>log_ingest</profile>
+        </ingester>
+        <default replace="true">
+            <password_sha256_hex>7e099f39b84ea79559b3e85ea046804e63725fd1f46b37f281276aae20f86dc3</password_sha256_hex>
+            <access_management>1</access_management>
+            <named_collection_control>1</named_collection_control>
+        </default>
+    </users>
+</clickhouse>
+```
+
+### 检查设置配置文件和分配
+
+```sql
+SHOW ACCESS
+```
+
+```sql
+┌─ACCESS─────────────────────────────────────────────────────────────────────────────┐
+│ CREATE USER default IDENTIFIED WITH sha256_password                                │
+│ CREATE USER ingester IDENTIFIED WITH sha256_password SETTINGS PROFILE log_ingest   │
+│ CREATE SETTINGS PROFILE default                                                    │
+│ CREATE SETTINGS PROFILE log_ingest SETTINGS async_insert = true                    │
+│ CREATE SETTINGS PROFILE readonly SETTINGS readonly = 1                             │
+│ ...                                                                                │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 为会话分配设置
+
+```sql
+SET async_insert =1;
+SELECT value FROM system.settings where name='async_insert';
+```
+
+```sql
+┌─value──┐
+│ 1      │
+└────────┘
+```
+
+### 在查询期间分配设置
+
+```sql
+INSERT INTO YourTable
+SETTINGS async_insert=1
+VALUES (...)
+```
+
+***
+
+## 将设置转换为其默认值
+
+如果更改设置并希望将其恢复为默认值，请将该值设置为 `DEFAULT`。语法如下：
+
+```sql
+SET setting_name = DEFAULT
+```
+
+例如，`async_insert` 的默认值为 `0`。假设将其值更改为 `1`：
+
+```sql
+SET async_insert = 1;
+
+SELECT value FROM system.settings where name='async_insert';
+```
+
+响应是：
+
+```sql
+┌─value──┐
+│ 1      │
+└────────┘
+```
+
+以下命令将其值设置回 0：
+
+```sql
+SET async_insert = DEFAULT;
+
+SELECT value FROM system.settings where name='async_insert';
+```
+
+该设置现在恢复为默认值：
+
+```sql
+┌─value───┐
+│ 0       │
+└─────────┘
+```
+
+***
+
+## 自定义设置
+
+除了通用设置之外，用户还可以定义自定义设置。
+
+自定义设置名称必须以预定义前缀之一开头。这些前缀的列表必须在服务器配置文件的 `custom_settings_prefixes` 参数中声明。
+
+```xml
+<custom_settings_prefixes>custom_</custom_settings_prefixes>
+```
+
+要定义自定义设置，请使用 `SET` 命令：
+
+```sql
+SET custom_a = 123;
+```
+
+要获取自定义设置的当前值，请使用 `getSetting()` 函数：
+
+
+
+
+
+
+
+
+
+
+
+
