@@ -3128,7 +3128,7 @@ SETTINGS async_insert = 1
 SHOW ACCESS
 ```
 
-```sql
+```bash
 ┌─ACCESS─────────────────────────────────────────────────────────────────────────────┐
 │ ...                                                                                │
 │ CREATE USER ingester IDENTIFIED WITH sha256_password SETTINGS async_insert = true  │
@@ -3187,7 +3187,7 @@ SETTINGS PROFILE log_ingest
 SHOW ACCESS
 ```
 
-```sql
+```bash
 ┌─ACCESS─────────────────────────────────────────────────────────────────────────────┐
 │ CREATE USER default IDENTIFIED WITH sha256_password                                │
 │ CREATE USER ingester IDENTIFIED WITH sha256_password SETTINGS PROFILE log_ingest   │
@@ -3205,7 +3205,7 @@ SET async_insert =1;
 SELECT value FROM system.settings where name='async_insert';
 ```
 
-```sql
+```bash
 ┌─value──┐
 │ 1      │
 └────────┘
@@ -3239,7 +3239,7 @@ SELECT value FROM system.settings where name='async_insert';
 
 响应是：
 
-```sql
+```bash
 ┌─value──┐
 │ 1      │
 └────────┘
@@ -3255,7 +3255,7 @@ SELECT value FROM system.settings where name='async_insert';
 
 该设置现在恢复为默认值：
 
-```sql
+```bash
 ┌─value───┐
 │ 0       │
 └─────────┘
