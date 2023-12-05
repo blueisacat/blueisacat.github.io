@@ -533,7 +533,7 @@ IO 线程池的最大可用大小。
 
 **例子**
 
-```XML
+```xml
 <max_table_size_to_drop>0</max_table_size_to_drop>
 ```
 
@@ -623,7 +623,7 @@ IO 线程池的最大可用大小。
 
 `local_disk` 的缓存和临时数据都将存储在文件系统上的 `/tiny_local_cache` 中，由`tiny_local_cache` 管理。
 
-```XML
+```xml
 <clickhouse>
     <storage_configuration>
         <disks>
@@ -675,7 +675,7 @@ IO 线程池的最大可用大小。
 
 当 `/disk1` 已满时，临时数据将存储在 `/disk2` 上。
 
-```XML
+```xml
 <clickhouse>
     <storage_configuration>
         <disks>
@@ -754,7 +754,7 @@ ClickHouse 每 x 秒重新加载内置词典。这使得无需重新启动服务
 
 例子
 
-```XML
+```xml
 <builtin_dictionaries_reload_interval>3600</builtin_dictionaries_reload_interval>
 ```
 
@@ -770,7 +770,7 @@ MergeTree 引擎表的数据压缩设置。
 
 配置模板：
 
-```XML
+```xml
 <compression>
     <case>
       <min_part_size>...</min_part_size>
@@ -804,7 +804,7 @@ MergeTree 引擎表的数据压缩设置。
 
 **例子**
 
-```XML
+```xml
 <compression incl="clickhouse_compression">
     <case>
         <min_part_size>10000000000</min_part_size>
@@ -827,7 +827,7 @@ MergeTree 引擎表的数据压缩设置。
 
 从配置加载：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <key>1234567812345678</key>
@@ -839,7 +839,7 @@ MergeTree 引擎表的数据压缩设置。
 
 当密钥为十六进制时，从配置加载：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <key_hex>00112233445566778899aabbccddeeff</key_hex>
@@ -849,7 +849,7 @@ MergeTree 引擎表的数据压缩设置。
 
 从环境变量加载密钥：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <key_hex from_env="ENVVAR"></key_hex>
@@ -861,7 +861,7 @@ MergeTree 引擎表的数据压缩设置。
 
 这些方法中的每一种都可以应用于多个键：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <key_hex id="0">00112233445566778899aabbccddeeff</key_hex>
@@ -875,7 +875,7 @@ MergeTree 引擎表的数据压缩设置。
 
 此外，用户还可以添加长度必须为 12 字节的随机数（默认情况下，加密和解密过程使用由零字节组成的随机数）：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <nonce>012345678910</nonce>
@@ -885,7 +885,7 @@ MergeTree 引擎表的数据压缩设置。
 
 或者可以设置为十六进制：
 
-```XML
+```xml
 <encryption_codecs>
     <aes_128_gcm_siv>
         <nonce_hex>abcdefabcdef</nonce_hex>
@@ -903,7 +903,7 @@ MergeTree 引擎表的数据压缩设置。
 
 **例子**
 
-```XML
+```xml
 <custom_settings_prefixes>custom_</custom_settings_prefixes>
 ```
 
@@ -923,7 +923,7 @@ MergeTree 引擎表的数据压缩设置。
 
 **例子**
 
-```XML
+```xml
 <core_dump>
     <size_limit>1073741824</size_limit>
 </core_dump>
@@ -973,7 +973,7 @@ MergeTree 引擎表的数据压缩设置。
 
 **例子**
 
-```XML
+```xml
 <default_profile>default</default_profile>
 ```
 
@@ -985,7 +985,7 @@ ZooKeeper 中表的路径。
 
 **例子**
 
-```XML
+```xml
 <default_replica_path>/clickhouse/tables/{uuid}/{shard}</default_replica_path>
 ```
 
@@ -997,7 +997,7 @@ ZooKeeper 中的副本名称。
 
 **例子**
 
-```XML
+```xml
 <default_replica_name>{replica}</default_replica_name>
 ```
 
@@ -1015,7 +1015,7 @@ ZooKeeper 中的副本名称。
 
 **例子**
 
-```XML
+```xml
 <dictionaries_config>*_dictionary.xml</dictionaries_config>
 ```
 
@@ -1031,7 +1031,7 @@ ZooKeeper 中的副本名称。
 
 * 该路径可以包含通配符 * 和 ?。
 
-```XML
+```xml
 <user_defined_executable_functions_config>*_function.xml</user_defined_executable_functions_config>
 ```
 
@@ -1049,7 +1049,7 @@ ZooKeeper 中的副本名称。
 
 **例子**
 
-```XML
+```xml
 <dictionaries_lazy_load>true</dictionaries_lazy_load>
 ```
 
@@ -1061,7 +1061,7 @@ ZooKeeper 中的副本名称。
 
 **例子**
 
-```XML
+```xml
 <!-- Directory containing schema files for various input formats. -->
 <format_schema_path>format_schemas/</format_schema_path>
 ```
@@ -1096,7 +1096,7 @@ ZooKeeper 中的副本名称。
 
 **例子**
 
-```XML
+```xml
 <graphite>
     <host>localhost</host>
     <port>42000</port>
@@ -1120,7 +1120,7 @@ Graphite细化数据的设置。
 
 **例子**
 
-```XML
+```xml
 <graphite_rollup_example>
     <default>
         <function>max</function>
@@ -1152,7 +1152,7 @@ Graphite细化数据的设置。
 
 **例子**
 
-```XML
+```xml
 <https_port>9999</https_port>
 ```
 
@@ -1166,7 +1166,7 @@ Graphite细化数据的设置。
 
 访问 `http://localhost: http_port` 时打开 `https://tabix.io/`。
 
-```XML
+```xml
 <http_server_default_response>
   <![CDATA[<html ng-app="SMI2"><head><base href="http://ui.tabix.io/"></head><body><div ui-view="" class="content-ui"></div><script src="http://loader.tabix.io/master.js"></script></body></html>]]>
 </http_server_default_response>
@@ -1180,7 +1180,7 @@ HSTS 的过期时间（以秒为单位）。默认值为 `0` 表示 clickhouse �
 
 **例子**
 
-```XML
+```xml
 <hsts_max_age>600000</hsts_max_age>
 ```
 
@@ -1194,7 +1194,7 @@ HSTS 的过期时间（以秒为单位）。默认值为 `0` 表示 clickhouse �
 
 **例子**
 
-```XML
+```xml
 <include_from>/etc/metrica.xml</include_from>
 ```
 
@@ -1206,7 +1206,7 @@ HSTS 的过期时间（以秒为单位）。默认值为 `0` 表示 clickhouse �
 
 **例子**
 
-```XML
+```xml
 <interserver_listen_host>::ffff:a00:1</interserver_listen_host>
 <interserver_listen_host>10.0.0.1</interserver_listen_host>
 ```
@@ -1219,7 +1219,7 @@ ClickHouse 服务器之间交换数据的端口。
 
 **例子**
 
-```XML
+```xml
 <interserver_http_port>9009</interserver_http_port>
 ```
 
@@ -1235,7 +1235,7 @@ ClickHouse 服务器之间交换数据的端口。
 
 **例子**
 
-```XML
+```xml
 <interserver_http_host>example.clickhouse.com</interserver_http_host>
 ```
 
@@ -1247,7 +1247,7 @@ ClickHouse 服务器之间交换数据的端口。
 
 **例子**
 
-```XML
+```xml
 <interserver_https_port>9010</interserver_https_port>
 ```
 
@@ -1259,7 +1259,7 @@ ClickHouse 服务器之间交换数据的端口。
 
 **例子**
 
-```XML
+```xml
 <interserver_https_host>example.clickhouse.com</interserver_https_host>
 ```
 
@@ -1291,7 +1291,7 @@ ClickHouse 支持动态服务器间凭证轮换，无需同时停止所有副本
 
 要启用身份验证，请将 `interserver_http_credentials.allow_empty` 设置为 `true` 并添加凭据。这允许有身份验证和无身份验证的连接。
 
-```XML
+```xml
 <interserver_http_credentials>
     <user>admin</user>
     <password>111</password>
@@ -1303,7 +1303,7 @@ ClickHouse 支持动态服务器间凭证轮换，无需同时停止所有副本
 
 要更改现有凭据，请将用户名和密码移至 `interserver_http_credentials.old` 部分，并使用新值更新`用户`和`密码`。此时，服务器使用新凭据连接到其他副本，并接受使用新或旧凭据的连接。
 
-```XML
+```xml
 <interserver_http_credentials>
     <user>admin</user>
     <password>222</password>
@@ -1328,7 +1328,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <keep_alive_timeout>10</keep_alive_timeout>
 ```
 
@@ -1340,7 +1340,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <listen_host>::1</listen_host>
 <listen_host>127.0.0.1</listen_host>
 ```
@@ -1367,7 +1367,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <listen_backlog>4096</listen_backlog>
 ```
 
@@ -1439,7 +1439,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <logger>
     <level>trace</level>
     <log>/var/log/clickhouse-server/clickhouse-server-%F-%T.log</log>
@@ -1452,7 +1452,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 可以配置写入控制台。配置示例：
 
-```XML
+```xml
 <logger>
     <level>information</level>
     <console>1</console>
@@ -1461,7 +1461,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 还支持写入系统日志。配置示例：
 
-```XML
+```xml
 <logger>
     <use_syslog>1</use_syslog>
     <syslog>
@@ -1511,7 +1511,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **推荐使用方式**
 
-```XML
+```xml
 <send_crash_reports>
     <enabled>true</enabled>
 </send_crash_reports>
@@ -1527,7 +1527,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <macros incl="macros" optional="true" />
 ```
 
@@ -1541,7 +1541,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <replica_group_name>backups</replica_group_name>
 ```
 
@@ -1559,7 +1559,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <max_open_files>262144</max_open_files>
 ```
 
@@ -1579,7 +1579,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <max_table_size_to_drop>0</max_table_size_to_drop>
 ```
 
@@ -1601,7 +1601,7 @@ ClickHouse 在关闭连接之前等待传入请求的秒数。默认为 10 秒�
 
 **例子**
 
-```XML
+```xml
 <max_partition_size_to_drop>0</max_partition_size_to_drop>
 ```
 
@@ -1619,7 +1619,7 @@ ClickHouse 使用全局线程池中的线程来处理查询。如果没有空闲
 
 **例子**
 
-```XML
+```xml
 <max_thread_pool_size>12000</max_thread_pool_size>
 ```
 
@@ -1637,7 +1637,7 @@ ClickHouse 使用全局线程池中的线程来处理查询。如果没有空闲
 
 **例子**
 
-```XML
+```xml
 <max_thread_pool_free_size>1200</max_thread_pool_free_size>
 ```
 
@@ -1657,7 +1657,7 @@ ClickHouse 使用全局线程池中的线程来处理查询。如果没有空闲
 
 **例子**
 
-```XML
+```xml
 <thread_pool_queue_size>12000</thread_pool_queue_size>
 ```
 
@@ -1755,7 +1755,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 **例子**
 
-```XML
+```xml
 <background_pool_size>16</background_pool_size>
 ```
 
@@ -1773,7 +1773,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 **例子**
 
-```XML
+```xml
 <background_merges_mutations_concurrency_ratio>3</background_merges_mutations_concurrency_ratio>
 ```
 
@@ -1789,7 +1789,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 **例子**
 
-```XML
+```xml
 <merges_mutations_memory_usage_soft_limit>0</merges_mutations_memory_usage_soft_limit>
 ```
 
@@ -1817,7 +1817,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 **例子**
 
-```XML
+```xml
 <merge_tree>
     <max_suspicious_broken_parts>5</max_suspicious_broken_parts>
 </merge_tree>
@@ -1833,7 +1833,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 要手动打开指标历史记录收集 `system.metric_log`，请使用以下内容创建 `/etc/clickhouse-server/config.d/metric_log.xml`：
 
-```XML
+```xml
 <clickhouse>
     <metric_log>
         <database>system</database>
@@ -1852,7 +1852,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 要禁用 `metric_log` 设置，您应该创建以下文件 `/etc/clickhouse-server/config.d/disable_metric_log.xml`，其中包含以下内容：
 
-```XML
+```xml
 <clickhouse>
 <metric_log remove="1" />
 </clickhouse>
@@ -1870,7 +1870,7 @@ ClickHouse 使用备份 IO 线程池中的线程来执行 S3 备份 IO 操作。
 
 **例子**
 
-```XML
+```xml
 <replicated_merge_tree>
     <max_suspicious_broken_parts>5</max_suspicious_broken_parts>
 </replicated_merge_tree>
@@ -1928,7 +1928,7 @@ SSL 客户端/服务器配置。
 
 **设置示例**：
 
-```XML
+```xml
 <openSSL>
     <server>
         <!-- openssl req -subj "/CN=localhost" -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/clickhouse-server/server.key -out /etc/clickhouse-server/server.crt -->
@@ -1992,7 +1992,7 @@ SSL 客户端/服务器配置。
 
 **例子**
 
-```XML
+```xml
 <part_log>
     <database>system</database>
     <table>part_log</table>
@@ -2015,7 +2015,7 @@ SSL 客户端/服务器配置。
 
 **例子**
 
-```XML
+```xml
 <path>/var/lib/clickhouse/</path>
 ```
 
@@ -2043,7 +2043,7 @@ SSL 客户端/服务器配置。
 
 **例子**
 
-```XML
+```xml
 <clickhouse>
     <listen_host>0.0.0.0</listen_host>
     <http_port>8123</http_port>
@@ -2103,7 +2103,7 @@ curl 127.0.0.1:9363/metrics
 
 **例子**
 
-```XML
+```xml
 <query_log>
     <database>system</database>
     <table>query_log</table>
@@ -2138,7 +2138,7 @@ curl 127.0.0.1:9363/metrics
 
 **例子**
 
-```XML
+```xml
 <query_cache>
     <max_size_in_bytes>1073741824</max_size_in_bytes>
     <max_entries>1024</max_entries>
@@ -2185,7 +2185,7 @@ curl 127.0.0.1:9363/metrics
 
 **例子**
 
-```XML
+```xml
 <query_thread_log>
     <database>system</database>
     <table>query_thread_log</table>
@@ -2236,7 +2236,7 @@ curl 127.0.0.1:9363/metrics
 
 **例子**
 
-```XML
+```xml
 <query_views_log>
     <database>system</database>
     <table>query_views_log</table>
@@ -2285,7 +2285,7 @@ curl 127.0.0.1:9363/metrics
 
 **例子**
 
-```XML
+```xml
 <clickhouse>
     <text_log>
         <level>notice</level>
@@ -2334,7 +2334,7 @@ Trace_log系统表操作的设置。
 
 默认服务器配置文件 config.xml 包含以下设置部分：
 
-```XML
+```xml
 <trace_log>
     <database>system</database>
     <table>trace_log</table>
@@ -2377,7 +2377,7 @@ Trace_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <clickhouse>
     <asynchronous_insert_log>
         <database>system</database>
@@ -2427,7 +2427,7 @@ crash_log系统表操作的设置。
 
 默认服务器配置文件 `config.xml` 包含以下设置部分：
 
-```XML
+```xml
 <crash_log>
     <database>system</database>
     <table>crash_log</table>
@@ -2474,7 +2474,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <clickhouse>
     <backup_log>
         <database>system</database>
@@ -2496,7 +2496,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <query_masking_rules>
     <rule>
         <name>hide SSN</name>
@@ -2526,7 +2526,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <remote_servers incl="clickhouse_remote_servers" />
 ```
 
@@ -2544,7 +2544,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <timezone>Asia/Istanbul</timezone>
 ```
 
@@ -2556,7 +2556,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <tcp_port>9000</tcp_port>
 ```
 
@@ -2572,7 +2572,7 @@ crash_log系统表操作的设置。
 
 **默认值**
 
-```XML
+```xml
 <tcp_port_secure>9440</tcp_port_secure>
 ```
 
@@ -2588,7 +2588,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <mysql_port>9004</mysql_port>
 ```
 
@@ -2604,7 +2604,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <postgresql_port>9005</postgresql_port>
 ```
 
@@ -2619,7 +2619,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
 ```
 
@@ -2631,7 +2631,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <user_files_path>/var/lib/clickhouse/user_files/</user_files_path>
 ```
 
@@ -2643,7 +2643,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <user_scripts_path>/var/lib/clickhouse/user_scripts/</user_scripts_path>
 ```
 
@@ -2655,7 +2655,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <user_defined_path>/var/lib/clickhouse/user_defined/</user_defined_path>
 ```
 
@@ -2675,7 +2675,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <users_config>users.xml</users_config>
 ```
 
@@ -2693,7 +2693,7 @@ crash_log系统表操作的设置。
 
 **例子**
 
-```XML
+```xml
 <wait_dictionaries_load_at_startup>true</wait_dictionaries_load_at_startup>
 ```
 
@@ -2711,7 +2711,7 @@ crash_log系统表操作的设置。
 
 例如：
 
-```XML
+```xml
 <node index="1">
     <host>example_host</host>
     <port>2181</port>
@@ -2752,7 +2752,7 @@ The `index` attribute specifies the node order when trying to connect to the Zoo
 
 **配置示例**
 
-```XML
+```xml
 <zookeeper>
     <node>
         <host>example1</host>
@@ -2825,7 +2825,7 @@ ZooKeeper中数据部分头的存储方法。
 
 **例子**
 
-```XML
+```xml
 <distributed_ddl>
     <!-- Path in ZooKeeper to queue with DDL queries -->
     <path>/clickhouse/task_queue/ddl</path>
@@ -2877,7 +2877,7 @@ ClickHouse 服务器存储由 SQL 命令创建的用户和角色配置的文件�
 
 **例子**
 
-```XML
+```xml
 <user_directories>
     <users_xml>
         <path>/etc/clickhouse-server/users.xml</path>
@@ -2890,7 +2890,7 @@ ClickHouse 服务器存储由 SQL 命令创建的用户和角色配置的文件�
 
 用户、角色、行策略、配额和配置文件也可以存储在 ZooKeeper 中：
 
-```XML
+```xml
 <user_directories>
     <users_xml>
         <path>/etc/clickhouse-server/users.xml</path>
@@ -2911,7 +2911,7 @@ ClickHouse 服务器存储由 SQL 命令创建的用户和角色配置的文件�
 
 **例子**
 
-```XML
+```xml
 <ldap>
     <server>my_ldap_server</server>
         <roles>
@@ -2995,7 +2995,7 @@ compiled_expression_cache_size
 
 ### Configuration template
 
-```XML
+```xml
 <proxy>
     <http>
         <uri>http://proxy1</uri>
@@ -3023,7 +3023,7 @@ compiled_expression_cache_size
 
 ### Configuration template
 
-```XML
+```xml
 <proxy>
     <http>
         <resolver>
