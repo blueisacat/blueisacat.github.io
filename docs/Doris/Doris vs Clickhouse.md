@@ -234,7 +234,7 @@ ClickHouse包含ClickHouse Client/Copier/Server这几个比较主要的模块，
 
 因此ClickHouse对二次开发更加友好，技术栈单一，且测试框架完善，模块间互相依赖关系相对较小。
 
-![](../../assets/images/Doris/attachments/83585ca68f490b48c10627ac738de730.jpeg)
+<center><img src="../../assets/images/Doris/attachments/83585ca68f490b48c10627ac738de730.jpeg"></center>
 
 # 四、性能测试
 
