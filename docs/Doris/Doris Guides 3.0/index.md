@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Doris指南3.0
+title: Doris Guides 3.0
 parent: Doris
+nav_order: 3
 has_children: true
 ---
