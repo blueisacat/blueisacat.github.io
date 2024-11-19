@@ -113,6 +113,7 @@ curl --location-trusted -u root: -T amazon_reviews_2015.snappy.parquet -H "forma
 ```
 
 > **信息**
+> 
 > 上面的文件可能超过 10 GB，您可能需要调整 be.conf 的 streaming_load_max_mb 防止超过 stream load 文件上传大小的限制，可以通过下面方式动态调整
 
 ```shell
