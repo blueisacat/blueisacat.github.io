@@ -1,9 +1,9 @@
 ---
 layout: default
-title: 数据表设计-Tiered Storage-SSD 和 HDD 层级存储
-parent: Doris Guides 3.0
-grand_parent: Doris
-nav_order: 03-04-01 
+title: SSD 和 HDD 层级存储
+parent: Tiered Storage
+ancestor: 数据表设计
+nav_order: 1
 ---
 
 # SSD 和 HDD 层级存储
