@@ -3,7 +3,7 @@ layout: default
 title: 数据表设计-Tiered Storage-明细模型
 parent: Doris Guides 3.0
 grand_parent: Doris
-nav_order: 3-5-2
+nav_order: 030502
 ---
 
 # 明细模型

@@ -3,7 +3,7 @@ layout: default
 title: 数据表设计-Schema 变更
 parent: Doris Guides 3.0
 grand_parent: Doris
-nav_order: 3-8
+nav_order: 0308
 ---
 
 # Schema 变更

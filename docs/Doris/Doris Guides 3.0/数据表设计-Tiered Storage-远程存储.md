@@ -3,7 +3,7 @@ layout: default
 title: 数据表设计-Tiered Storage-远程存储
 parent: Doris Guides 3.0
 grand_parent: Doris
-nav_order: 3-4-2
+nav_order: 030402
 ---
 
 # 远程存储

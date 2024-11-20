@@ -3,7 +3,7 @@ layout: default
 title: 数据表设计-表索引-N-Gram 索引
 parent: Doris Guides 3.0
 grand_parent: Doris
-nav_order: 3-3-5
+nav_order: 030305
 ---
 
 # N-Gram 索引
