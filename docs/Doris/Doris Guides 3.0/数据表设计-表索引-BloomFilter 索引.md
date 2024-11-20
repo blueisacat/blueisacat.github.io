@@ -3,7 +3,7 @@ layout: default
 title: 数据表设计-表索引-BloomFilter 索引
 parent: Doris Guides 3.0
 grand_parent: Doris
-nav_order: 030304
+nav_order: 03-03-04
 ---
 
 # BloomFilter 索引
