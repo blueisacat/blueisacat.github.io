@@ -18,7 +18,7 @@ BloomFilter 是由一个超长的二进制位数组和一系列的哈希函数�
 
 下图所示出一个 m=18, k=3（m 是该 Bit 数组的大小，k 是 Hash 函数的个数）的 BloomFilter 示例。集合中的 x、y、z 三个元素通过 3 个不同的哈希函数散列到位数组中。当查询元素 w 时，通过 Hash 函数计算之后只要有一个位为 0，因此 w 不在该集合中。但是反过来全部都是 1 只能说明可能在集合中、不能肯定一定在集合中，因为 Hash 函数可能出现 Hash 碰撞。
 
-![](../../../assets/images/Doris/attachments/Bloom_filter.svg-e437ea5c65c96143c00cdb97711e1b10.png)
+![](../../../../../assets/images/Doris/attachments/Bloom_filter.svg-e437ea5c65c96143c00cdb97711e1b10.png)
 
 反过来如果某个元素经过哈希函数计算后得到所有的偏移位置，若这些位置全都为 1，只能说明可能在集合中、不能肯定一定在集合中，因为 Hash 函数可能出现 Hash 碰撞。这就是 BloomFilter“假阳性”，因此基于 BloomFilter 的索引只能跳过不满足条件的数据，不能精确定位满足条件的数据。
 
