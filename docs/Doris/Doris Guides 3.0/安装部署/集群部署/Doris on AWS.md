@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Doris on AWS
-parent: K8s 部署
-ancestor: 集群部署
+parent: 集群部署
+ancestor: 安装部署
 nav_order: 4
 ---
 

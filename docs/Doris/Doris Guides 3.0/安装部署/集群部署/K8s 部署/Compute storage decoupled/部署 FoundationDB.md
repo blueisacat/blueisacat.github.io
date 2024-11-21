@@ -105,6 +105,7 @@ fdb-kubernetes-operator 仓库提供了以 IP 模式部署 FDB 集群的部署�
             tag: 7.1.36-1
         version: 7.1.38
         ```
+
 > 提示
 > 
 > * 私有环境下，FDB 推到私有仓库时，tag 必须与官方保持一致，比如：7.1.38。
