@@ -2,10 +2,10 @@ name: publish site
 on: # 在什么时候触发工作流
   push: # 在从本地main分支被push到GitHub仓库时
     branches:
-      - gh-pages
+      - master
   pull_request: # 在main分支合并别人提的pr时
     branches:
-      - gh-pages
+      - master
 jobs: # 工作流的具体内容
   deploy:
     runs-on: ubuntu-latest # 创建一个新的云端虚拟机 使用最新Ubuntu系统
@@ -15,4 +15,4 @@ jobs: # 工作流的具体内容
         with:
           python-version: 3.x
       - run: pip install mkdocs-material # 使用pip包管理工具安装mkdocs-material
-      - run: mkdocs gh-deploy --force # 使用mkdocs-material部署gh-pages分支
+      - run: mkdocs gh-deploy --config-file mkdocs.yml --remote-branch master # 使用mkdocs-material部署gh-pages分支
