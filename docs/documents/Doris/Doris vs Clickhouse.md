@@ -9,17 +9,25 @@ ClickHouse是俄罗斯的搜索公司Yandex开源的MPP架构的分析引擎，�
 ## 2 差异和选择建议
 
 ### 2.1 Doris更优的方面
+
 * 使用更简单，如建表更简单，SQL标准支持更好， Join性能更好，导数功能更强大
+
 * 运维更简单，如灵活的扩缩容能力，故障节点自动恢复，社区提供的支持更好
+
 * 分布式更强，支持事务和幂等性导数，物化视图自动聚合，查询自动路由，全面元数据管理
 
 ### 2.2 ClickHouse更优的方面
+
 * 性能更佳，导入性能和单表查询性能更好，同时可靠性更好
+
 * 功能丰富，非常多的表引擎，更多类型和函数支持，更好的聚合函数以及庞大的优化参数选项
+
 * 集群管理工具更多，更好多租户和配额管理，灵活的集群管理，方便的集群间迁移工具
 
 ### 2.3 那么两者之间如何选择呢？
+
 * 业务场景复杂数据规模巨大，希望投入研发力量做定制开发，选ClickHouse
+
 * 希望一站式的分析解决方案，少量投入研发资源，选择Doris
 
 另外， Doris源自在线广告系统，偏交易系统数据分析；ClickHouse起源于网站流量分析服务，偏互联网数据分析，但是这两类场景这两个引擎都可以覆盖。如果说两者不那么强的地方，ClickHouse的问题是使用门槛高、运维成本高和分布式能力太弱，需要较多的定制化和较深的技术实力，Doris的问题是性能差一些可靠性差一些，下面就深入分析两者的差异。
@@ -30,8 +38,11 @@ ClickHouse是俄罗斯的搜索公司Yandex开源的MPP架构的分析引擎，�
 ### 3.1 部署运维
 #### 3.1.1 部署和日常运维
 部署指部署集群，安装相关依赖和核心组件，修改配置文件，让集群正常运行起来；运维指日常集群版本更新，配置文件更改、扩缩容等相关事项。集群所需组件如下：
+
 * 左侧是Doris的部署架构图，JDBC指接入协议，DNS是域名和请求分发系统。Managerment Panel是管控面。Frontend指前端模块简称FE，包含了SQL解析、查询计划、计划调度、元数据管理等功能，Backend指后端模块简称BE负责存储层、数据读取和写入，另外还有一个BrokerLoad导数组件最好是单独部署。所以，Doris一般只需要FE和BE两个组件。
+
 * 右侧是ClickHouse的部署架构图，ClickHouse本身只有一个模块，就是ClickHouse Server，周边有两个模块，如ClickHouseProxy主要是转发请求、配额限制和容灾等，ZooKeeper这块负责分布式DDL和副本间数据同步，ClickHouseCopier负责集群和数据迁移，ClickHouse一般需要Server、ZooKeeper和CHProxy三个组件。
+
 * 日常运维如更新版本、更改配置文件两者都需要依赖Ansible或者SaltStack来进行批量更新。两者都有部分配置文件可以热更新，不用重启节点，而且有Session相关参数可以设置可以覆盖配置文件。Doris有较多的SQL命令协助运维，比如增加节点，Doris中Add Backend即可，ClickHouse中需要更改配置文件并下发到各个节点上。
 
 ![](../../assets/images/Doris/51d0e87ee220321317a34ded3e093e79.jpeg)
@@ -82,8 +93,11 @@ DDL操作两者都是异步的，但是Doris能保证各个节点元数据的一
 
 ### 3.3 数据导入
 Doris中有RoutineLoad、BrokerLoad和StreamLoad等丰富内置的导数方式，这些功能非常好用，虽然无法处理复杂的ETL逻辑，但是支持简单过滤和转换函数，也能容忍少量的数据异常，同时支持ACID和导数幂等性。
+
 * Routineload支持消费Kafka的实时数据，按每批条数、导入间隔和并发数等设置导数参数，用于实时数据的导入；
+
 * Brokerload支持从HDFS上导入数据文件，用于离线导数，速度不是很快；
+
 * Streamload是导数的底层接口，更加高级的功能可以外部程序处理后通过Steamload来导入。
 
 ![](../../assets/images/Doris/bdced2be63eaecf6ea45a12f4d401d12.jpeg)
@@ -116,8 +130,11 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 #### 3.4.2 存储结构
 两者都是列存，列存的好处就是：
+
 * 分析场景中需要读大量行但是少数几个列，只需要读取参与计算的列即可，极大的减低了IO，加速了查询
+
 * 同一列中的数据属于同一类型，压缩效果显著，节省存储空间，降低了存储成本
+
 * 高压缩比，意味着同等大小的内存能够存放更多数据，系统Cache效果更好
 
 ![](../../assets/images/Doris/12a53d2402b20b7da071cab3901b8bef.jpeg)
@@ -132,7 +149,9 @@ ClickHouse中分为DistributeTable、LocalTable、Partition、Shard、Part、Col
 
 #### 3.4.3 表引擎/模型
 两者都有典型的表类型（引擎类型）的支持
+
 * Doris：可重复的Duplicated Key就是明细表，按维度聚合的Aggregate Key，唯一主键Unique Key，UniqueKey这个可以视为AggregateKey的特例，另外在这三种基础上可以建立Rollup（上卷），可以理解为物化视图。
+
 * ClickHouse : 主要是MergeTree表引擎家族，主要是ReplicatedMergeTree带副本的、ReplacingMergeTree可以更新数据的和AggregatingMergeTree可以聚合数据，另外还有内存字典表可以加载数据字典、内存表可以加速查询或获得更好写入性能。CH比较特殊地方是分布式表和每个节点的本地表都要单独创建，物化视图无法自动路由。
 
 另外，Doris新开发的Primary Key模型，对实时更新场景下的读性能进行了深度优化，在支持update语义的同时，避免了Unique key的sort merge开销。在实时update的压力下，查询性能跟是Unique key的3-15倍。类似的，相比ClickHouse的ReplicatedMergeTree，也避免了select final/optimize final的问题。
@@ -182,12 +201,19 @@ ClickHouse支持支持ODBC、JDBC、HTTP接口，Doris支持JDBC和ODBC接口。
 ### 3.6 使用成本
 #### 3.6.1 使用成本
 Doris使用成本低，是一个强一致性元数据的系统，导数功能较为完备，查询SQL的标准兼容好无需额外的工作，弹性伸缩能力要好，而ClickHouse则需要做较多工作：
+
 * ZooKeeper存在性能瓶颈导致集群规模不能特别大
+
 * 基本无法做到弹性伸缩，纯手工扩缩容工作量巨大且容易出错
+
 * 故障节点的容忍度较低，出现一个节点故障会引发某些操作失败
+
 * 导数需要外部保证数据不重不丢，导数失败需要删了重导
+
 * 元数据需要自己保证各个节点一致性，偶发性的不一致情况较多
+
 * 分布式表和本地表有两套表结构，较多用户难以理解
+
 * 多表Join SQL需要改写和优化，方言较多几乎是不兼容其他引擎的SQL
 
 所以，在大规模实施ClickHouse时，需要研发一个比较好用的运维系统的支持，处理大部分的日常运维工作。
@@ -203,7 +229,9 @@ ClickHouse包含ClickHouse Client/Copier/Server这几个比较主要的模块，
 
 ## 4 性能测试
 TPC-DS测试是大数据领域比较常用的一个测试，24张表、99个SQL，可以生成不同容量的数据，京东内部常用来做不同引擎的对比测试。
+
 * 这两个引擎都无法全部支持99个SQL，不支持的部分我们根据各个引擎不同特点，进行手工SQL改写让其能正确执行，Doris改动量较小，ClickHouse的多表关联几乎都要改写；
+
 * 为了简化测试过程，我们挑选了9个关联查询的SQL，然后自己构造了9个单表查询的SQL，共18个SQL来测试性能；
 
 ### 4.1 举个例子
@@ -252,8 +280,11 @@ group by i_item_id order by i_item_id limit 10;
 ```
 
 ### 4.2 测试环境
+
 * 硬件：3台32核/128G内存/HDD磁盘的服务器
+
 * 软件：Doris 0.13.1、ClickHouse 21.3.13.1
+
 * 配置：3个分片1副本，都是默认配置
 
 ### 4.3 测试总结
