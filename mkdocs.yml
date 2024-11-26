@@ -80,7 +80,7 @@ theme:
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
 # copyright: 杨希杰 CC-BY-4.0
 # [bottom-right corner]
-extra:
+# extra:
   # [添加社交网络图标和链接]
   # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links
   # 搜索图标：https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search
