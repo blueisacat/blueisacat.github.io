@@ -15,7 +15,7 @@ nav:
 theme:
   # 标识
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#logo
-  logo: 
+  logo: assets/favicon.ico
   # 网站图标
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#favicon
   favicon: favicon.ico
@@ -93,14 +93,10 @@ theme:
     # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
     - content.code.copy
   language: zh # 一些提示性的文字会变成中文
-  icon:
-    # [添加 GitHub 仓库]
-    # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#repository-icon
-    repo: fontawesome/brands/github
 # [bottom-left corner]
 # [版权说明]
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
-copyright: 梅尔菲斯
+copyright: 
 # [bottom-right corner]
 
 # 发电机通知
