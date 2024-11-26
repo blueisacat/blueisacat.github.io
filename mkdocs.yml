@@ -15,7 +15,7 @@ nav:
 theme:
   # 标识
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#logo
-  logo: material/github
+  logo: favicon.ico
   # 网站图标
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#favicon
   favicon: favicon.ico
@@ -67,7 +67,7 @@ theme:
     # - navigation.tabs
     # 导航部分
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-sections
-    - navigation.sections
+    # - navigation.sections
     # 导航路径
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-path
     - navigation.path
@@ -82,7 +82,7 @@ theme:
     # - navigation.indexes
     # 打开 Tab 时左侧目录全部展开
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-expansion
-    - navigation.expand
+    # - navigation.expand
     # 搜索输入一些字母时推荐补全整个单词
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-suggestions
     - search.suggest
