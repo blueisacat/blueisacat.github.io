@@ -15,10 +15,13 @@ nav:
 theme:
   # 标识
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#logo
-  logo: assets/favicon.ico
+  logo: material/github
   # 网站图标
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#favicon
   favicon: favicon.ico
+  # 延伸主题
+  # https://squidfunk.github.io/mkdocs-material/customization/?h=custom#extending-the-theme
+  custom_dir: overrides
   name: material
   # [切换日间模式和夜间模式]
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#color-palette-toggle
