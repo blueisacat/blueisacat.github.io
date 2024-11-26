@@ -10,14 +10,14 @@ nav:
   - Doris:
     - documents/Doris/Doris vs Clickhouse.md
     - documents/Doris/Doris 3.x vs Doris 2.X.md
-    - Apache Doris 中文手册 v3.0
-      - 1 安装部署
-        - 1.1 源码编译
+    - Apache Doris 中文手册 v3.0:
+      - 1 安装部署:
+        - 1.1 源码编译:
           - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.1 使用 Docker 开发镜像编译（推荐）.md
-        - 1.2 集群部署
-      - 2 数据库连接
-      - 3 数据表设计
-      - 4 数据操作
+        - 1.2 集群部署:
+      - 2 数据库连接:
+      - 3 数据表设计:
+      - 4 数据操作:
 
 # [UI]
 # [top]
