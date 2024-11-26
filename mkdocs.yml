@@ -1,9 +1,9 @@
 # [Info]
 # 左上角标题
 site_name: Blue是只蓝色的猫
-# site_url: https://yang-xijie.github.io
+site_url: https://www.blueisacat.cn
 site_author: 梅尔菲斯
-# site_description: 杨希杰的个人网站
+site_description: 梅尔菲斯的个人网站
 
 # [Navigtion]
 nav:
@@ -13,6 +13,12 @@ nav:
 # [UI]
 # [top]
 theme:
+  # 标识
+  # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#logo
+  logo: 
+  # 网站图标
+  # https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#favicon
+  favicon: favicon.ico
   name: material
   # [切换日间模式和夜间模式]
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#color-palette-toggle
@@ -21,10 +27,10 @@ theme:
     - scheme: default
       # 主颜色
       # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
-      primary: indigo
+      primary: white
       # 链接等可交互元件的高亮色
       # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#accent-color
-      accent: orange
+      accent: light blue
       toggle:
         # 图标
         icon: material/weather-night
@@ -32,21 +38,45 @@ theme:
         name: 切换至夜间模式
     # 夜间模式
     - scheme: slate
-      primary: indigo
-      accent: orange
+      primary: black
+      accent: light blue
       toggle:
         icon: material/weather-sunny
         name: 切换至日间模式
   features:
+    # 即时加载
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#instant-loading
+    - navigation.instant
+    # 即时预取
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#instant-prefetching
+    - navigation.instant.prefetch
+    # 进度指示器
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#progress-indicator
+    - navigation.instant.progress
+    # 自动预览
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#automatic-previews
+    - navigation.instant.preview
+    # 锚点追踪
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#anchor-tracking
+    - navigation.tracking
     # 使用 Tab 来进行分类
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
-    - navigation.tabs
+    # - navigation.tabs
+    # 导航部分
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-sections
+    - navigation.sections
+    # 导航路径
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-path
+    - navigation.path
+    # 锚点跟随
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#anchor-following
+    - toc.follow
     # 返回顶部的按钮，在上滑时出现
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#back-to-top-button
     - navigation.top
     # 给每个 Tab 添加一个 index.md，且在点击 Tab 时打开
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages-with-section-index-pages
-    - navigation.indexes
+    # - navigation.indexes
     # 打开 Tab 时左侧目录全部展开
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-expansion
     - navigation.expand
@@ -56,54 +86,27 @@ theme:
     # 搜索的关键词文章加入高亮
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-highlighting
     - search.highlight
+    # 页脚导航
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#navigation
+    - navigation.footer
     # 可以通过按钮复制代码
     # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
     - content.code.copy
-    # [点击按钮跳转至 GitHub 修改 Markdown 源文件]
-    # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
-    - content.action.edit
   language: zh # 一些提示性的文字会变成中文
   icon:
     # [添加 GitHub 仓库]
     # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#repository-icon
     repo: fontawesome/brands/github
-# [点击按钮跳转至 GitHub 修改 Markdown 源文件]
-# https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
-# edit_uri: edit/main/docs/
-# [top-right corner]
-# [添加 GitHub 仓库]
-# https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/
-# repo_url: https://github.com/Yang-Xijie/yang-xijie.github.io
-# repo_name: yang-xijie.github.io
 # [bottom-left corner]
 # [版权说明]
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
-# copyright: 杨希杰 CC-BY-4.0
+copyright: 梅尔菲斯
 # [bottom-right corner]
-# extra:
-  # [添加社交网络图标和链接]
-  # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links
-  # 搜索图标：https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search
-  # name 会在鼠标悬浮时提示
-  # social: # icons
-  #   - name: GitHub | Yang-Xijie
-  #     icon: fontawesome/brands/github
-  #     link: https://github.com/Yang-Xijie
-  #   - name: Bilibili | 杨希杰619
-  #     icon: fontawesome/brands/bilibili
-  #     link: https://space.bilibili.com/24502827
-  #   - name: 小杰答疑群 QQ 796233390
-  #     icon: fontawesome/brands/qq
-  #     link: https://yang-xijie.github.io/ME/qq-groups/
-  #   - name: 小杰水群 QQ 824114857
-  #     icon: fontawesome/brands/qq
-  #     link: https://yang-xijie.github.io/ME/qq-groups/
-  #   - name: 小红书 | 杨希杰
-  #     icon: fontawesome/solid/images
-  #     link: https://www.xiaohongshu.com/user/profile/61be0cc10000000021024369
-  #   - name: 打赏支持
-  #     icon: fontawesome/solid/mug-saucer
-  #     link: https://yang-xijie.github.io/ME/support/
+
+# 发电机通知
+# https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/?h=copyright#generator-notice
+extra:
+  generator: false
 
 # [Extensions]
 plugins:
@@ -114,7 +117,6 @@ plugins:
       lang:
         - zh
         - en
-        - ja
   # [给单篇文章添加标签]
   # https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/
   # https://squidfunk.github.io/mkdocs-material/plugins/tags/#meta.tags
