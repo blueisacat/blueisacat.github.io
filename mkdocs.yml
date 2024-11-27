@@ -39,7 +39,36 @@ nav:
       - 2 数据库连接:
         - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.1 数据库连接.md
         - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.2 基于 Arrow Flight SQL 的高速数据传输链路.md
-      # - 3 数据表设计:
+      - 3 数据表设计:
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.1 概览.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.2 数据类型.md
+        - 3.3 表索引:
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.1 索引概述.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.2 前缀索引与排序键.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.3 倒排索引.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.4 BloomFilter 索引.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.5 N-Gram 索引.md
+        - 3.4 Tiered Storage:
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.4 Tiered Storage/3.4.1 SSD 和 HDD 层级存储.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.4 Tiered Storage/3.4.2 远程存储.md
+        - 3.5 数据模型:
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.1 模型概述.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.2 明细模型.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.3 主键模型.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.4 聚合模型.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.5 使用注意.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.6 行列混存.md
+        - 3.7 数据划分:
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.1 基本概念.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.2 手动分区.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.3 动态分区.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.4 自动分区.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.5 手动分桶.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.6 自动分桶.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.7 常见问题.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.8 Schema 变更.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.9 自增列.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.10 数据库建表最佳实践.md
       # - 4 数据操作:
 
 # [UI]
