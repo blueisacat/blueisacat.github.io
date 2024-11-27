@@ -19,7 +19,23 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.4 Arm 平台上编译.md
           - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.5 Windows 平台上编译.md
           - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.6 在 MacOS 平台上编译.md
-      #   - 1.2 集群部署:
+        - 1.2 集群部署:
+          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.1 手动部署.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.2 Docker 部署.md
+          - 1.2.3 K8s 部署:
+            - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.1 集群环境要求.md
+            - 1.2.3.2 Compute storage coupled:
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.1 快速部署.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.2 部署 Doris Operator.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.3 配置 Doris 集群.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.4 集群运维.md
+            - 1.2.3.3 Compute storage decoupled:
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.1 快速部署.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.2 部署 FoundationDB.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.3 配置部署 Metaservice.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.4 配置部署 FE.md
+              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.5 配置部署计算组.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.4 Doris on AWS.md
       # - 2 数据库连接:
       # - 3 数据表设计:
       # - 4 数据操作:
