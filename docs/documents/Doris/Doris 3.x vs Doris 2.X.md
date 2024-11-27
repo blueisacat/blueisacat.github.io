@@ -11,6 +11,7 @@
 **在 3.0 版本的研发过程中，有超过 170 名贡献者为 Apache Doris 提交了近 5000 个优化与修复**。 来自飞轮科技、百度、美团、字节跳动、腾讯、阿里、快手、华为、天翼云等企业的贡献者与社区深度共建，贡献了大量来自真实业务场景下测试 Case 来帮助我们持续打磨、共同改进，在此向所有参与版本研发、测试和需求反馈的贡献者们表示最衷心的感谢。
 
 GitHub 下载：[https://github.com/apache/doris/releases](https://github.com/apache/doris/releases)
+
 官网下载：[https://doris.apache.org/download](https://doris.apache.org/download)
 
 ## 1 存算分离全新架构
