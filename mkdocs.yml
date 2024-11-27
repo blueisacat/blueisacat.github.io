@@ -36,7 +36,9 @@ nav:
               - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.4 配置部署 FE.md
               - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.5 配置部署计算组.md
           - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.4 Doris on AWS.md
-      # - 2 数据库连接:
+      - 2 数据库连接:
+        - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.1 数据库连接.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.2 基于 Arrow Flight SQL 的高速数据传输链路.md
       # - 3 数据表设计:
       # - 4 数据操作:
 
