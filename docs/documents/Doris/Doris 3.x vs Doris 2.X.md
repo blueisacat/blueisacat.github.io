@@ -120,7 +120,8 @@ GitHub 下载：[https://github.com/apache/doris/releases](https://github.com/ap
 
 * 暂不支持从 2.1 版本原地升级至 3.0 存算分离模式，需要在存算分离集群部署完成后通过诸如 x2Doris 等工具进行数据迁移，后续也会支持通过 CCR 能力实现不停服迁移。
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [存算分离](https://doris.apache.org/zh-CN/docs/3.0/compute-storage-decoupled/overview/)
@@ -164,7 +165,8 @@ GitHub 下载：[https://github.com/apache/doris/releases](https://github.com/ap
 
 目前 Doris 已完成 Delta Lake、Kudu、BigQuery、Kafka、TPCH、TPCDS 等多种 Connector 的适配，也欢迎所有开发者参考开发指南，为 Apache Doris 适配更多数据源。
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [接入 Trino Connector](https://doris.apache.org/zh-CN/community/how-to-contribute/trino-connector-developer-guide/)
@@ -190,7 +192,8 @@ GitHub 下载：[https://github.com/apache/doris/releases](https://github.com/ap
 
 在后续的迭代版本中，Apache Doris 将进一步完善对数据湖表格式的支持以及存储 API 开放性。
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [数据湖构建](https://doris.apache.org/zh-CN/docs/3.0/lakehouse/datalake-building/hive-build/)
@@ -245,7 +248,8 @@ Variant 数据类型在经过大规模生产打磨后，已具备充分的稳定
     COMMIT;
     ```
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [事务](https://doris.apache.org/zh-CN/docs/3.0/data-operate/transaction/)
@@ -296,7 +300,8 @@ Variant 数据类型在经过大规模生产打磨后，已具备充分的稳定
 
 * 持续优化了透明改写的性能，透明改写性能是 2.1.0 版本的两倍。
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [异步物化视图概览](https://doris.apache.org/zh-CN/docs/query/view-materialized-view/async-materialized-view)
@@ -368,7 +373,8 @@ Runtime Filter 是否能够准确生成对查询性能的影响至关重要，�
     );
     ```
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [Java UDF - UDTF](https://doris.apache.org/zh-CN/docs/query/udf/java-user-defined-function#udtf-1)
@@ -381,7 +387,8 @@ Runtime Filter 是否能够准确生成对查询性能的影响至关重要，�
 
 从 3.0 版本开始 Apache Doris 支持生成列功能，创建表时可以指定列为 Generated 列。Generated 列可在写入时，根据定义的表达式，自动获取计算结果。相比于 Default value，可以定义更为复杂的表达式，但不可以显式写入指定的值。
 
-!!! Quote ""
+!!! Quote
+
     参考文档：
 
     * [CREATE TABLE AND GENERATED COLUMN](https://doris.apache.org/zh-CN/docs/3.0/sql-manual/sql-statements/Data-Definition-Statements/Create/CREATE-TABLE-AND-GENERATED-COLUMN/)

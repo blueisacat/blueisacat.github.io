@@ -75,6 +75,7 @@ nav:
           - 4.1.2 导入方式:
             - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.1 Stream Load.md
             - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.2 Broker Load.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.3 Routine Load.md
 
 # [UI]
 # [top]
