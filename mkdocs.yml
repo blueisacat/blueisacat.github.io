@@ -76,6 +76,9 @@ nav:
             - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.1 Stream Load.md
             - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.2 Broker Load.md
             - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.3 Routine Load.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.4 Insert Into.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.5 MySQL Load.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.6 Group Commit.md
 
 # [UI]
 # [top]
