@@ -96,6 +96,11 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.3 Truncate 操作.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.4 表原子替换.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.5 临时分区.md
+        - 4.4  数据导出:
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.1 数据导出概述.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.2 Export.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.3 Select Into Outfile.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.4 MySQL Dump.md
 # [UI]
 # [top]
 theme:
