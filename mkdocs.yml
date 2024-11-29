@@ -85,11 +85,11 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.6 导入高可用性.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.7 从其他 AP 系统迁移数据.md
         - 4.2 数据导入:
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据导入/4.2.1 数据更新概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据导入/4.2.2 主键模型的 Update 更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据导入/4.2.3 主键模型的导入更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据导入/4.2.4 聚合模型的导入更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据导入/4.2.5 主键模型的更新事务.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.1 数据更新概述.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.2 主键模型的 Update 更新.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.3 主键模型的导入更新.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.4 聚合模型的导入更新.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.5 主键模型的更新事务.md
 
 # [UI]
 # [top]
