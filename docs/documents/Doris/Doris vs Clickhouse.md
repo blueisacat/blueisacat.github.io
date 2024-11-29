@@ -315,6 +315,7 @@ group by i_item_id order by i_item_id limit 10;
 ### 4.3 测试总结
 
 单表性能ClickHouse更好，无论是查询延时还是并发能力
+
 多表性能Doris优势更明显，特别是复杂Join和大表Join大表的场景，另外ClickHouse需要改写SQL有一些工作量
 
 ### 4.4 单表延时和并发
