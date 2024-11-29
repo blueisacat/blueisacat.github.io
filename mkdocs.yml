@@ -90,7 +90,12 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.3 主键模型的导入更新.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.4 聚合模型的导入更新.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.5 主键模型的更新事务.md
-
+        - 4.3 数据删除:
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.1 Delete 操作.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.2 批量删除.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.3 Truncate 操作.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.4 表原子替换.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.5 临时分区.md
 # [UI]
 # [top]
 theme:
