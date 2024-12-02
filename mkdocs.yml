@@ -103,6 +103,21 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.4 MySQL Dump.md
         - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.5 作业调度.md
         - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.6 事务.md
+      - 5 数据查询:
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.1 MySQL 兼容性.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.2 连接（JOIN）.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.3 子查询.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.4 聚合多维分析.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.5 分析函数 (窗口函数）.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.6 公用表表达式（CTE）.md
+        - 5.7 自定义函数:
+          - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.7 自定义函数/5.7.1 别名函数.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.7 自定义函数/5.7.2 Java UDF.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.8 复杂类型查询.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.9 列转行 (Lateral View).md
+        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.10 加密和脱敏.md
+
+
 # [UI]
 # [top]
 theme:
