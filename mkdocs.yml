@@ -102,6 +102,7 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.3 Select Into Outfile.md
           - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.4 MySQL Dump.md
         - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.5 作业调度.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.6 事务.md
 # [UI]
 # [top]
 theme:
