@@ -125,6 +125,38 @@ nav:
             - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.2 功能描述.md
             - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.3 使用与实践.md
             - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.4 常见问题.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.2 查询缓存.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.3 高并发点查.md
+        - 6.4 高效去重:
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.4 高效去重/6.4.1 BITMAP 精准去重.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.4 高效去重/6.4.2 HLL 近似去重.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.5 查询优化器介绍.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.6 Pipeline 执行引擎.md
+        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.7 统计信息.md
+        - 6.8 查询调优原理与实践:
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.1 查询调优概述.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.2 查询性能分析.md
+          - 6.8.3 计划调优:
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.1 优化表 Schema 设计.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.2 优化索引设计和使用.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.3 使用 PrepareStatement 加速高并发点查.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.4 使用分区裁剪优化扫表.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.5 使用单表物化视图透明改写.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.6 使用多表物化视图透明改写.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.7 使用列统计信息优化计划.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.8 使用 Colocate Group 优化 Join.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.9 使用 Hint 调整 Join Shuffle 方式.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.10 使用 Hint 控制代价改写.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.11 使用 Leading Hint 控制 Join 顺序.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.12 使用 SQL Cache 加速查询.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.13 使用 Runtime Filter 高阶优化.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.14 数据倾斜处理.md
+            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.15 DML 计划调优.md
+
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.4 常见调优参数.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.5 Hint.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.6 Runtime Filter.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.7 TOPN 查询优化.md
 
 # [UI]
 # [top]
