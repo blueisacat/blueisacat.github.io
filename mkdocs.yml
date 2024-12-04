@@ -157,7 +157,8 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.5 Hint.md
           - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.6 Runtime Filter.md
           - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.7 TOPN 查询优化.md
-
+      - 7 湖仓一体:
+        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.1 湖仓一体概述.md
 # [UI]
 # [top]
 theme:
