@@ -171,6 +171,9 @@ nav:
           - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.9 阿里云 DLF.md
           - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.10 TPCH.md
           - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.11 TPCDS.md
+        - 7.3 数据湖构建:
+          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.3 数据湖构建/7.3.1 Hive.md
+          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.3 数据湖构建/7.3.2 Iceberg.md
 
 # [UI]
 # [top]
