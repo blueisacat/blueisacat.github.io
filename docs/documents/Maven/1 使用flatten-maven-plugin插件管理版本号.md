@@ -1,4 +1,4 @@
-# 1 使用flatten-maven-plugin插件统一管理版本号
+# 1 使用flatten-maven-plugin插件管理版本号
 
 ## 1 发现问题
 
@@ -26,11 +26,11 @@
 
     ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_3.png)
 
-到这一步，已经基本实现了父包的统一管理，但是在install、deploy的时候会出现问题，在打包后的pom文件中 revision 依旧是个变量。举个栗子：
+到这一步，已经基本实现了父包的统一管理，但是在 `install` 、 `deploy` 的时候会出现问题，在打包后的 `pom` 文件中 `revision` 依旧是个变量。举个栗子：
 
 ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_4.png)
 
-为了解决这个问题，可以在父包中引入 flatten-maven-plugin 插件，其作用就是将 revision 变量替换为实际的值。
+为了解决这个问题，可以在父包中引入 `flatten-maven-plugin` 插件，其作用就是将 `revision` 变量替换为实际的值。
 
 ```xml
 <plugin>
@@ -60,6 +60,6 @@
 </plugin>
 ```
 
-在install后，会发现项目目录中多了 `.flattened-pom.xml` ，其原理是将 `.flattened-pom.xml（已替换变量的pom）` 替换到jar包中。
+在 `install` 后，会发现项目目录中多了 `.flattened-pom.xml` ，其原理是将 `.flattened-pom.xml（已替换变量的pom）` 替换到 `jar` 包中。
 
 至此，通过使用 `flatten-maven-plugin` 插件实现了在父包中进行统一的版本管理。

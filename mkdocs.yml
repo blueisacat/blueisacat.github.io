@@ -202,7 +202,7 @@ nav:
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.6 数据缓存.md
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.7 Meta Service API 参考.md
   - Maven:
-    - documents/Maven/1 使用flatten-maven-plugin插件统一管理版本号.md
+    - documents/Maven/1 使用flatten-maven-plugin插件管理版本号.md
     - documents/Maven/2 使用maven-assembly-plugin插件定制化打包.md
 # [UI]
 # [top]

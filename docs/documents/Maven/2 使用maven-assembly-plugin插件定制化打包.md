@@ -2,25 +2,25 @@
 
 ## 1 有个想法
 
-以SpringBoot为例，使用官方默认的maven插件spring-boot-maven-plugin进行打包时，最终的形态是一个jar包，其中配置文件、lib依赖都会打进jar内，这就导致了整个jar包的体积很大。对于经常进行版本更迭的项目来说，每次都是要把整个jar上传。如果网速较慢的话，那么整个更迭的过程会很痛苦。
+以 `SpringBoot` 为例，使用官方默认的 `maven` 插件 `spring-boot-maven-plugin` 进行打包时，最终的形态是一个 `jar` 包，其中 `配置文件` 、 `lib依赖` 都会打进 `jar` 内，这就导致了整个 `jar` 包的体积很大。对于经常进行版本更迭的项目来说，每次都是要把整个 `jar` 上传。如果网速较慢的话，那么整个更迭的过程会很痛苦。
 
-那么理想状态是什么样子呢？对于lib包、配置文件没有变更的情况，我只上传代码就可以了。也就是说如果将jar包中的配置文件、lib依赖分离出来，那么就可以更灵活的进行版本更迭了。
+那么理想状态是什么样子呢？对于 `lib依赖` 、 `配置文件` 没有变更的情况，我只上传代码就可以了。也就是说如果将 `jar` 包中的 `配置文件` 、 `lib依赖` 分离出来，那么就可以更灵活的进行版本更迭了。
 
 ## 2 实现想法
 
 有了想法，那么就开始实操啦。具体要实现的步骤如下：
 
-1. 需要将jar进行瘦身，只把代码放进去，并添加对配置文件、lib依赖的引用；
+1. 需要将 `jar` 进行瘦身，只把代码放进去，并添加对 `配置文件` 、 `lib依赖` 的引用；
 
-2. 需要将需要的配置文件，拷贝出来；
+2. 需要将需要的 `配置文件` ，拷贝出来；
 
-3. 需要将lib依赖，拷贝出来；
+3. 需要将 `lib依赖` ，拷贝出来；
 
 4. 整合打包；
 
 ## 3 jar瘦身
 
-jar瘦身，需要用到 `maven-jar-plugin` 插件，其配置如下：
+`jar` 瘦身，需要用到 `maven-jar-plugin` 插件，其配置如下：
 
 * pom.xml
 
@@ -51,15 +51,15 @@ jar瘦身，需要用到 `maven-jar-plugin` 插件，其配置如下：
 
     !!! tip
 
-        * mainClass：指定jar的启动类
+        * mainClass：指定 `jar` 的启动类
 
-        * classpathPrefix：添加lib依赖到classpath，`../lib` 为稍后lib依赖拷贝的目录
+        * classpathPrefix：添加 `lib依赖` 到 `classpath` ，`../lib` 为稍后 `lib依赖` 拷贝的目录
 
-        * Class-Path：添加配置文件的目录到classpath，`../config` 为稍后配置文件拷贝的目录
+        * Class-Path：添加 `配置文件` 的目录到 `classpath` ，`../config` 为稍后 `配置文件` 拷贝的目录
 
 ## 4 配置文件拷贝
 
-配置文件拷贝，需要用到 `maven-resources-plugin` 插件，其配置如下：
+`配置文件` 拷贝，需要用到 `maven-resources-plugin` 插件，其配置如下：
 
 * pom.xml
 
@@ -85,15 +85,15 @@ jar瘦身，需要用到 `maven-jar-plugin` 插件，其配置如下：
 
     !!! tip
 
-        * directory：指定配置文件从哪里拷贝
+        * directory：指定 `配置文件` 从哪里拷贝
 
-        * targetPath：指定配置文件拷贝到哪里
+        * targetPath：指定 `配置文件` 拷贝到哪里
 
         这里需要注意的是，最终拷贝到的根目录是 `\target\classes`  。
 
 ## 5 lib依赖拷贝
 
-lib依赖拷贝，需要用到 `maven-dependency-plugin` 插件，其配置如下：
+`lib依赖` 拷贝，需要用到 `maven-dependency-plugin` 插件，其配置如下：
 
 * pom.xml
 
@@ -121,7 +121,7 @@ lib依赖拷贝，需要用到 `maven-dependency-plugin` 插件，其配置如�
 
     !!! tip
 
-        * outputDirectory：lib依赖拷贝到哪里
+        * outputDirectory： `lib依赖` 拷贝到哪里
 
 ## 6 整合打包
 
