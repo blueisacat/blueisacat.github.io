@@ -1,4 +1,4 @@
-# 2 使用maven-assembly-plugin插件定制化打包
+# 使用maven-assembly-plugin插件定制化打包
 
 ## 1 有个想法
 

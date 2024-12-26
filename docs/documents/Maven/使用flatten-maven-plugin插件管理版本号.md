@@ -1,4 +1,4 @@
-# 1 使用flatten-maven-plugin插件管理版本号
+# 使用flatten-maven-plugin插件管理版本号
 
 ## 1 发现问题
 
