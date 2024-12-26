@@ -21,7 +21,7 @@
 
 !!! warning
 
-    mapreduce.reduce.shuffle.input.buffer.percent（默认0.7）* mapreduce.reduce.shuffle.memory.limit.percent（默认0.25）* mapreduce.reduce.shuffle.parallelcopies < 1，当大于1时会导致内存溢出。
+    mapreduce.reduce.shuffle.input.buffer.percent（默认0.7）× mapreduce.reduce.shuffle.memory.limit.percent（默认0.25）× mapreduce.reduce.shuffle.parallelcopies < 1，当大于1时会导致内存溢出。
 
 ## 2 HDFS相关优化
 

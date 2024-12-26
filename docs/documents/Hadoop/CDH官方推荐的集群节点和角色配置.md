@@ -12,27 +12,27 @@
 
 ### 1.1 3-10个Worker主机（非高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_0.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_0.png)
 
 ### 1.2 3-20个Worker主机（高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_1.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_1.png)
 
 ### 1.3 20-80个Worker主机（高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_2.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_2.png)
 
 ### 1.4 80-200个Worker主机（高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_3.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_3.png)
 
 ### 1.5 200-500个Worker主机（高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_4.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_4.png)
 
 ### 1.6 500-1000个Worker主机（高可用）
 
-![](../../assets/images/hadoop/CDH官方推荐的集群节点和角色配置_image_5.png)
+![](../../assets/images/Hadoop/CDH官方推荐的集群节点和角色配置_image_5.png)
 
 ## 2 关键组件资源分配
 
