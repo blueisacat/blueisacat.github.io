@@ -201,6 +201,10 @@ nav:
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.5 计算组操作.md
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.6 数据缓存.md
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.7 Meta Service API 参考.md
+  - Hadoop:
+    - documents/Hadoop/CDH调优.md
+    - documents/Hadoop/CDH官方推荐的集群节点和角色配置.md
+    - documents/Hadoop/CDH集群角色和节点数规划建议.md
   - Linux:
     - documents/Linux/Linux指令.md
   - Maven:
