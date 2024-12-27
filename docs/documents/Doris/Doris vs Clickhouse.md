@@ -1,4 +1,4 @@
-# Doris vs Clickhouse
+# Doris vs ClickHouse
 
 ## 1 背景介绍
 

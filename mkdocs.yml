@@ -8,7 +8,7 @@ site_description: 梅尔菲斯的个人网站
 # [Navigtion]
 nav:
   - Doris:
-    - documents/Doris/Doris vs Clickhouse.md
+    - documents/Doris/Doris vs ClickHouse.md
     - documents/Doris/Doris 3.x vs Doris 2.X.md
     - Apache Doris 中文手册 v3.0:
       - 1 安装部署:
