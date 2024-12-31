@@ -66,7 +66,7 @@
 
 #### 3.1.4 扩容/缩容
 
-`Doris` 支持集群的在线动态扩缩容，通过内置的 `SQL` 命令  `alter system add/decomission backends` 即可进行节点的扩缩容，数据均衡的粒度是 `tablet` ，每个 `tablet` 大概是数百兆，扩容后表的 `tablet` 会自动拷贝到新的 `BE` 节点，如果在线扩容，应该小批量去增加 `BE` ，避免过于剧烈导致集群不稳定。
+`Doris` 支持集群的在线动态扩缩容，通过内置的 `SQL` 命令 `alter system add/decomission backends` 即可进行节点的扩缩容，数据均衡的粒度是 `tablet` ，每个 `tablet` 大概是数百兆，扩容后表的 `tablet` 会自动拷贝到新的 `BE` 节点，如果在线扩容，应该小批量去增加 `BE` ，避免过于剧烈导致集群不稳定。
 
 ![](../../assets/images/Doris/8c639f843117c537106fec15ef485e76.jpeg)
 
@@ -78,7 +78,7 @@
 
 `Doris` 在 `FrontEnd` 中包含元数据的管理能力，内置了 `BerkeleyDB JE HA` 组件，包含选举策略和副本数据同步，提供了 `FE` 的高可用方案。 `FE` 中管理的元数据也非常丰富，包含节点、集群、库、表和用户信息，以及分区、 `Tablet` 等数据信息，也包含事务、后台任务、 `DDL` 操作和导数相关任务等信息。
 
-`Doris` 的 `FrontEnd` 可以部署 `3` 个 `Follwer` + `n` 个 `Oberserver` （ `n>=0` ）的方式来实现元数据和访问连接的高可用， `Follower` 参与选主，在有 `Follwer` 宕机时，会自动的选举出新节点保证读写高可用， `Observer` 是只读的扩展节点，可以水平扩展实现读的扩展。 `BE` 通过多副本来实现高可用，一般来说也采取默认的三副本，写入的时候采用 `Quroum` 协议保证数据一致性。
+`Doris` 的 `FrontEnd` 可以部署 `3` 个 `Follwer` 加 `n` 个 `Oberserver` （ `n>=0` ）的方式来实现元数据和访问连接的高可用， `Follower` 参与选主，在有 `Follwer` 宕机时，会自动的选举出新节点保证读写高可用， `Observer` 是只读的扩展节点，可以水平扩展实现读的扩展。 `BE` 通过多副本来实现高可用，一般来说也采取默认的三副本，写入的时候采用 `Quroum` 协议保证数据一致性。
 
 `Doris` 的元数据和数据多副本存储的，能自动复制具有自动灾备的能力，服务挂了可以自动重启，坏一块盘数据自动均衡，小范围的节点宕机不会影响集群对外的服务，但宕机后数据均衡过程会消耗集群资源，引发短时间的负载过高。架构如下图：
 
@@ -154,7 +154,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 ![](../../assets/images/Doris/12a53d2402b20b7da071cab3901b8bef.jpeg)
 
-`Doris` 的数据划分方式是 `Table` 、 `Partition` 、 `Bucket/Tablet` 、 `Segment` 几个部分，其中 `Partition` 代表数据的纵向划分分区一般是日期列， `Bucket/Tablet` 一般指数据的横向切割分桶规则一般为某主键，  `Segment` 是具体的存储文件。 `Segment` 中包含数据和索引，数据部分包含多个列的数据按列存放，有三种索引：物理索引、稀疏索引和 `ZoneMap` 索引。
+`Doris` 的数据划分方式是 `Table` 、 `Partition` 、 `Bucket/Tablet` 、 `Segment` 几个部分，其中 `Partition` 代表数据的纵向划分分区一般是日期列， `Bucket/Tablet` 一般指数据的横向切割分桶规则一般为某主键， `Segment` 是具体的存储文件。 `Segment` 中包含数据和索引，数据部分包含多个列的数据按列存放，有三种索引：物理索引、稀疏索引和 `ZoneMap` 索引。
 
 `ClickHouse` 中分为 `DistributeTable` 、 `LocalTable` 、 `Partition` 、 `Shard` 、 `Part` 、 `Column` 几个部分，差不多能和 `Doris` 对应起来，区别就是 `CH` 中每个 `Column` 都对应一组数据文件和索引文件，好处就是命中系统 `Cache` 性能更高，不好的地方就是 `IO` 较高且文件数量较多，另外 `CH` 有 `Count` 索引，所以 `Count` 时命中索引会比较快。
 
@@ -168,7 +168,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 * `Doris` ：可重复的 `Duplicated Key` 就是明细表，按维度聚合的 `Aggregate Key` ，唯一主键 `Unique Key` ， `UniqueKey` 这个可以视为 `AggregateKey` 的特例，另外在这三种基础上可以建立 `Rollup` （上卷），可以理解为物化视图。
 
-* `ClickHouse` : 主要是 `MergeTree` 表引擎家族，主要是 `ReplicatedMergeTree` 带副本的、 `ReplacingMergeTree` 可以更新数据的和 `AggregatingMergeTree` 可以聚合数据，另外还有内存字典表可以加载数据字典、内存表可以加速查询或获得更好写入性能。 `CH` 比较特殊地方是分布式表和每个节点的本地表都要单独创建，物化视图无法自动路由。
+* `ClickHouse` ：主要是 `MergeTree` 表引擎家族，主要是 `ReplicatedMergeTree` 带副本的、 `ReplacingMergeTree` 可以更新数据的和 `AggregatingMergeTree` 可以聚合数据，另外还有内存字典表可以加载数据字典、内存表可以加速查询或获得更好写入性能。 `CH` 比较特殊地方是分布式表和每个节点的本地表都要单独创建，物化视图无法自动路由。
 
 另外， `Doris` 新开发的 `Primary Key` 模型，对实时更新场景下的读性能进行了深度优化，在支持 `update` 语义的同时，避免了 `Unique key` 的 `sort merge` 开销。在实时 `update` 的压力下，查询性能跟是 `Unique key` 的 `3-15` 倍。类似的，相比 `ClickHouse` 的 `ReplicatedMergeTree` ，也避免了 `select final/optimize final` 的问题。
 
@@ -202,7 +202,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 #### 3.5.3 SQL支持
 
-`Doris` 与 `MySQL` 语法兼容，支持 `SQL99` 规范以及部分 `SQL2003` 新标准(比如窗口函数， `Grouping sets` )。
+`Doris` 与 `MySQL` 语法兼容，支持 `SQL99` 规范以及部分 `SQL2003` 新标准（比如窗口函数， `Grouping sets` ）。
 
 `ClickHouse` 部分支持 `SQL-2011` 标准（[https://clickhouse.tech/docs/en/sql-reference/ansi/](https://clickhouse.tech/docs/en/sql-reference/ansi/)），但是由于 `Planner` 的一些限制， `ClickHouse` 的多表关联需要对 `SQL` 做大量改写工作，比如需要手动下推条件到子查询中，所以复杂查询使用不太方便。
 
@@ -306,7 +306,7 @@ group by i_item_id order by i_item_id limit 10;
 
 ### 4.2 测试环境
 
-* 硬件： `3` 台 `32` 核 / `128G` 内存 / `HDD` 磁盘的服务器
+* 硬件： `3` 台 `32` 核、 `128G` 内存、 `HDD` 磁盘的服务器
 
 * 软件： `Doris 0.13.1` 、 `ClickHouse 21.3.13.1`
 
