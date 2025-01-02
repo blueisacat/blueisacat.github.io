@@ -22,7 +22,7 @@
 
 `jar` 瘦身，需要用到 `maven-jar-plugin` 插件，其配置如下：
 
-* pom.xml
+* `pom.xml`
 
     ```xml
     <plugin>
@@ -51,17 +51,17 @@
 
     !!! tip
 
-        * mainClass：指定 `jar` 的启动类
+        * `mainClass` ：指定 `jar` 的启动类
 
-        * classpathPrefix：添加 `lib依赖` 到 `classpath` ，`../lib` 为稍后 `lib依赖` 拷贝的目录
+        * `classpathPrefix` ：添加 `lib依赖` 到 `classpath` ， `../lib` 为稍后 `lib依赖` 拷贝的目录
 
-        * Class-Path：添加 `配置文件` 的目录到 `classpath` ，`../config` 为稍后 `配置文件` 拷贝的目录
+        * `Class-Path` ：添加 `配置文件` 的目录到 `classpath` ， `../config` 为稍后 `配置文件` 拷贝的目录
 
 ## 4 配置文件拷贝
 
 `配置文件` 拷贝，需要用到 `maven-resources-plugin` 插件，其配置如下：
 
-* pom.xml
+* `pom.xml`
 
     ```xml
     <plugin>
@@ -85,17 +85,17 @@
 
     !!! tip
 
-        * directory：指定 `配置文件` 从哪里拷贝
+        * `directory` ：指定 `配置文件` 从哪里拷贝
 
-        * targetPath：指定 `配置文件` 拷贝到哪里
+        * `targetPath` ：指定 `配置文件` 拷贝到哪里
 
-        这里需要注意的是，最终拷贝到的根目录是 `\target\classes`  。
+        这里需要注意的是，最终拷贝到的根目录是 `\target\classes` 。
 
 ## 5 lib依赖拷贝
 
 `lib依赖` 拷贝，需要用到 `maven-dependency-plugin` 插件，其配置如下：
 
-* pom.xml
+* `pom.xml`
 
     ```xml
     <plugin>
@@ -121,13 +121,13 @@
 
     !!! tip
 
-        * outputDirectory： `lib依赖` 拷贝到哪里
+        * `outputDirectory` ： `lib依赖` 拷贝到哪里
 
 ## 6 整合打包
 
 整合打包，需要用到 `maven-assembly-plugin` 插件，其配置如下：
 
-* pom.xml
+* `pom.xml`
 
     ```xml
     <plugin>
@@ -152,9 +152,9 @@
 
     !!! tip
 
-        * descriptor：指定了 `assembly.xml` 的位置
+        * `descriptor` ：指定了 `assembly.xml` 的位置
 
-* assembly.xml
+* `assembly.xml`
 
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
@@ -217,28 +217,19 @@
 
 通过按照上面的插件配置，最终打包会在 `\target` 目录下生成一个 `*.tar.gz` 的压缩文件，解压后其目录结构如下：
 
-* 根目录
-
-    * boot
-
-        * jar包
-
-    * config
-
-        * application.yml
-
-        * application-dev.yml
-
-        * logback-spring.xml
-
-    * lib
-
-        * 依赖.jar
-
-        * ……
-
-        * 依赖.jar
-
-    * license
+```shell
+--根目录
+    --boot
+        --jar包
+    --config
+        --application.yml
+        --application-dev.yml
+        --logback-spring.xml
+    --lib
+        --依赖.jar
+        ……
+        --依赖.jar
+    --license
+```
 
 至此，最终形态已经符合预期。

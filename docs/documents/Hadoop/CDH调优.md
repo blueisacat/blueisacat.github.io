@@ -21,7 +21,7 @@
 
 !!! warning
 
-    mapreduce.reduce.shuffle.input.buffer.percent（默认0.7）× mapreduce.reduce.shuffle.memory.limit.percent（默认0.25）× mapreduce.reduce.shuffle.parallelcopies < 1，当大于1时会导致内存溢出。
+    `mapreduce.reduce.shuffle.input.buffer.percent(默认0.7)× mapreduce.reduce.shuffle.memory.limit.percent(默认0.25)× mapreduce.reduce.shuffle.parallelcopies < 1` ，当大于 `1` 时会导致内存溢出。
 
 ## 2 HDFS相关优化
 
@@ -132,4 +132,4 @@
 
     !!! tip
 
-        默认值：1024，如果需要超过1048576，需要先增大nr_open值。
+        默认值： `1024` ，如果需要超过 `1048576` ，需要先增大 `nr_open` 值。

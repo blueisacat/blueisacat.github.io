@@ -2,13 +2,13 @@
 
 ## 1 主机角色分配
 
-* Master Hosts：运行 Hadoop 主进程，例如 HDFS NameNode 和 YARN 资源管理器。
+* `Master Hosts` ：运行 `Hadoop` 主进程，例如 `HDFS NameNode` 和 `YARN` 资源管理器。
 
-* Utility Hosts： 运行其他不是主进程的集群进程，例如 Cloudera Manager 和 Hive Metastore。
+* `Utility Hosts` ：运行其他不是主进程的集群进程，例如 `Cloudera Manager` 和 `Hive Metastore` 。
 
-* Gateway Hosts： 是用于在集群中启动作业的客户端访问点。 所需网关主机的数量因工作负载的类型和大小而异。
+* `Gateway Hosts` ：是用于在集群中启动作业的客户端访问点。所需网关主机的数量因工作负载的类型和大小而异。
 
-* Worker Hosts： 主要运行 DataNodes 和其他分布式进程，例如 Impalad。
+* `Worker Hosts` ：主要运行 `DataNodes` 和其他分布式进程，例如 `Impalad` 。
 
 ### 1.1 3-10个Worker主机（非高可用）
 
@@ -36,7 +36,7 @@
 
 ## 2 关键组件资源分配
 
-* HDFS：
+* `HDFS` ：
 
     CPU：★☆☆☆☆
 
@@ -46,7 +46,7 @@
 
     网络IO：★★★★☆
 
-* Impala：
+* `Impala` ：
 
     CPU：★☆☆☆☆
 
@@ -56,7 +56,7 @@
 
     网络IO：★★☆☆☆
 
-* YARN：
+* `YARN` ：
 
     CPU：★★★★★
 
