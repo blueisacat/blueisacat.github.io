@@ -1,5 +1,7 @@
 # 目录
 
+* **ClickHouse**: ClickHouse相关文档
+
 * **Doris**: Apache Doris相关文档
 
 * **Hadoop**: Apache Hadoop相关文档

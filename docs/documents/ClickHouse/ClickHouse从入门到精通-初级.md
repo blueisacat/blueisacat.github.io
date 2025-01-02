@@ -2,7 +2,7 @@
 
 ## 1 ClickHouse入门
 
-`ClickHouse` 是俄罗斯的 `Yandex` 于 `2016` 年开源的列式存储数据库（DBMS），使用 `C++` 语言编写，主要用于在线分析处理查询（OLAP），能够使用 `SQL` 查询实时生成分析数据报告。
+`ClickHouse` 是俄罗斯的 `Yandex` 于 `2016` 年开源的列式存储数据库（ `DBMS` ），使用 `C++` 语言编写，主要用于在线分析处理查询（ `OLAP` ），能够使用 `SQL` 查询实时生成分析数据报告。
 
 ### 1.1 ClickHouse 的特点
 
@@ -44,13 +44,13 @@
 
 `ClickHouse` 采用类 `LSM Tree` 的结构，数据写入后定期在后台 `Compaction` 。通过类 `LSM tree` 的结构， `ClickHouse` 在数据导入时全部是顺序 `append` 写，写入后数据段不可更改，在后台 `compaction` 时也是多个段 `merge sort` 后顺序写回磁盘。顺序写的特性，充分利用了磁盘的吞吐能力，即便在 `HDD` 上也有着优异的写入性能。
 
-官方公开 `benchmark` 测试显示能够达到 `50MB-200MB/s` 的写入吞吐能力，按照每行 `100 Byte` 估算，大约相当于 `50W-200W` 条/s 的写入速度。
+官方公开 `benchmark` 测试显示能够达到 `50MB-200MB/s` 的写入吞吐能力，按照每行 `100 Byte` 估算，大约相当于 `50W-200W 条/s` 的写入速度。
 
 #### 1.1.5 数据分区与线程级并行
 
-`ClickHouse` 将数据划分为多个 `partition` ，每个 `partition` 再进一步划分为多个 `indexgranularity(索引粒度)` ，然后通过多个CPU核心分别处理其中的一部分来实现并行数据处理。在这种设计下，单条 `Query` 就能利用整机所有CPU。极致的并行处理能力，极大的降低了查询延时。
+`ClickHouse` 将数据划分为多个 `partition` ，每个 `partition` 再进一步划分为多个 `indexgranularity(索引粒度)` ，然后通过多个 `CPU` 核心分别处理其中的一部分来实现并行数据处理。在这种设计下，单条 `Query` 就能利用整机所有 `CPU` 。极致的并行处理能力，极大的降低了查询延时。
 
-所以， `ClickHouse` 即使对于大量数据的查询也能够化整为零平行处理。但是有一个弊端就是对于单条查询使用多CPU，就不利于同时并发多条查询。所以对于高 `QPS` 的查询业务， `ClickHouse` 并不是强项。
+所以， `ClickHouse` 即使对于大量数据的查询也能够化整为零平行处理。但是有一个弊端就是对于单条查询使用多 `CPU` ，就不利于同时并发多条查询。所以对于高 `QPS` 的查询业务， `ClickHouse` 并不是强项。
 
 #### 1.1.6 性能对比
 
@@ -64,7 +64,7 @@
 
     ![](../../assets/images/ClickHouse/ClickHouse从入门到精通-初级_image_4.png)
 
-结论: `ClickHouse` 像很多 `OLAP` 数据库一样，单表查询速度由于关联查询，而且 `ClickHouse` 的两者差距更为明显。
+结论： `ClickHouse` 像很多 `OLAP` 数据库一样，单表查询速度由于关联查询，而且 `ClickHouse` 的两者差距更为明显。
 
 ## 2 ClickHouse安装
 
@@ -119,7 +119,7 @@
 
 #### 2.1.4 CentOS 取消 SELINUX
 
-1. 修改/etc/selinux/config 中的 SELINUX=disabled
+1. 修改 `/etc/selinux/config` 中的 `SELINUX=disabled`
 
     ```shell
     [atguigu@hadoop102 ~]$ sudo vim /etc/selinux/config
@@ -187,9 +187,9 @@
 
     在这个文件中，有 `ClickHouse` 的一些默认路径配置，比较重要的
 
-    数据文件路径：`/var/lib/clickhouse/`
+    数据文件路径： `/var/lib/clickhouse/`
 
-    日志文件路径：`/var/log/clickhouse-server/clickhouse-server.log`
+    日志文件路径： `/var/log/clickhouse-server/clickhouse-server.log`
 
 #### 2.2.6 启动 Server
 
@@ -215,7 +215,7 @@
 
 !!! tip
 
-    -m :可以在命令窗口输入多行命令
+    `-m` ：可以在命令窗口输入多行命令
 
 ## 3 数据类型
 
@@ -223,33 +223,33 @@
 
 固定长度的整型，包括有符号整型或无符号整型。
 
-整型范围（-2^n -1~2^n-1 -1）：
+整型范围（ `-2^n -1~2^n-1 -1` ）：
 
-* Int8 - [-128 : 127]
+* `Int8 - [-128 : 127]`
 
-* Int16 - [-32768 : 32767]
+* `Int16 - [-32768 : 32767]`
 
-* Int32 - [-2147483648 : 2147483647]
+* `Int32 - [-2147483648 : 2147483647]`
 
-* Int64 - [-9223372036854775808 : 9223372036854775807]
+* `Int64 - [-9223372036854775808 : 9223372036854775807]`
 
-无符号整型范围（0~2^n-1）：
+无符号整型范围（ `0~2^n-1` ）：
 
-* UInt8 - [0 : 255]
+* `UInt8 - [0 : 255]`
 
-* UInt16 - [0 : 65535]
+* `UInt16 - [0 : 65535]`
 
-* UInt32 - [0 : 4294967295]
+* `UInt32 - [0 : 4294967295]`
 
-* UInt64 - [0 : 18446744073709551615]
+* `UInt64 - [0 : 18446744073709551615]`
 
-使用场景：个数、数量、也可以存储型id。
+使用场景：个数、数量、也可以存储型 `id` 。
 
 ### 3.2 浮点型
 
-* Float32 - float
+* `Float32 - float`
 
-* Float64 - double
+* `Float64 - double`
 
 建议尽可能以整数形式存储数据。例如，将固定精度的数字转换为整数值，如时间用毫秒为单位表示，因为浮点型进行计算时可能引起四舍五入的误差。
 
@@ -267,11 +267,11 @@
 
 有三种声明：
 
-* Decimal32(s)，相当于 Decimal(9-s,s)，有效位数为 1~9
+* `Decimal32(s)` ，相当于 `Decimal(9-s,s)` ，有效位数为 `1~9`
 
-* Decimal64(s)，相当于 Decimal(18-s,s)，有效位数为 1~18
+* `Decimal64(s)` ，相当于 `Decimal(18-s,s)` ，有效位数为 `1~18`
 
-* Decimal128(s)，相当于 Decimal(38-s,s)，有效位数为 1~38
+* `Decimal128(s)` ，相当于 `Decimal(38-s,s)` ，有效位数为 `1~38`
 
 !!! tip
 
@@ -281,11 +281,11 @@
 
 ### 3.5 字符串
 
-* String
+* `String`
 
     字符串可以任意长度的。它可以包含任意的字节集，包含空字节。
 
-* FixedString(N)
+* `FixedString(N)`
 
     固定长度 `N` 的字符串， `N` 必须是严格的正自然数。当服务端读取长度小于 `N` 的字符串时候，通过在字符串末尾添加空字节来达到 `N` 字节长度。当服务端读取长度大于 `N` 的字符串时候，将返回错误消息。
 
@@ -312,7 +312,7 @@
     ENGINE = TinyLog;
     ```
 
-2. 这个 `x` 列只能存储类型定义中列出的值：`'hello'或'world'`
+2. 这个 `x` 列只能存储类型定义中列出的值： `'hello'` 或 `'world'`
 
     ```sql
     hadoop102 :) INSERT INTO t_enum VALUES ('hello'), ('world'), ('hello');
@@ -342,11 +342,11 @@
 
 目前 `ClickHouse` 有三种时间类型
 
-* `Date` 接受年-月-日的字符串比如 `‘2019-12-16’`
+* `Date` 接受 `年-月-日` 的字符串比如 `'2019-12-16'`
 
-* `Datetime` 接受年-月-日 时:分:秒的字符串比如 `‘2019-12-16 20:50:10’`
+* `Datetime` 接受 `年-月-日 时:分:秒` 的字符串比如 `'2019-12-16 20:50:10'`
 
-* `Datetime64` 接受年-月-日 时:分:秒.亚秒的字符串比如 `‘2019-12-16 20:50:10.66’`
+* `Datetime64` 接受 `年-月-日 时:分:秒.亚秒` 的字符串比如 `'2019-12-16 20:50:10.66'`
 
 日期类型，用两个字节存储，表示从 `1970-01-01 (无符号)` 到当前的日期值。
 
@@ -354,11 +354,11 @@
 
 ### 3.8 数组
 
-Array(T)：由 `T` 类型元素组成的数组。
+`Array(T)` ：由 `T` 类型元素组成的数组。
 
 `T` 可以是任意类型，包含数组类型。但不推荐使用多维数组， `ClickHouse` 对多维数组的支持有限。例如，不能在 `MergeTree` 表中存储多维数组。
 
-1. 创建数组方式1，使用 `array` 函数
+1. 创建数组方式 `1` ，使用 `array` 函数
 
     ```sql
     array(T) hadoop102 :) SELECT array(1, 2) AS x, toTypeName(x) ;
@@ -366,7 +366,7 @@ Array(T)：由 `T` 类型元素组成的数组。
 
     ![](../../assets/images/ClickHouse/ClickHouse从入门到精通-初级_image_17.png)
 
-2. 创建数组方式2：使用方括号
+2. 创建数组方式 `2` ：使用方括号
 
     ```sql
     [] hadoop102 :) SELECT [1, 2] AS x, toTypeName(x);
@@ -416,7 +416,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 ### 4.4 MergeTree
 
-`ClickHouse` 中最强大的表引擎当属 `MergeTree（合并树）` 引擎及该系列 `（*MergeTree）` 中的其他引擎，支持索引和分区，地位可以相当于 `innodb` 之于 `MySql` 。而且基于 `MergeTree` ，还衍生除了很多小弟，也是非常有特色的引擎。
+`ClickHouse` 中最强大的表引擎当属 `MergeTree(合并树)` 引擎及该系列 `(*MergeTree)` 中的其他引擎，支持索引和分区，地位可以相当于 `innodb` 之于 `MySql` 。而且基于 `MergeTree` ，还衍生除了很多小弟，也是非常有特色的引擎。
 
 1. 建表语句
 
@@ -444,7 +444,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
     (102,'sku_002',600.00,'2020-06-02 12:00:00');
     ```
 
-`MergeTree` 其实还有很多参数(绝大多数用默认值即可)，但是三个参数是更加重要的，也涉及了关于 `MergeTree` 的很多概念。
+`MergeTree` 其实还有很多参数（绝大多数用默认值即可），但是三个参数是更加重要的，也涉及了关于 `MergeTree` 的很多概念。
 
 #### 4.4.1 partition by 分区(可选)
 
@@ -458,7 +458,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 3. 分区目录
 
-    `MergeTree` 是以列文件+索引文件+表定义文件组成的，但是如果设定了分区那么这些文件就会保存到不同的分区目录中。
+    `MergeTree` 是以列文件、索引文件、表定义文件组成的，但是如果设定了分区那么这些文件就会保存到不同的分区目录中。
 
 4. 并行
 
@@ -466,7 +466,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 5. 数据写入与分区合并
 
-    任何一个批次的数据写入都会产生一个临时分区，不会纳入任何一个已有的分区。写入后的某个时刻（大概 10-15 分钟后）， `ClickHouse` 会自动执行合并操作（等不及也可以手动通过 `optimize` 执行），把临时分区的数据，合并到已有分区中。
+    任何一个批次的数据写入都会产生一个临时分区，不会纳入任何一个已有的分区。写入后的某个时刻（大概 `10-15` 分钟后）， `ClickHouse` 会自动执行合并操作（等不及也可以手动通过 `optimize` 执行），把临时分区的数据，合并到已有分区中。
 
     ```sql
     optimize table xxxx final;
@@ -506,9 +506,9 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 主键的设定主要依据是查询语句中的 `where` 条件。
 
-根据条件通过对主键进行某种形式的二分查找，能够定位到对应的 `index granularity` ,避免了全表扫描。
+根据条件通过对主键进行某种形式的二分查找，能够定位到对应的 `index granularity` ，避免了全表扫描。
 
-`index granularity`： 直接翻译的话就是索引粒度，指在稀疏索引中两个相邻索引对应数据的间隔。 `ClickHouse` 中的 `MergeTree` 默认是 `8192` 。官方不建议修改这个值，除非该列存在大量重复值，比如在一个分区中几万行才有一个不同数据。
+`index granularity` ：直接翻译的话就是索引粒度，指在稀疏索引中两个相邻索引对应数据的间隔。 `ClickHouse` 中的 `MergeTree` 默认是 `8192` 。官方不建议修改这个值，除非该列存在大量重复值，比如在一个分区中几万行才有一个不同数据。
 
 稀疏索引：
 
@@ -577,7 +577,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 `TTL` 即 `Time To Live` ， `MergeTree` 提供了可以管理数据表或者列的生命周期的功能。
 
-1. 列级别 TTL
+1. 列级别 `TTL`
 
     1. 创建测试表
 
@@ -606,7 +606,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
         ![](../../assets/images/ClickHouse/ClickHouse从入门到精通-初级_image_23.png)
 
-2. 表级 TTL
+2. 表级 `TTL`
 
     下面的这条语句是数据会在 `create_time` 之后 `10` 秒丢失
 
@@ -618,21 +618,21 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
     能够使用的时间周期：
 
-    * SECOND
+    * `SECOND`
 
-    * MINUTE
+    * `MINUTE`
 
-    * HOUR
+    * `HOUR`
 
-    * DAY
+    * `DAY`
 
-    * WEEK
+    * `WEEK`
 
-    * MONTH
+    * `MONTH`
 
-    * QUARTER
+    * `QUARTER`
 
-    * YEAR
+    * `YEAR`
 
 ### 4.5 ReplacingMergeTree
 
@@ -781,7 +781,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
     * 不在一个分区的数据不会被聚合
 
-    * 只有在同一批次插入(新版本)或分片合并时才会进行聚合
+    * 只有在同一批次插入（新版本）或分片合并时才会进行聚合
 
 3. 开发建议
 
@@ -805,11 +805,11 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 ## 5 SQL操作
 
-基本上来说传统关系型数据库（以 `MySQL` 为例）的 `SQL` 语句， `ClickHouse` 基本都支持，这里不会从头讲解 `SQL` 语法只介绍 `ClickHouse` 与标准 `SQL（MySQL）` 不一致的地方。
+基本上来说传统关系型数据库（以 `MySQL` 为例）的 `SQL` 语句， `ClickHouse` 基本都支持，这里不会从头讲解 `SQL` 语法只介绍 `ClickHouse` 与标准 `SQL(MySQL)` 不一致的地方。
 
 ### 5.1 Insert
 
-基本与标准 `SQL（MySQL）` 基本一致
+基本与标准 `SQL(MySQL)` 基本一致
 
 1. 标准
 
@@ -851,11 +851,11 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
 * 支持子查询
 
-* 支持CTE(Common Table Expression 公用表表达式 `with` 子句)
+* 支持 `CTE` （ `Common Table Expression` 公用表表达式 `with` 子句）
 
 * 支持各种 `JOIN` ，但是 `JOIN` 操作无法使用缓存，所以即使是两次相同的 `JOIN` 语句， `ClickHouse` 也会视为两条新 `SQL`
 
-* 窗口函数(官方正在测试中...)
+* 窗口函数（官方正在测试中……）
 
 * 不支持自定义函数
 
@@ -878,7 +878,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
     (110,'sku_003',600.00,'2020-06-01 12:00:00');
     ```
 
-2. with rollup：从右至左去掉维度进行小计
+2. `with rollup` ：从右至左去掉维度进行小计
 
     ```sql
     hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with rollup;
@@ -886,7 +886,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
     ![](../../assets/images/ClickHouse/ClickHouse从入门到精通-初级_image_28.png)
 
-3. with cube : 从右至左去掉维度进行小计，再从左至右去掉维度进行小计
+3. `with cube` ：从右至左去掉维度进行小计，再从左至右去掉维度进行小计
 
     ```sql
     hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with cube;
@@ -894,7 +894,7 @@ create table t_tinylog ( id String, name String) engine=TinyLog;
 
     ![](../../assets/images/ClickHouse/ClickHouse从入门到精通-初级_image_29.png)
 
-4. with totals: 只计算合计
+4. `with totals` ：只计算合计
 
     ```sql
     hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with totals;
@@ -948,7 +948,7 @@ clickhouse-client --query "select * from t_order_mt where create_time='2020-06-0
 
 1. 启动 `zookeeper` 集群
 
-2. 在 `hadoop102` 的 `/etc/clickhouse-server/config.d` 目录下创建一个名为 `metrika.xml` 的配置文件,内容如下：
+2. 在 `hadoop102` 的 `/etc/clickhouse-server/config.d` 目录下创建一个名为 `metrika.xml` 的配置文件，内容如下：
 
     注：也可以不创建外部文件，直接在 `config.xml` 中指定
 
@@ -1265,7 +1265,7 @@ clickhouse-client --query "select * from t_order_mt where create_time='2020-06-0
 
     参数含义：
 
-    Distributed（集群名称，库名，本地表名，分片键）
+    `Distributed` （集群名称，库名，本地表名，分片键）
 
     分片键必须是整型数字，所以用 `hiveHash` 函数转换，也可以 `rand()`
 

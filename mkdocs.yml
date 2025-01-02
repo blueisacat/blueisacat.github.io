@@ -7,6 +7,8 @@ site_description: 梅尔菲斯的个人网站
 
 # [Navigtion]
 nav:
+  - ClickHouse:
+    - documents/ClickHouse/ClickHouse从入门到精通-初级.md
   - Doris:
     - documents/Doris/Doris vs ClickHouse.md
     - documents/Doris/Doris 3.x vs Doris 2.X.md
