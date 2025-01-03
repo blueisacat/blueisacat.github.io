@@ -11,6 +11,8 @@ nav:
     - documents/ClickHouse/ClickHouse从入门到精通-初级.md
     - documents/ClickHouse/ClickHouse从入门到精通-高级.md
     - documents/ClickHouse/ClickHouse从入门到精通-监控与备份.md
+    - documents/ClickHouse/ClickHouse设置.md
+    - documents/ClickHouse/LSM Tree原理详解.md
   - Doris:
     - documents/Doris/Doris vs ClickHouse.md
     - documents/Doris/Doris 3.x vs Doris 2.X.md
