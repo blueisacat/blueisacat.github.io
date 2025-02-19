@@ -229,6 +229,7 @@ nav:
   - Maven:
     - documents/Maven/使用flatten-maven-plugin插件管理版本号.md
     - documents/Maven/使用maven-assembly-plugin插件定制化打包.md
+    - documents/Maven/Maven使用手册.md
 # [UI]
 # [top]
 theme:
