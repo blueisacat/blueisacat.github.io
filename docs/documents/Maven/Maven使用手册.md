@@ -600,7 +600,7 @@ D:\mavenRepository\com\fm\maven\pro01-maven-java\1.0-SNAPSHOT\pro01-maven-java-1
 </modules>
 ```
 
-#### 13.3.4 在子工程中引入依赖
+#### 14.3.4 在子工程中引入依赖
 
 因为父工程中已经统一管理了所有依赖的版本，所以子工程引入依赖的时候就不需要写依赖的版本了
 
@@ -636,9 +636,9 @@ D:\mavenRepository\com\fm\maven\pro01-maven-java\1.0-SNAPSHOT\pro01-maven-java-1
 
 ![](../../assets/images/Maven/v2-b42d00c91aacef0e20a50c771b445e05_1440w.jpg)
 
-#### 13.4.5  在父工程中自定义属性进行版本锁定
+#### 14.4.5  在父工程中自定义属性进行版本锁定
 
-##### 13.4.5.1 什么是自定义属性
+##### 14.4.5.1 什么是自定义属性
 
 在 `pom.xml` 文件中的 `<properties>` 标签中添加子标签进行自定义属性，子标签的标签名就是属性名，子标签的标签体的内容就是属性值，例如：
 
@@ -650,7 +650,7 @@ D:\mavenRepository\com\fm\maven\pro01-maven-java\1.0-SNAPSHOT\pro01-maven-java-1
 
 那么我们在 `pom.xml` 中就可以使用 `${属性名}` 来获取属性值
 
-##### 13.4.5.2 什么是版本锁定
+##### 14.4.5.2 什么是版本锁定
 
 因为父工程在管理项目依赖的时候，需要管理非常多的依赖，而有很多依赖的版本都应该是相同的，比如 `spring` 框架的相关依赖都需要统一版本
 
