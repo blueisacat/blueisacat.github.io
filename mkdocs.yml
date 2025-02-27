@@ -8,16 +8,21 @@ site_description: 梅尔菲斯的个人网站
 # [Navigtion]
 nav:
   - Alibaba:
-    - documents/Alibaba/Java开发手册/Java开发手册(黄山版).md
+    - Java开发手册:
+      - documents/Alibaba/Java开发手册/Java开发手册(黄山版).md
   - ClickHouse:
-    - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-初级.md
-    - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-高级.md
-    - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-监控与备份.md
-    - documents/ClickHouse/ClickHouse设置/ClickHouse设置.md
-    - documents/ClickHouse/ClickHouse原理详解/LSM Tree原理详解.md
+    - ClickHouse从入门到精通:
+      - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-初级.md
+      - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-高级.md
+      - documents/ClickHouse/ClickHouse从入门到精通/ClickHouse从入门到精通-监控与备份.md
+    - ClickHouse设置:
+      - documents/ClickHouse/ClickHouse设置/ClickHouse设置.md
+    - ClickHouse原理详解:
+      - documents/ClickHouse/ClickHouse原理详解/LSM Tree原理详解.md
   - Doris:
-    - documents/Doris/Doris选型对比/Doris vs ClickHouse.md
-    - documents/Doris/Doris选型对比/Doris 3.x vs Doris 2.X.md
+    - Doris选型对比:
+      - documents/Doris/Doris选型对比/Doris vs ClickHouse.md
+      - documents/Doris/Doris选型对比/Doris 3.x vs Doris 2.X.md
     - Apache Doris 中文手册 v3.0:
       - 1 安装部署:
         - 1.1 源码编译:
@@ -210,16 +215,17 @@ nav:
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.6 数据缓存.md
         - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.7 Meta Service API 参考.md
   - Flink:
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（1）：Runtime 核心机制剖析.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（2）：Time 深度解析.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（3）：Checkpoint 的应用实践.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（4）：Flink on YarnK8s 原理剖析及实践.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（5）：数据类型和序列化.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（6）：Flink 作业执行深度解析.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（7）：网络流控及反压剖析.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（8）：详解 Metrics 原理与实战.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（9）：Flink Connector 开发.md
-    - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（10）：Flink State 最佳实践.md
+    - Apache Flink 进阶教程:
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（1）：Runtime 核心机制剖析.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（2）：Time 深度解析.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（3）：Checkpoint 的应用实践.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（4）：Flink on YarnK8s 原理剖析及实践.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（5）：数据类型和序列化.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（6）：Flink 作业执行深度解析.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（7）：网络流控及反压剖析.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（8）：详解 Metrics 原理与实战.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（9）：Flink Connector 开发.md
+      - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（10）：Flink State 最佳实践.md
   - Hadoop:
     - documents/Hadoop/CDH调优.md
     - documents/Hadoop/CDH官方推荐的集群节点和角色配置.md
@@ -228,8 +234,9 @@ nav:
     - documents/Linux/Linux指令.md
   - Maven:
     - documents/Maven/Maven使用手册.md
-    - documents/Maven/Maven插件使用/使用flatten-maven-plugin插件管理版本号.md
-    - documents/Maven/Maven插件使用/使用maven-assembly-plugin插件定制化打包.md
+    - Maven插件使用:
+      - documents/Maven/Maven插件使用/使用flatten-maven-plugin插件管理版本号.md
+      - documents/Maven/Maven插件使用/使用maven-assembly-plugin插件定制化打包.md
 # [UI]
 # [top]
 theme:
