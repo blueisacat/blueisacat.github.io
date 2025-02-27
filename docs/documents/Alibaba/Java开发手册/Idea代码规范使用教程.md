@@ -325,6 +325,6 @@
 
 格式化代码
 
-- `Idea` 快捷键： `Ctrl + Alt + L`
+* `Idea` 快捷键： `Ctrl + Alt + L`
 
-- `Eclipse` 快捷键： `Ctrl + Shift + F`
+* `Eclipse` 快捷键： `Ctrl + Shift + F`
