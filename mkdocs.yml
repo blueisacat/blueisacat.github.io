@@ -227,11 +227,14 @@ nav:
       - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（9）：Flink Connector 开发.md
       - documents/Flink/Apache Flink 进阶教程/Apache Flink 进阶教程（10）：Flink State 最佳实践.md
   - Hadoop:
-    - documents/Hadoop/CDH调优.md
-    - documents/Hadoop/CDH官方推荐的集群节点和角色配置.md
-    - documents/Hadoop/CDH集群角色和节点数规划建议.md
+    - Hadoop集群规划:
+      - documents/Hadoop/Hadoop集群规划/CDH官方推荐的集群节点和角色配置.md
+      - documents/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议.md
+    - Hadoop配置优化:
+      - documents/Hadoop/Hadoop配置优化/CDH调优.md
   - Linux:
-    - documents/Linux/Linux指令.md
+    - Linux指令:
+      - documents/Linux/Linux指令/Linux指令.md
   - Maven:
     - documents/Maven/Maven使用手册.md
     - Maven插件使用:
