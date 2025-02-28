@@ -6,11 +6,11 @@
 
 * 子包
 
-    ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_0.png)
+    ![](../../../assets/images/Maven/Maven插件使用/使用flatten-maven-plugin管理版本号_image_0.png)
 
 * 父包
 
-    ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_1.png)
+    ![](../../../assets/images/Maven/Maven插件使用/使用flatten-maven-plugin管理版本号_image_1.png)
 
 可以看到，在子包中要写死父包的版本号，这样一来，每次进行版本号更迭时，都要对每个子包进行一次修改。
 
@@ -20,15 +20,15 @@
 
 * 父包
 
-    ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_2.png)
+    ![](../../../assets/images/Maven/Maven插件使用/使用flatten-maven-plugin管理版本号_image_2.png)
 
 * 子包
 
-    ![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_3.png)
+    ![](../../../assets/images/Maven/Maven插件使用/使用flatten-maven-plugin管理版本号_image_3.png)
 
 到这一步，已经基本实现了父包的统一管理，但是在 `install` 、 `deploy` 的时候会出现问题，在打包后的 `pom` 文件中 `revision` 依旧是个变量。举个栗子：
 
-![](../../assets/images/Maven/使用flatten-maven-plugin管理版本号_image_4.png)
+![](../../../assets/images/Maven/Maven插件使用/使用flatten-maven-plugin管理版本号_image_4.png)
 
 为了解决这个问题，可以在父包中引入 `flatten-maven-plugin` 插件，其作用就是将 `revision` 变量替换为实际的值。
 

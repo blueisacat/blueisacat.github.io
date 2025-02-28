@@ -4,7 +4,7 @@
 
 `Hadoop` 集群服务器按照节点任务的不同可以分为管理节点和工作节点。管理节点上部署各组件的管理角色，工作节点部署各角色的存储、容器或计算角色。但因为 `Hadoop` 不同组件之间兼容性的问题，所以一般使用 `Cloudera` 套件。在 `CDH` 套件中就有如下角色。
 
-![](../../assets/images/Hadoop/CDH集群角色和节点数规划建议_image_0.png)
+![](../../../assets/images/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议_image_0.png)
 
 ## 2 CDH 节点数量建议
 
@@ -22,7 +22,7 @@
 
 * `3` 个主节点：用来安装 `CDH` 服务以 `HA` 的组件。如 `3` 个 `ZKServer` 、 `2` 个 `NameNode` （主备）、 `2` 个 `ResourceManager` ， `3` 个 `HBase Master` `1` 个 `Hive Metastore` 、 `1` 个 `spark History Server` 之类管理角色。角色分配可以参考下图：
 
-    ![](../../assets/images/Hadoop/CDH集群角色和节点数规划建议_image_1.png)
+    ![](../../../assets/images/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议_image_1.png)
 
 * `N` 个工具节点：用来部署 `HIVE Server2` 、 `Hue Server` 、 `Oozie Server` 、 `Flum Agent` 、 `Sqoop Client` 、 `Gateway` 等。
 
@@ -42,16 +42,16 @@
 
     由于性能的原因， `Hadoop` 实时流处理对节点内存和 `CPU` 有较高要求，基于 `Spark Streaming` 的流处理消息吞吐量可随节点数量增加而线性增长，配置可参考下图：
 
-    ![](../../assets/images/Hadoop/CDH集群角色和节点数规划建议_image_2.png)
+    ![](../../../assets/images/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议_image_2.png)
 
 2. 在线分析业务集群：
 
     在线分析业务一般基于 `Impala` 等 `MPP SQL` 引擎，复杂的 `SQL` 计算对内存容量有较高要求，因此需要 `128GB` 至更多的内存的硬件，推荐配置如下：
 
-    ![](../../assets/images/Hadoop/CDH集群角色和节点数规划建议_image_3.png)
+    ![](../../../assets/images/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议_image_3.png)
 
 3. 云存储业务集群：
 
     存储业务主要面向海量数据和文件的存储和计算，强调单节点存储容量和成本，因此配置相对廉价的 `SATA` 硬盘，满足成本和容量的需求，推荐配置如下：
 
-    ![](../../assets/images/Hadoop/CDH集群角色和节点数规划建议_image_4.png)
+    ![](../../../assets/images/Hadoop/Hadoop集群规划/CDH集群角色和节点数规划建议_image_4.png)
