@@ -11,7 +11,7 @@ nav:
     - Java开发手册:
       - documents/Alibaba/Java开发手册/Java开发手册（黄山版）.md
   - ClickHouse:
-    - ClickHouse从入门到精通:
+    - ClickHouse入门教程:
       - documents/ClickHouse/ClickHouse入门教程/ClickHouse从入门到精通-初级.md
       - documents/ClickHouse/ClickHouse入门教程/ClickHouse从入门到精通-高级.md
       - documents/ClickHouse/ClickHouse入门教程/ClickHouse从入门到精通-监控与备份.md
@@ -21,197 +21,197 @@ nav:
     - Doris选型对比:
       - documents/Doris/Doris选型对比/Doris vs ClickHouse.md
       - documents/Doris/Doris选型对比/Doris 3.x vs Doris 2.X.md
-    - Apache Doris 中文手册 v3.0:
+    - Doris用户手册:
       - 1 安装部署:
         - 1.1 源码编译:
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.1 使用 Docker 开发镜像编译（推荐）.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.2 使用 LDB Toolchain 编译（推荐）.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.3 Linux 平台直接编译.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.4 Arm 平台上编译.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.5 Windows 平台上编译.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.1 源码编译/1.1.6 在 MacOS 平台上编译.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.1 使用 Docker 开发镜像编译（推荐）.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.2 使用 LDB Toolchain 编译（推荐）.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.3 Linux 平台直接编译.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.4 Arm 平台上编译.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.5 Windows 平台上编译.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.1 源码编译/1.1.6 在 MacOS 平台上编译.md
         - 1.2 集群部署:
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.1 手动部署.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.2 Docker 部署.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.1 手动部署.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.2 Docker 部署.md
           - 1.2.3 K8s 部署:
-            - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.1 集群环境要求.md
+            - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.1 集群环境要求.md
             - 1.2.3.2 Compute storage coupled:
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.1 快速部署.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.2 部署 Doris Operator.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.3 配置 Doris 集群.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.4 集群运维.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.1 快速部署.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.2 部署 Doris Operator.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.3 配置 Doris 集群.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.2 Compute storage coupled/1.2.3.2.4 集群运维.md
             - 1.2.3.3 Compute storage decoupled:
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.1 快速部署.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.2 部署 FoundationDB.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.3 配置部署 Metaservice.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.4 配置部署 FE.md
-              - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.5 配置部署计算组.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/1 安装部署/1.2 集群部署/1.2.4 Doris on AWS.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.1 快速部署.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.2 部署 FoundationDB.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.3 配置部署 Metaservice.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.4 配置部署 FE.md
+              - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.3 K8s 部署/1.2.3.3 Compute storage decoupled/1.2.3.3.5 配置部署计算组.md
+          - documents/Doris/Doris用户手册/1 安装部署/1.2 集群部署/1.2.4 Doris on AWS.md
       - 2 数据库连接:
-        - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.1 数据库连接.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/2 数据库连接/2.2 基于 Arrow Flight SQL 的高速数据传输链路.md
+        - documents/Doris/Doris用户手册/2 数据库连接/2.1 数据库连接.md
+        - documents/Doris/Doris用户手册/2 数据库连接/2.2 基于 Arrow Flight SQL 的高速数据传输链路.md
       - 3 数据表设计:
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.1 概览.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.2 数据类型.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.1 概览.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.2 数据类型.md
         - 3.3 表索引:
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.1 索引概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.2 前缀索引与排序键.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.3 倒排索引.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.4 BloomFilter 索引.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.3 表索引/3.3.5 N-Gram 索引.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.3 表索引/3.3.1 索引概述.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.3 表索引/3.3.2 前缀索引与排序键.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.3 表索引/3.3.3 倒排索引.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.3 表索引/3.3.4 BloomFilter 索引.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.3 表索引/3.3.5 N-Gram 索引.md
         - 3.4 Tiered Storage:
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.4 Tiered Storage/3.4.1 SSD 和 HDD 层级存储.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.4 Tiered Storage/3.4.2 远程存储.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.4 Tiered Storage/3.4.1 SSD 和 HDD 层级存储.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.4 Tiered Storage/3.4.2 远程存储.md
         - 3.5 数据模型:
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.1 模型概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.2 明细模型.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.3 主键模型.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.4 聚合模型.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.5 数据模型/3.5.5 使用注意.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.6 行列混存.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.5 数据模型/3.5.1 模型概述.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.5 数据模型/3.5.2 明细模型.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.5 数据模型/3.5.3 主键模型.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.5 数据模型/3.5.4 聚合模型.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.5 数据模型/3.5.5 使用注意.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.6 行列混存.md
         - 3.7 数据划分:
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.1 基本概念.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.2 手动分区.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.3 动态分区.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.4 自动分区.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.5 手动分桶.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.6 自动分桶.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.7 数据划分/3.7.7 常见问题.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.8 Schema 变更.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.9 自增列.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/3 数据表设计/3.10 数据库建表最佳实践.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.1 基本概念.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.2 手动分区.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.3 动态分区.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.4 自动分区.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.5 手动分桶.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.6 自动分桶.md
+          - documents/Doris/Doris用户手册/3 数据表设计/3.7 数据划分/3.7.7 常见问题.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.8 Schema 变更.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.9 自增列.md
+        - documents/Doris/Doris用户手册/3 数据表设计/3.10 数据库建表最佳实践.md
       - 4 数据操作:
         - 4.1 数据导入:
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.1 导入概览.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.1 导入概览.md
           - 4.1.2 导入方式:
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.1 Stream Load.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.2 Broker Load.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.3 Routine Load.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.4 Insert Into.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.5 MySQL Load.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.6 Group Commit.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.3 导入数据格式.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.4 错误数据处理.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.5 数据转换.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.6 导入高可用性.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.1 数据导入/4.1.7 从其他 AP 系统迁移数据.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.1 Stream Load.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.2 Broker Load.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.3 Routine Load.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.4 Insert Into.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.5 MySQL Load.md
+            - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.2 导入方式/4.1.2.6 Group Commit.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.3 导入数据格式.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.4 错误数据处理.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.5 数据转换.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.6 导入高可用性.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.1 数据导入/4.1.7 从其他 AP 系统迁移数据.md
         - 4.2 数据导入:
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.1 数据更新概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.2 主键模型的 Update 更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.3 主键模型的导入更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.4 聚合模型的导入更新.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.2 数据更新/4.2.5 主键模型的更新事务.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.2 数据更新/4.2.1 数据更新概述.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.2 数据更新/4.2.2 主键模型的 Update 更新.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.2 数据更新/4.2.3 主键模型的导入更新.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.2 数据更新/4.2.4 聚合模型的导入更新.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.2 数据更新/4.2.5 主键模型的更新事务.md
         - 4.3 数据删除:
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.1 Delete 操作.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.2 批量删除.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.3 Truncate 操作.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.4 表原子替换.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.3 数据删除/4.3.5 临时分区.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.3 数据删除/4.3.1 Delete 操作.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.3 数据删除/4.3.2 批量删除.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.3 数据删除/4.3.3 Truncate 操作.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.3 数据删除/4.3.4 表原子替换.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.3 数据删除/4.3.5 临时分区.md
         - 4.4  数据导出:
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.1 数据导出概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.2 Export.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.3 Select Into Outfile.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.4  数据导出/4.4.4 MySQL Dump.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.5 作业调度.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/4 数据操作/4.6 事务.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.4  数据导出/4.4.1 数据导出概述.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.4  数据导出/4.4.2 Export.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.4  数据导出/4.4.3 Select Into Outfile.md
+          - documents/Doris/Doris用户手册/4 数据操作/4.4  数据导出/4.4.4 MySQL Dump.md
+        - documents/Doris/Doris用户手册/4 数据操作/4.5 作业调度.md
+        - documents/Doris/Doris用户手册/4 数据操作/4.6 事务.md
       - 5 数据查询:
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.1 MySQL 兼容性.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.2 连接（JOIN）.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.3 子查询.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.4 聚合多维分析.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.5 分析函数 (窗口函数）.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.6 公用表表达式（CTE）.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.1 MySQL 兼容性.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.2 连接（JOIN）.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.3 子查询.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.4 聚合多维分析.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.5 分析函数 (窗口函数）.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.6 公用表表达式（CTE）.md
         - 5.7 自定义函数:
-          - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.7 自定义函数/5.7.1 别名函数.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.7 自定义函数/5.7.2 Java UDF.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.8 复杂类型查询.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.9 列转行 (Lateral View).md
-        - documents/Doris/Apache Doris 中文手册 v3.0/5 数据查询/5.10 加密和脱敏.md
+          - documents/Doris/Doris用户手册/5 数据查询/5.7 自定义函数/5.7.1 别名函数.md
+          - documents/Doris/Doris用户手册/5 数据查询/5.7 自定义函数/5.7.2 Java UDF.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.8 复杂类型查询.md
+        - documents/Doris/Doris用户手册/5 数据查询/5.9 列转行 (Lateral View).md
+        - documents/Doris/Doris用户手册/5 数据查询/5.10 加密和脱敏.md
       - 6 查询加速:
         - 6.1 物化视图:
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.1 物化视图概览.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.2 同步物化视图.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.1 物化视图概览.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.2 同步物化视图.md
           - 6.1.3 异步物化视图:
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.1 原理介绍.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.2 功能描述.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.3 使用与实践.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.4 常见问题.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.2 查询缓存.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.3 高并发点查.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.1 原理介绍.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.2 功能描述.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.3 使用与实践.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.1 物化视图/6.1.3 异步物化视图/6.1.3.4 常见问题.md
+        - documents/Doris/Doris用户手册/6 查询加速/6.2 查询缓存.md
+        - documents/Doris/Doris用户手册/6 查询加速/6.3 高并发点查.md
         - 6.4 高效去重:
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.4 高效去重/6.4.1 BITMAP 精准去重.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.4 高效去重/6.4.2 HLL 近似去重.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.5 查询优化器介绍.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.6 Pipeline 执行引擎.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.7 统计信息.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.4 高效去重/6.4.1 BITMAP 精准去重.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.4 高效去重/6.4.2 HLL 近似去重.md
+        - documents/Doris/Doris用户手册/6 查询加速/6.5 查询优化器介绍.md
+        - documents/Doris/Doris用户手册/6 查询加速/6.6 Pipeline 执行引擎.md
+        - documents/Doris/Doris用户手册/6 查询加速/6.7 统计信息.md
         - 6.8 查询调优原理与实践:
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.1 查询调优概述.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.2 查询性能分析.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.1 查询调优概述.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.2 查询性能分析.md
           - 6.8.3 计划调优:
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.1 优化表 Schema 设计.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.2 优化索引设计和使用.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.3 使用 PrepareStatement 加速高并发点查.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.4 使用分区裁剪优化扫表.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.5 使用单表物化视图透明改写.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.6 使用多表物化视图透明改写.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.7 使用列统计信息优化计划.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.8 使用 Colocate Group 优化 Join.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.9 使用 Hint 调整 Join Shuffle 方式.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.10 使用 Hint 控制代价改写.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.11 使用 Leading Hint 控制 Join 顺序.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.12 使用 SQL Cache 加速查询.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.13 使用 Runtime Filter 高阶优化.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.14 数据倾斜处理.md
-            - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.15 DML 计划调优.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.1 优化表 Schema 设计.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.2 优化索引设计和使用.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.3 使用 PrepareStatement 加速高并发点查.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.4 使用分区裁剪优化扫表.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.5 使用单表物化视图透明改写.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.6 使用多表物化视图透明改写.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.7 使用列统计信息优化计划.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.8 使用 Colocate Group 优化 Join.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.9 使用 Hint 调整 Join Shuffle 方式.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.10 使用 Hint 控制代价改写.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.11 使用 Leading Hint 控制 Join 顺序.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.12 使用 SQL Cache 加速查询.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.13 使用 Runtime Filter 高阶优化.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.14 数据倾斜处理.md
+            - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.3 计划调优/6.8.3.15 DML 计划调优.md
 
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.4 常见调优参数.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.5 Hint.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.6 Runtime Filter.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/6 查询加速/6.8 查询调优原理与实践/6.8.7 TOPN 查询优化.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.4 常见调优参数.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.5 Hint.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.6 Runtime Filter.md
+          - documents/Doris/Doris用户手册/6 查询加速/6.8 查询调优原理与实践/6.8.7 TOPN 查询优化.md
       - 7 湖仓一体:
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.1 湖仓一体概述.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.1 湖仓一体概述.md
         - 7.2 数据湖分析:
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.1 Hive Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.2 Hudi Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.3 Iceberg Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.4 Paimon Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.5 LakeSoul Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.6 BigQuery Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.7 Delta Lake Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.8 Kudu Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.9 阿里云 DLF.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.10 TPCH.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.2 数据湖分析/7.2.11 TPCDS.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.1 Hive Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.2 Hudi Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.3 Iceberg Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.4 Paimon Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.5 LakeSoul Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.6 BigQuery Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.7 Delta Lake Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.8 Kudu Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.9 阿里云 DLF.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.10 TPCH.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.2 数据湖分析/7.2.11 TPCDS.md
         - 7.3 数据湖构建:
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.3 数据湖构建/7.3.1 Hive.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.3 数据湖构建/7.3.2 Iceberg.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.3 数据湖构建/7.3.1 Hive.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.3 数据湖构建/7.3.2 Iceberg.md
         - 7.4 数据库分析:
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.1 JDBC Catalog.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.2 MySQL.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.3 PostgreSQL.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.4 Oracle.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.5 SQL Server.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.6 IBM Db2.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.7 ClickHouse.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.8 SAP HANA.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.9 OceanBase.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.10 Elasticsearch.md
-          - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.4 数据库分析/7.4.11 阿里云 MaxCompute.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.5 分析 S3、HDFS 上的文件.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.6 数据缓存.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.7 元数据缓存.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.8 弹性计算节点.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.9 外表统计信息.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.10 云服务认证接入.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/7 湖仓一体/7.11 SQL 方言兼容.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.1 JDBC Catalog.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.2 MySQL.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.3 PostgreSQL.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.4 Oracle.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.5 SQL Server.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.6 IBM Db2.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.7 ClickHouse.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.8 SAP HANA.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.9 OceanBase.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.10 Elasticsearch.md
+          - documents/Doris/Doris用户手册/7 湖仓一体/7.4 数据库分析/7.4.11 阿里云 MaxCompute.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.5 分析 S3、HDFS 上的文件.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.6 数据缓存.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.7 元数据缓存.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.8 弹性计算节点.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.9 外表统计信息.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.10 云服务认证接入.md
+        - documents/Doris/Doris用户手册/7 湖仓一体/7.11 SQL 方言兼容.md
       - 8 存算分离:
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.1 概览.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.2 Doris 存算分离模式部署准备.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.3 编译部署.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.4 管理 Storage Vault.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.5 计算组操作.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.6 数据缓存.md
-        - documents/Doris/Apache Doris 中文手册 v3.0/8 存算分离/8.7 Meta Service API 参考.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.1 概览.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.2 Doris 存算分离模式部署准备.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.3 编译部署.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.4 管理 Storage Vault.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.5 计算组操作.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.6 数据缓存.md
+        - documents/Doris/Doris用户手册/8 存算分离/8.7 Meta Service API 参考.md
   - Flink:
     - Flink进阶教程:
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（1）：Runtime 核心机制剖析.md

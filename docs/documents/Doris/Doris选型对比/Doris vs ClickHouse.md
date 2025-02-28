@@ -50,13 +50,13 @@
 
 * 日常运维如更新版本、更改配置文件两者都需要依赖 `Ansible` 或者 `SaltStack` 来进行批量更新。两者都有部分配置文件可以热更新，不用重启节点，而且有 `Session` 相关参数可以设置可以覆盖配置文件。 `Doris` 有较多的 `SQL` 命令协助运维，比如增加节点， `Doris` 中 `Add Backend` 即可， `ClickHouse` 中需要更改配置文件并下发到各个节点上。
 
-![](../../assets/images/Doris/51d0e87ee220321317a34ded3e093e79.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_1.jpeg)
 
 #### 3.1.2 多租户管理
 
 `ClickHouse` 的权限和 `Quota` 的粒度更细，可以很方便的支持多租户使用共享集群。比如可以设置查询内存、查询线程数量、查询超时等，以便来限制查询的大小；同时结合查询并发和一定时间窗口内的查询数量，以便来控制查询数量。多租户的方案，对发展中的业务非常友好，因为使用共享集群资源，可以快速动态调整配额，如果是独占集群资源利用率不高、扩容相对麻烦。
 
-![](../../assets/images/Doris/4eaee95a4708eb295ecda1eea720aba1.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_2.jpeg)
 
 #### 3.1.3 集群迁移
 
@@ -68,7 +68,7 @@
 
 `Doris` 支持集群的在线动态扩缩容，通过内置的 `SQL` 命令 `alter system add/decomission backends` 即可进行节点的扩缩容，数据均衡的粒度是 `tablet` ，每个 `tablet` 大概是数百兆，扩容后表的 `tablet` 会自动拷贝到新的 `BE` 节点，如果在线扩容，应该小批量去增加 `BE` ，避免过于剧烈导致集群不稳定。
 
-![](../../assets/images/Doris/8c639f843117c537106fec15ef485e76.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_3.jpeg)
 
 `ClickHouse` 的扩容缩容复杂且繁琐，目前做不到自动在线操作，需要自研工具支持。扩容时需要部署新的节点，添加新分片和副本到配置文件中，并在新节点上创建元数据，如果是扩副本数据会自动均衡，如果是扩分片，需要手工去做均衡，或自研相关工具，让均衡自动进行。
 
@@ -82,13 +82,13 @@
 
 `Doris` 的元数据和数据多副本存储的，能自动复制具有自动灾备的能力，服务挂了可以自动重启，坏一块盘数据自动均衡，小范围的节点宕机不会影响集群对外的服务，但宕机后数据均衡过程会消耗集群资源，引发短时间的负载过高。架构如下图：
 
-![](../../assets/images/Doris/69800fcb20d271abbca67d45c2669371.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_4.jpeg)
 
 `ClickHouse` 目前版本是基于 `ZooKeeper` 来存储元数据，包含 `分布式的DDL` 、表和数据 `Part` 信息，从元数据丰富程度来说稍弱，因为存储了大量细粒度的文件信息，导致 `ZooKeeper` 经常出现性能瓶颈，社区也有基于 `Raft` 协议的改进计划。 `ClickHouse` 依赖 `Zookeeper` 来实现数据的高可用， `Zookeeper` 带来额外的运维复杂性的同时也有性能问题。
 
 `ClickHouse` 没有集中的元数据管理，每个节点分别管理，高可用一般依赖业务方来实现。 `ClickHouse` 中某个副本节点宕机，对查询和分布式表的导入没有影响，本地表导入要在导数程序中做灾备方案比如选择健康的副本，对 `DDL` 操作是有影响的，需要及时处理。
 
-![](../../assets/images/Doris/5533490fdeb876f632b972490c025f1f.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_5.jpeg)
 
 在分布式能力这块， `Doris` 在内核侧已经实现，使用的代价更低；而 `ClickHouse` 需要依赖于外部配套的措施去保障，使用成本较高。
 
@@ -112,7 +112,7 @@
 
 * `Streamload` 是导数的底层接口，更加高级的功能可以外部程序处理后通过 `Steamload` 来导入。
 
-![](../../assets/images/Doris/bdced2be63eaecf6ea45a12f4d401d12.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_6.jpeg)
 
 `ClickHouse` 中并没有后台导数任务这一概念，它更多的是通过各种引擎去连接到各种存储系统中。导数在 `1048576` 条以内是原子的，要么都生效，要么都失败，但是没有类似 `Doris` 中事务 `ID` 的概念，在 `Doris` 中相同的事务 `ID` 插入数据是无效的，这也避免了重复的导数，在 `CH` 中如果导数重复，只能删除重新导入。 `CH` 中比较有特色的是既可以写分布式表又可以写本地表。
 
@@ -120,7 +120,7 @@
 
 如果数据量少可以使用 `OLAP` 中的导数，数据量大逻辑复杂，一般使用 `Spark/Flink` 等外部计算引擎来做 `ETL` 和导数功能，主要是导数消耗集群资源。
 
-![](../../assets/images/Doris/396de1aba36809142035f4c0971b3b87.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_7.jpeg)
 
 ### 3.4 存储架构
 
@@ -128,7 +128,7 @@
 
 `Doris` 的存储部分参考 `GoogleMesa` ，采用的 `MVCC` 模式， `MVCC` 指 `Multi-version concurrency control` 多版本控制，通过版本可以实现事务的两段提交，可以通过版本进行小文件合并，也可以在明细表和物化视图之间实现强一致性。
 
-![](../../assets/images/Doris/a8455ea2adec1e939709ce37e1da2a76.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_8.jpeg)
 
 `ClickHouse` 中也是类似，有两个操作，一种是 `Merge` 合并小的 `Part` 文件到一个大的 `Part` ，提升查询性能避免扫描多个小文件，合并过程类似上图。另外一种是 `Mutation` 就是在已有的 `Part` 中实现数据的变更或元数据的变更，如下图的 `SQL` ：
 
@@ -140,7 +140,7 @@ ALTER TABLE [db.]table DELETE WHERE filter_expr;
 ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 ```
 
-![](../../assets/images/Doris/9b8da50a07c76c8a23f9b6c2cde34e5c.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_9.jpeg)
 
 #### 3.4.2 存储结构
 
@@ -152,7 +152,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 * 高压缩比，意味着同等大小的内存能够存放更多数据，系统 `Cache` 效果更好
 
-![](../../assets/images/Doris/12a53d2402b20b7da071cab3901b8bef.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_10.jpeg)
 
 `Doris` 的数据划分方式是 `Table` 、 `Partition` 、 `Bucket/Tablet` 、 `Segment` 几个部分，其中 `Partition` 代表数据的纵向划分分区一般是日期列， `Bucket/Tablet` 一般指数据的横向切割分桶规则一般为某主键， `Segment` 是具体的存储文件。 `Segment` 中包含数据和索引，数据部分包含多个列的数据按列存放，有三种索引：物理索引、稀疏索引和 `ZoneMap` 索引。
 
@@ -160,7 +160,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 通过分区分桶的方式可以让用户自定义数据在集群中的数据分布方式，降低数据查询的扫描量，方便集群的管理。分区作为数据管理的手段， `Doris` 支持按照 `range` 分区， `ClickHouse` 可以表达式来自定义。 `Doris` 可以通过动态分区的配置来按照时间自动创建新的分区，也可以做冷热数据的分级存储。 `ClickHouse` 通过 `distrubute` 引擎来进行多节点的数据分布，但是因为缺少 `bucket` 这一层，会导致集群的迁移扩容比较麻烦， `Doris` 通过分桶的配置可以进一步对数据划分，方便数据的均衡和迁移。
 
-![](../../assets/images/Doris/11015b64b441f22d4865635e086b4759.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_11.jpeg)
 
 #### 3.4.3 表引擎/模型
 
@@ -172,27 +172,27 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 另外， `Doris` 新开发的 `Primary Key` 模型，对实时更新场景下的读性能进行了深度优化，在支持 `update` 语义的同时，避免了 `Unique key` 的 `sort merge` 开销。在实时 `update` 的压力下，查询性能跟是 `Unique key` 的 `3-15` 倍。类似的，相比 `ClickHouse` 的 `ReplicatedMergeTree` ，也避免了 `select final/optimize final` 的问题。
 
-![](../../assets/images/Doris/0849a682d40519f40a0ebcb5cce6f91b.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_12.jpeg)
 
 #### 3.4.4 数据类型
 
 `ClickHouse` 中存在较多的复杂类型的支持如 `Array/Nested/Map/Tuple/Enum` 等，这些类型能够满足一些特性场景，还是比较好用的。
 
-![](../../assets/images/Doris/29fb1237fe871010d4ffa8e87f417466.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_13.jpeg)
 
 ### 3.5 数据查询
 
 #### 3.5.1 查询架构
 
-![](../../assets/images/Doris/d460edd4f7bcb4e5772887d03f548270.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_14.jpeg)
 
 分布式查询指查询分布在多台服务器上的数据，就如同使用一张表一样，分布式 `Join` 比较繁琐， `Doris` 的分布式 `Join` 有 `Local join` ， `Broadcast join` ， `Shuffle join` ， `Hash join` 等方式。 `ClickHouse` 只有 `Local` 和 `Broadcast` 两种 `Join` ，这种架构比较简单，也限制了 `Join SQL` 的自由度，变通的方式是通过子查询和查询嵌套来实现多级的 `Join` 。
 
-![](../../assets/images/Doris/31cb7f0482b97a80fbb7652612bb6fcf.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_15.jpeg)
 
 `Doris` 和 `ClickHouse` 都支持向量化执行，向量化简单理解就是一批数据一批数据去执行，可以多行并发执行，同时也提升了 `CPU Cache` 命中率。在数据库领域，一直是 `Codegen` 和 `Vectorized` 并存，如下图是 `TPC-H` 的五个测试 `SQL` ，纵轴是查询时间， `Type` 是编译执行， `TW` 是向量化执行，可以看出两者在不同场景下，性能表现不一样。
 
-![](../../assets/images/Doris/30b38302004e026b811623832c46afdc.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_16.jpeg)
 
 #### 3.5.2 并发能力
 
@@ -210,13 +210,13 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 #### 3.5.4 联邦查询
 
-![](../../assets/images/Doris/52f55e1b9ba659e5ca38a55864551984.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_17.jpeg)
 
 #### 3.5.5 函数支持
 
-![](../../assets/images/Doris/2d207a5ee150711dd4306d205bbdaa1e.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_18.jpeg)
 
-![](../../assets/images/Doris/f1fca322237e9db29a6cb8839890f989.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_19.jpeg)
 
 ### 3.6 使用成本
 
@@ -248,7 +248,7 @@ ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr;
 
 因此 `ClickHouse` 对二次开发更加友好，技术栈单一，且测试框架完善，模块间互相依赖关系相对较小。
 
-![](../../assets/images/Doris/83585ca68f490b48c10627ac738de730.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_20.jpeg)
 
 ## 4 性能测试
 
@@ -324,9 +324,9 @@ group by i_item_id order by i_item_id limit 10;
 
 `ClickHouse` 的单表性能好，得益于向量化执行引擎，在数据密集情况下，利用内存的 `PageCache` 和 `CPU` 的 `L2 Cache` 可以大大加速查询过程。
 
-![](../../assets/images/Doris/d46625d3754582323dc6092c424a9b57.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_21.jpeg)
 
-![](../../assets/images/Doris/bb5a37c8ceb73ed77eceaf86a9d6d2a5.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_22.jpeg)
 
 ### 4.5 Join的延时和并发
 
@@ -336,29 +336,29 @@ group by i_item_id order by i_item_id limit 10;
 
 `Doris` 的执行计划对 `SQL` 进行了较多的优化，因此多表关联中的大部分情况，能找到最优的执行方式，因此多表关联性能较好一些，但是也并不是所有的关联 `SQL` 都要好。
 
-![](../../assets/images/Doris/464ed15c1a90009c9b917f3521bb954b.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_23.jpeg)
 
-![](../../assets/images/Doris/c1227aafd33057f8166304d8c34db145.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_24.jpeg)
 
 ### 4.6 ClickHouse小表不同数据量下延时
 
 通过上面的测试，大家肯定有疑问，不是说 `ClickHouse` 的 `Join` 性能不行么，为什么表现并不差呢？因此，贴一个去年做的一组 `ClickHouse` 大小表的测试供大家参考，就是用一个大表关联查询不同数据规模的小表，看 `Join` 性能情况怎么样。横轴是指小表的不同数据量，纵轴是执行时间。可以看出，因为 `Join` 机制不一样， `ClickHouse` 的延时随小表数据量加大梯度更大， `ClickHouse` 小表数据量 `1000` 万以内尚可，超过 `1000` 万性能比就比较差了。
 
-![](../../assets/images/Doris/3716a8269f3c0c5910d55841fd61d4e7.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_25.jpeg)
 
 ## 5 对比表格
 
 上面的对比，是从大的几个方面来进行的，下面是比较详细的对比，绿色指我们觉得比较占优的部分。
 
-![](../../assets/images/Doris/df65576a08cf69de52fe7330343e18c8.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_26.jpeg)
 
-![](../../assets/images/Doris/0e255b540092f38d8ff51829cee4838f.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_27.jpeg)
 
-![](../../assets/images/Doris/b4bdde4a8f646c173dbd8cf977527708.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_28.jpeg)
 
-![](../../assets/images/Doris/c2af9965328dcae609efd5d84b8e3e77.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_29.jpeg)
 
-![](../../assets/images/Doris/1d2bf9e69d2e32d96801a9c7c751caa0.jpeg)
+![](../../../assets/images/Doris/Doris选型对比/Doris%20vs%20ClickHouse_image_30.jpeg)
 
 ## 6 未来规划展望
 
