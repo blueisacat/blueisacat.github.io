@@ -13,11 +13,11 @@ nav_order: 19
 
 如下图所示，Flink 提供了丰富的客户端操作来提交任务和与任务进行交互，包括 Flink 命令行，Scala Shell，SQL Client，Restful API 和 Web。Flink 首先提供的最重要的是命令行，其次是 SQL Client 用于提交 SQL 任务的运行，还有就是 Scala Shell 提交 Table API 的任务。同时，Flink 也提供了Restful 服务，用户可以通过 http 方式进行调用。此外，还有 Web 的方式可以提交任务。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_0.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_0.png)
 
 在 Flink 安装目录的 bin 目录下面可以看到有 flink, start-scala-shell.sh 和 sql-client.sh 等文件，这些都是客户端操作的入口。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_1.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_1.png)
 
 # 3. Flink 客户端操作
 
@@ -65,15 +65,15 @@ Job has been submitted with JobID 5e20cb6b0f357591171dfcca2eea09de
 
 运行起来后默认是 1 个并发:
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_2.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_2.png)
 
 点左侧「Task Manager」，然后点「Stdout」能看到输出日志：
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_3.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_3.png)
 
 或者查看本地 Log 目录下的 *.out 文件：
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_4.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_4.png)
 
 #### List
 
@@ -239,9 +239,9 @@ Job has been submitted with JobID 7752ea7b0e7303c780de9d86a5ded3fa
 
 从页面上能看到 Task Slot 变为了 4，这时候任务的默认并发度是 1。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_5.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_5.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_6.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_6.png)
 
 通过 Modify 命令依次将并发度修改为 4 和 3，可以看到每次 Modify 命令都会触发一次 Savepoint。
 
@@ -260,7 +260,7 @@ total 0
 drwxr-xr-x 3 baoniu 96 Jun 17 09:08 savepoint-7752ea-449b131b2bd4/
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_7.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_7.png)
 
 查看 JobManager 的日志，可以看到：
 
@@ -286,11 +286,11 @@ Info 命令是用来查看 Flink 任务的执行计划（StreamGraph）的。
 
 拷贝输出的 Json 内容，粘贴到这个网站：[http://flink.apache.org/visualizer/](http://flink.apache.org/visualizer/)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_8.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_8.png)
 
 可以和实际运行的物理执行计划对比：
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_9.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_9.png)
 
 ### 3.1.2 Yarn per-job
 
@@ -341,9 +341,9 @@ Accumulator Results:
 - 2bed2c5506e9237fb85625416a1bc508 (java.util.ArrayList) [170 elements]
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_10.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_10.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_11.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_11.png)
 
 如果我们以 Attach 模式运行 Streaming 的任务，客户端会一直等待不退出，可以运行以下的例子试验下：
 
@@ -376,9 +376,9 @@ Please also note that the temporary files of the YARN session in the home direct
 Job has been submitted with JobID e61b9945c33c300906ad50a9a11f36df
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_12.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_12.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_13.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_13.png)
 
 ### 3.1.3 Yarn session
 
@@ -422,9 +422,9 @@ JobManager Web Interface:
 
 - 或者启动的时候用 -d 则为 detached 模式Yarn 上显示为 Flink session cluster；
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_14.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_14.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_15.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_15.png)
 
 - 在本机的临时目录（有些机器是 /tmp 目录）下会生成一个文件：
 
@@ -478,7 +478,7 @@ Accumulator Results:
 
 运行结束后 TM 的资源会释放。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_16.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_16.png)
 
 #### 提交到指定的 Session
 
@@ -497,7 +497,7 @@ Printing result to stdout. Use --output to specify output path.
 Job has been submitted with JobID 58d5049ebbf28d515159f2f88563f5fd
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_17.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_17.png)
 
 注：Blink版本 的 Session 与 Flink 的 Session 的区别：
 
@@ -587,7 +587,7 @@ Starting Flink Shell:
 Connecting to Flink cluster (host: 10.10.10.10, port: 56942).
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_18.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_18.png)
 
 按 CTRL + C 退出 Shell 后，这个 Flink cluster 还会继续运行，不会退出。
 
@@ -620,7 +620,7 @@ scala> counts.print()
 
 对 DataSet 任务来说，print() 会触发任务的执行。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_19.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_19.png)
 
 也可以将结果输出到文件（先删除 /tmp/out1，不然会报错同名文件已经存在），继续执行以下命令：
 
@@ -645,7 +645,7 @@ res2: org.apache.flink.api.common.JobExecutionResult = org.apache.flink.api.comm
 (to,2)
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_20.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_20.png)
 
 #### DataSteam
 
@@ -672,9 +672,9 @@ res4: org.apache.flink.api.common.JobExecutionResult = org.apache.flink.api.comm
 
 对 DataStream 任务，print() 并不会触发任务的执行，需要显示调用 execute(“job name”) 才会执行任务。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_21.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_21.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_22.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_22.png)
 
 #### TableAPI
 
@@ -723,15 +723,15 @@ Hint: Make sure that a statement ends with ';' for finalizing (multi-line) state
 Flink SQL> SELECT 'Hello World';
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_23.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_23.png)
 
 按 ”Q” 退出这个界面 打开 [http://127.0.0.1:8081](http://127.0.0.1:8081) 能看到这条 Select 语句产生的查询任务已经结束了。这个查询采用的是读取固定数据集的 Custom Source，输出用的是 Stream Collect Sink，且只输出一条结果。
 
 注意：如果本机的临时目录存在类似 .yarn-properties-baoniu 的文件，任务会提交到 Yarn 上。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_24.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_24.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_25.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_25.png)
 
 #### Explain
 
@@ -781,11 +781,11 @@ Flink SQL> SELECT name, COUNT(*) AS cnt FROM (VALUES ('Bob'), ('Alice'), ('Greg'
 
 运行结果如下图所示：
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_26.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_26.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_27.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_27.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_28.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_28.png)
 
 #### Changlog mode
 
@@ -797,13 +797,13 @@ Flink SQL> SELECT name, COUNT(*) AS cnt FROM (VALUES ('Bob'), ('Alice'), ('Greg'
 
 运行结果如下图所示：
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_29.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_29.png)
 
 其中 ‘-’ 代表的就是撤回消息。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_30.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_30.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_31.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_31.png)
 
 ### 3.3.3 Environment Files
 
@@ -913,11 +913,11 @@ root
 Flink SQL> select * from MyTableSource;
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_32.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_32.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_33.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_33.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_34.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_34.png)
 
 使用 insert into 写入结果表：
 
@@ -930,9 +930,9 @@ Job ID: 3fac2be1fd891e3e07595c684bb7b7a0
 Web interface: 
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_35.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_35.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_36.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_36.png)
 
 查询生成的结果数据文件：
 
@@ -968,9 +968,9 @@ SQL Client 功能社区还在开发中，详见
 {"jobid":"04d80a24b076523d3dc5fbaa0ad5e1ad"}%
 ```
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_37.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_37.png)
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_38.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_38.png)
 
 Restful API 还提供了很多监控和 Metrics 相关的功能，对于任务提交的操作也支持的比较全面。
 
@@ -978,7 +978,7 @@ Restful API 还提供了很多监控和 Metrics 相关的功能，对于任务�
 
 在 Flink Dashboard 页面左侧可以看到有个「Submit new Job」的地方，用户可以上传 Jar 包和显示执行计划和提交任务。Web 提交功能主要用于新手入门和演示用。
 
-![](../../assets/images/Flink/attachments/ApacheFlink零基础入门（5）：客户端操作_image_39.png)
+![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_39.png)
 
 # 4. 结语
 

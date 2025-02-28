@@ -796,7 +796,7 @@ pause
 
 #### 15.4.1 文件校验工具
 
-`jar` 包表面上看起来是下载完的状态，结尾并没有“ `.lastUpdated` ”扩展名。但是程序运行时找不到这个 `jar` 包中的类。例如：针对 `jar` 包中的类出现 `ClassNotFoundException` 。
+`jar` 包表面上看起来是下载完的状态，结尾并没有 `.lastUpdated` 扩展名。但是程序运行时找不到这个 `jar` 包中的类。例如：针对 `jar` 包中的类出现 `ClassNotFoundException` 。
 
 遇到类似问题需要先确认一下“有嫌疑”的 `jar` 包是否存在内部损坏问题。此时可以使用上面的文件校验工具。
 

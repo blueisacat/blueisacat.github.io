@@ -213,6 +213,15 @@ nav:
         - documents/Doris/Doris用户手册/8 存算分离/8.6 数据缓存.md
         - documents/Doris/Doris用户手册/8 存算分离/8.7 Meta Service API 参考.md
   - Flink:
+    - Flink基础入门:
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（1+2）：基础概念解析.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（3）：开发环境搭建和应用的配置、部署及运行.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（4）：DataStream API 编程.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（5）：客户端操作.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（6）：Flink Time & Window 解析.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（7）：状态管理及容错机制.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（8）：Table API 编程.md
+      - documents/Flink/Flink基础入门/Apache Flink 零基础入门（9）：Flink SQL 编程实践.md
     - Flink进阶教程:
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（1）：Runtime 核心机制剖析.md
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（2）：Time 深度解析.md
