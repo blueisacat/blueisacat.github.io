@@ -1,45 +1,40 @@
----
-layout: default
-title: Apache Flink 零基础入门（5）：客户端操作
-parent: Flink
-nav_order: 19
----
+# Apache Flink 零基础入门（5）：客户端操作
 
-# 1. 环境说明
+## 1 环境说明
 
-在前面几期的课程里面讲过了 Flink 开发环境的搭建和应用的部署以及运行，今天的课程主要是讲 Flink 的客户端操作。本次讲解以实际操作为主。这次课程是基于社区的 Flink 1.7.2 版本，操作系统是 Mac 系统，浏览器是 Google Chrome 浏览器。有关开发环境的准备和集群的部署，请参考「
+在前面几期的课程里面讲过了 `Flink` 开发环境的搭建和应用的部署以及运行，今天的课程主要是讲 `Flink` 的客户端操作。本次讲解以实际操作为主。这次课程是基于社区的 `Flink 1.7.2` 版本，操作系统是 `Mac` 系统，浏览器是 `Google Chrome` 浏览器。有关开发环境的准备和集群的部署，请参考 `开发环境搭建和应用的配置部署及运行` 的内容。
 
-# 2. 课程概要
+## 2 课程概要
 
-如下图所示，Flink 提供了丰富的客户端操作来提交任务和与任务进行交互，包括 Flink 命令行，Scala Shell，SQL Client，Restful API 和 Web。Flink 首先提供的最重要的是命令行，其次是 SQL Client 用于提交 SQL 任务的运行，还有就是 Scala Shell 提交 Table API 的任务。同时，Flink 也提供了Restful 服务，用户可以通过 http 方式进行调用。此外，还有 Web 的方式可以提交任务。
+如下图所示， `Flink` 提供了丰富的客户端操作来提交任务和与任务进行交互，包括 `Flink 命令行` ， `Scala Shell` ， `SQL Client` ， `Restful API` 和 `Web` 。 `Flink` 首先提供的最重要的是命令行，其次是 `SQL Client` 用于提交 `SQL` 任务的运行，还有就是 `Scala Shell` 提交 `Table API` 的任务。同时， `Flink` 也提供了 `Restful` 服务，用户可以通过 `http` 方式进行调用。此外，还有 `Web` 的方式可以提交任务。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_0.png)
 
-在 Flink 安装目录的 bin 目录下面可以看到有 flink, start-scala-shell.sh 和 sql-client.sh 等文件，这些都是客户端操作的入口。
+在 `Flink` 安装目录的 `bin` 目录下面可以看到有 `flink` ， `start-scala-shell.sh` 和 `sql-client.sh` 等文件，这些都是客户端操作的入口。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_1.png)
 
-# 3. Flink 客户端操作
+## 3 Flink 客户端操作
 
-## 3.1 Flink 命令行
+### 3.1 Flink 命令行
 
-Flink 的命令行参数很多，输入 flink – h 能看到完整的说明：
+`Flink` 的命令行参数很多，输入 `flink -h` 能看到完整的说明：
 
 ```shell
 ➜  flink-1.7.2 bin/flink -h
 ```
 
-如果想看某一个命令的参数，比如 Run 命令，输入：
+如果想看某一个命令的参数，比如 `Run` 命令，输入：
 
 ```shell
 ➜  flink-1.7.2 bin/flink run -h
 ```
 
-本文主要讲解常见的一些操作，更详细的文档请参考: 
+本文主要讲解常见的一些操作，更详细的文档请参考：
 
-### 3.1.1 Standalone
+#### 3.1.1 Standalone
 
-首先启动一个 Standalone 的集群：
+首先启动一个 `Standalone` 的集群：
 
 ```shell
 ➜  flink-1.7.2 bin/start-cluster.sh
@@ -48,11 +43,11 @@ Starting standalonesession daemon on host zkb-MBP.local.
 Starting taskexecutor daemon on host zkb-MBP.local.
 ```
 
-打开 [http://127.0.0.1:8081](http://127.0.0.1:8081) 能看到 Web 界面。
+打开 [http://127.0.0.1:8081](http://127.0.0.1:8081) 能看到 `Web` 界面。
 
-#### Run
+##### 3.1.1.1 Run
 
-运行任务，以 Flink 自带的例子 TopSpeedWindowing 为例：
+运行任务，以 `Flink` 自带的例子 `TopSpeedWindowing` 为例：
 
 ```shell
 ➜  flink-1.7.2 bin/flink run -d examples/streaming/TopSpeedWindowing.jar
@@ -63,19 +58,19 @@ Printing result to stdout. Use --output to specify output path.
 Job has been submitted with JobID 5e20cb6b0f357591171dfcca2eea09de
 ```
 
-运行起来后默认是 1 个并发:
+运行起来后默认是 `1` 个并发：
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_2.png)
 
-点左侧「Task Manager」，然后点「Stdout」能看到输出日志：
+点左侧 `Task Manager` ，然后点 `Stdout` 能看到输出日志：
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_3.png)
 
-或者查看本地 Log 目录下的 *.out 文件：
+或者查看本地 `Log` 目录下的 `*.out` 文件：
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_4.png)
 
-#### List
+##### 3.1.1.2 List
 
 查看任务列表：
 
@@ -88,9 +83,9 @@ Waiting for response...
 No scheduled jobs.
 ```
 
-#### Stop
+##### 3.1.1.3 Stop
 
-停止任务。通过 -m 来指定要停止的 JobManager 的主机地址和端口。
+停止任务。通过 `-m` 来指定要停止的 `JobManager` 的主机地址和端口。
 
 ```shell
 ➜  flink-1.7.2 bin/flink stop -m 127.0.0.1:8081 d67420e52bd051fae2fddbaa79e046bb
@@ -125,7 +120,7 @@ Caused by: org.apache.flink.runtime.rest.util.RestClientException: [Job terminat
   at java.lang.Thread.run(Thread.java:748)
 ```
 
-从日志里面能看出 Stop 命令执行失败了。一个 Job 能够被 Stop 要求所有的 Source 都是可以 Stoppable 的，即实现了 StoppableFunction 接口。
+从日志里面能看出 `Stop` 命令执行失败了。一个 `Job` 能够被 `Stop` 要求所有的 `Source` 都是可以 `Stoppable` 的，即实现了 `StoppableFunction` 接口。
 
 ```java
 /**
@@ -143,9 +138,9 @@ public interface StoppableFunction {
 }
 ```
 
-#### Cancel
+##### 3.1.1.4 Cancel
 
-取消任务。如果在 conf/flink-conf.yaml 里面配置了 state.savepoints.dir，会保存 Savepoint，否则不会保存 Savepoint。
+取消任务。如果在 `conf/flink-conf.yaml` 里面配置了 `state.savepoints.dir` ，会保存 `Savepoint` ，否则不会保存 `Savepoint` 。
 
 ```shell
 ➜  flink-1.7.2 bin/flink cancel -m 127.0.0.1:8081 5e20cb6b0f357591171dfcca2eea09de
@@ -153,7 +148,7 @@ Cancelling job 5e20cb6b0f357591171dfcca2eea09de.
 Cancelled job 5e20cb6b0f357591171dfcca2eea09de.
 ```
 
-也可以在停止的时候显示指定 Savepoint 目录。
+也可以在停止的时候显示指定 `Savepoint` 目录。
 
 ```shell
 ➜  flink-1.7.2 bin/flink cancel -m 127.0.0.1:8081 -s /tmp/savepoint 29da945b99dea6547c3fbafd57ed8759
@@ -166,13 +161,13 @@ total 32K
 
 取消和停止（流作业）的区别如下：
 
-cancel() 调用，立即调用作业算子的 cancel() 方法，以尽快取消它们。如果算子在接到 cancel() 调用后没有停止，Flink 将开始定期中断算子线程的执行，直到所有算子停止为止。
+`cancel()` 调用，立即调用作业算子的 `cancel()` 方法，以尽快取消它们。如果算子在接到 `cancel()` 调用后没有停止， `Flink` 将开始定期中断算子线程的执行，直到所有算子停止为止。
 
-stop() 调用，是更优雅的停止正在运行流作业的方式。stop() 仅适用于 Source 实现了 StoppableFunction 接口的作业。当用户请求停止作业时，作业的所有 Source 都将接收 stop() 方法调用。直到所有 Source 正常关闭时，作业才会正常结束。这种方式，使作业正常处理完所有作业。
+`stop()` 调用，是更优雅的停止正在运行流作业的方式。 `stop()` 仅适用于 `Source` 实现了 `StoppableFunction` 接口的作业。当用户请求停止作业时，作业的所有 `Source` 都将接收 `stop()` 方法调用。直到所有 `Source` 正常关闭时，作业才会正常结束。这种方式，使作业正常处理完所有作业。
 
-#### Savepoint
+##### 3.1.1.5 Savepoint
 
-触发 Savepoint。
+触发 `Savepoint` 。
 
 ```shell
 ➜  flink-1.7.2 bin/flink savepoint -m 127.0.0.1:8081 ec53edcfaeb96b2a5dadbfbe5ff62bbb /tmp/savepoint
@@ -182,13 +177,13 @@ Savepoint completed. Path: file:/tmp/savepoint/savepoint-ec53ed-84b00ce500ee
 You can resume your program from this savepoint with the run command.
 ```
 
-说明：Savepoint 和 Checkpoint 的区别（
+说明： `Savepoint` 和 `Checkpoint` 的区别（详见文档）：
 
-Checkpoint 是增量做的，每次的时间较短，数据量较小，只要在程序里面启用后会自动触发，用户无须感知；Checkpoint 是作业 failover 的时候自动使用，不需要用户指定。
+`Checkpoint` 是增量做的，每次的时间较短，数据量较小，只要在程序里面启用后会自动触发，用户无须感知； `Checkpoint` 是作业 `failover` 的时候自动使用，不需要用户指定。
 
-Savepoint 是全量做的，每次的时间较长，数据量较大，需要用户主动去触发。Savepoint 一般用于程序的版本更新（
+`Savepoint` 是全量做的，每次的时间较长，数据量较大，需要用户主动去触发。 `Savepoint` 一般用于程序的版本更新（详见文档）， `Bug` 修复， `A/B Test` 等场景，需要用户指定。
 
-通过 -s 参数从指定的 Savepoint 启动：
+通过 `-s` 参数从指定的 `Savepoint` 启动：
 
 ```shell
 ➜  flink-1.7.2 bin/flink run -d -s /tmp/savepoint/savepoint-f049ff-24ec0d3e0dc7 ./examples/streaming/TopSpeedWindowing.jar
@@ -198,7 +193,7 @@ Use --input to specify file input.
 Printing result to stdout. Use --output to specify output path.
 ```
 
-查看 JobManager 的日志，能够看到类似这样的 Log：
+查看 `JobManager` 的日志，能够看到类似这样的 `Log` ：
 
 ```shell
 2019-03-28 10:30:53,957 INFO  org.apache.flink.runtime.checkpoint.CheckpointCoordinator     
@@ -209,11 +204,11 @@ Printing result to stdout. Use --output to specify output path.
 - Restoring job 790d7b98db6f6af55d04aec1d773852d from latest valid checkpoint: Checkpoint 1 @ 0 for 790d7b98db6f6af55d04aec1d773852d.
 ```
 
-#### Modify
+##### 3.1.1.6 Modify
 
 修改任务并行度。
 
-为了方便演示，我们修改 conf/flink-conf.yaml 将 Task Slot 数从默认的 1 改为 4，并配置 Savepoint 目录。（Modify 参数后面接 -s 指定 Savepoint 路径当前版本可能有 Bug，提示无法识别）
+为了方便演示，我们修改 `conf/flink-conf.yaml` 将 `Task Slot` 数从默认的 `1` 改为 `4` ，并配置 `Savepoint` 目录。（ `Modify` 参数后面接 `-s` 指定 `Savepoint` 路径当前版本可能有 `Bug` ，提示无法识别）
 
 ```shell
 taskmanager.numberOfTaskSlots: 4
@@ -237,13 +232,13 @@ Printing result to stdout. Use --output to specify output path.
 Job has been submitted with JobID 7752ea7b0e7303c780de9d86a5ded3fa
 ```
 
-从页面上能看到 Task Slot 变为了 4，这时候任务的默认并发度是 1。
+从页面上能看到 `Task Slot` 变为了 `4` ，这时候任务的默认并发度是 `1` 。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_5.png)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_6.png)
 
-通过 Modify 命令依次将并发度修改为 4 和 3，可以看到每次 Modify 命令都会触发一次 Savepoint。
+通过 `Modify` 命令依次将并发度修改为 `4` 和 `3` ，可以看到每次 `Modify` 命令都会触发一次 `Savepoint` 。
 
 ```shell
 ➜  flink-1.7.2 bin/flink modify -p 4 7752ea7b0e7303c780de9d86a5ded3fa
@@ -262,7 +257,7 @@ drwxr-xr-x 3 baoniu 96 Jun 17 09:08 savepoint-7752ea-449b131b2bd4/
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_7.png)
 
-查看 JobManager 的日志，可以看到：
+查看 `JobManager` 的日志，可以看到：
 
 ```shell
 2019-06-17 09:05:11,179 INFO  org.apache.flink.runtime.checkpoint.CheckpointCoordinator     - Starting job 7752ea7b0e7303c780de9d86a5ded3fa from savepoint file:/tmp/savepoint/savepoint-790d7b-3581698f007e ()
@@ -273,9 +268,9 @@ drwxr-xr-x 3 baoniu 96 Jun 17 09:08 savepoint-7752ea-449b131b2bd4/
 org.apache.flink.util.FlinkException: Job is being rescaled.
 ```
 
-#### Info
+##### 3.1.1.7 Info
 
-Info 命令是用来查看 Flink 任务的执行计划（StreamGraph）的。
+`Info` 命令是用来查看 `Flink` 任务的执行计划（ `StreamGraph` ）的。
 
 ```shell
 ➜  flink-1.7.2 bin/flink info examples/streaming/TopSpeedWindowing.jar
@@ -284,7 +279,7 @@ Info 命令是用来查看 Flink 任务的执行计划（StreamGraph）的。
 --------------------------------------------------------------
 ```
 
-拷贝输出的 Json 内容，粘贴到这个网站：[http://flink.apache.org/visualizer/](http://flink.apache.org/visualizer/)
+拷贝输出的 `Json` 内容，粘贴到这个网站：[http://flink.apache.org/visualizer/](http://flink.apache.org/visualizer/)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_8.png)
 
@@ -292,17 +287,17 @@ Info 命令是用来查看 Flink 任务的执行计划（StreamGraph）的。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_9.png)
 
-### 3.1.2 Yarn per-job
+#### 3.1.2 Yarn per-job
 
-#### 单任务 Attach 模式
+##### 3.1.2.1 单任务 Attach 模式
 
-默认是 Attach 模式，即客户端会一直等待直到程序结束才会退出。
+默认是 `Attach` 模式，即客户端会一直等待直到程序结束才会退出。
 
-- 通过 -m yarn-cluster 指定 Yarn 模式
+* 通过 `-m yarn-cluster` 指定 `Yarn` 模式
 
-- Yarn 上显示名字为 Flink session cluster，这个 Batch 的 Wordcount 任务运行完会 FINISHED。
+* `Yarn` 上显示名字为 `Flink session cluster` ，这个 `Batch` 的 `Wordcount` 任务运行完会 `FINISHED` 。
 
-- 客户端能看到结果输出
+* 客户端能看到结果输出
 
 ```shell
 [admin@z17.sqa.zth /home/admin/flink/flink-1.7.2]
@@ -345,17 +340,17 @@ Accumulator Results:
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_11.png)
 
-如果我们以 Attach 模式运行 Streaming 的任务，客户端会一直等待不退出，可以运行以下的例子试验下：
+如果我们以 `Attach` 模式运行 `Streaming` 的任务，客户端会一直等待不退出，可以运行以下的例子试验下：
 
 ```shell
 ./bin/flink run -m yarn-cluster ./examples/streaming/TopSpeedWindowing.jar
 ```
 
-#### 单任务 Detached 模式
+##### 3.1.2.2 单任务 Detached 模式
 
-- 由于是 Detached 模式，客户端提交完任务就退出了
+* 由于是 `Detached` 模式，客户端提交完任务就退出了
 
-- Yarn 上显示为 Flink per-job cluster
+* `Yarn` 上显示为 `Flink per-job cluster`
 
 ```shell
 $./bin/flink run -yd -m yarn-cluster ./examples/streaming/TopSpeedWindowing.jar
@@ -380,15 +375,15 @@ Job has been submitted with JobID e61b9945c33c300906ad50a9a11f36df
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_13.png)
 
-### 3.1.3 Yarn session
+#### 3.1.3 Yarn session
 
-#### 启动 Session
+##### 3.1.3.1 启动 Session
 
 ```shell
 ./bin/yarn-session.sh -tm 2048 -s 3
 ```
 
-表示启动一个 Yarn session 集群，每个 TM 的内存是 2 G，每个 TM 有 3 个 Slot。(注意：-n 参数不生效)
+表示启动一个 `Yarn session` 集群，每个 `TM` 的内存是 `2 G` ，每个 `TM` 有 `3` 个 `Slot` 。（注意： `-n` 参数不生效）
 
 ```shell
 ➜  flink-1.7.2 ./bin/yarn-session.sh -tm 2048 -s 3
@@ -416,17 +411,17 @@ Flink JobManager is now running on z07.sqa.net:37109 with leader id 00000000-000
 JobManager Web Interface: 
 ```
 
-客户端默认是 Attach 模式，不会退出：
+客户端默认是 `Attach` 模式，不会退出：
 
-- 可以 ctrl + c 退出，然后再通过 ./bin/yarn-session.sh -id application_1532332183347_0726 连上来；
+* 可以 `ctrl + c` 退出，然后再通过 `./bin/yarn-session.sh -id application_1532332183347_0726` 连上来；
 
-- 或者启动的时候用 -d 则为 detached 模式Yarn 上显示为 Flink session cluster；
+* 或者启动的时候用 `-d` 则为 `detached` 模式 `Yarn` 上显示为 `Flink session cluster` ；
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_14.png)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_15.png)
 
-- 在本机的临时目录（有些机器是 /tmp 目录）下会生成一个文件：
+* 在本机的临时目录（有些机器是 `/tmp` 目录）下会生成一个文件：
 
 ```shell
 ➜  flink-1.7.2 cat /var/folders/2b/r6d49pcs23z43b8fqsyz885c0000gn/T/.yarn-properties-baoniu
@@ -437,13 +432,13 @@ dynamicPropertiesString=
 applicationID=application_1532332183347_0726
 ```
 
-#### 提交任务
+##### 3.1.3.2 提交任务
 
 ```shell
 ./bin/flink run ./examples/batch/WordCount.jar
 ```
 
-将会根据 /tmp/.yarn-properties-admin 文件内容提交到了刚启动的 Session。
+将会根据 `/tmp/.yarn-properties-admin` 文件内容提交到了刚启动的 `Session` 。
 
 ```shell
 ➜  flink-1.7.2 ./bin/flink run ./examples/batch/WordCount.jar
@@ -476,13 +471,13 @@ Accumulator Results:
 - fd07c75d503d0d9a99e4f27dd153114c (java.util.ArrayList) [170 elements]
 ```
 
-运行结束后 TM 的资源会释放。
+运行结束后 `TM` 的资源会释放。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_16.png)
 
-#### 提交到指定的 Session
+##### 3.1.3.3 提交到指定的 Session
 
-通过 -yid 参数来提交到指定的 Session。
+通过 `-yid` 参数来提交到指定的 `Session` 。
 
 ```shell
 $./bin/flink run -d -p 30 -m yarn-cluster -yid application_1532332183347_0708 ./examples/streaming/TopSpeedWindowing.jar
@@ -499,19 +494,19 @@ Job has been submitted with JobID 58d5049ebbf28d515159f2f88563f5fd
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_17.png)
 
-注：Blink版本 的 Session 与 Flink 的 Session 的区别：
+注： `Blink` 版本的 `Session` 与 `Flink` 的 `Session` 的区别：
 
-- Flink 的 session -n 参数不生效，而且不会提前启动 TM；
+* `Flink` 的 `session -n` 参数不生效，而且不会提前启动 `TM` ；
 
-- Blink 的 session 可以通过 -n 指定启动多少个 TM，而且 TM 会提前起来；
+* `Blink` 的 `session` 可以通过 `-n` 指定启动多少个 `TM` ，而且 `TM` 会提前起来；
 
-## 3.2 Scala Shell
+### 3.2 Scala Shell
 
 官方文档：[https://ci.apache.org/projects/flink/flink-docs-release-1.7/ops/scala_shell.html](https://ci.apache.org/projects/flink/flink-docs-release-1.7/ops/scala_shell.html)
 
-### 3.2.1 Deploy
+#### 3.2.1 Deploy
 
-#### Local
+##### 3.2.1.1 Local
 
 ```shell
 $bin/start-scala-shell.sh local
@@ -524,13 +519,13 @@ scala>
 
 任务运行说明：
 
-- Batch 任务内置了 benv 变量，通过 print() 将结果输出到控制台；
+* `Batch` 任务内置了 `benv` 变量，通过 `print()` 将结果输出到控制台；
 
-- Streaming 任务内置了 senv 变量，通过 senv.execute(“job name”) 来提交任务，且 Datastream 的输出只有在 Local 模式下打印到控制台；
+* `Streaming` 任务内置了 `senv` 变量，通过 `senv.execute("job name")` 来提交任务，且 `Datastream` 的输出只有在 `Local` 模式下打印到控制台；
 
-#### Remote
+##### 3.2.1.2 Remote
 
-先启动一个 yarn session cluster：
+先启动一个 `yarn session cluster` ：
 
 ```shell
 $./bin/yarn-session.sh  -tm 2048 -s 3
@@ -547,7 +542,7 @@ Flink JobManager is now running on z054.sqa.net:28665 with leader id 00000000-00
 JobManager Web Interface: 
 ```
 
-启动 scala shell，连到 jm：
+启动 `scala shell` ，连到 `jm` ：
 
 ```shell
 $bin/start-scala-shell.sh remote z054.sqa.net 28665
@@ -557,7 +552,7 @@ Connecting to Flink cluster (host: z054.sqa.net, port: 28665).
 scala>
 ```
 
-#### Yarn
+##### 3.2.1.3 Yarn
 
 ```shell
 $./bin/start-scala-shell.sh yarn -n 2 -jm 1024 -s 2 -tm 1024 -nm flink-yarn
@@ -589,11 +584,11 @@ Connecting to Flink cluster (host: 10.10.10.10, port: 56942).
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_18.png)
 
-按 CTRL + C 退出 Shell 后，这个 Flink cluster 还会继续运行，不会退出。
+按 `CTRL + C` 退出 `Shell` 后，这个 `Flink cluster` 还会继续运行，不会退出。
 
-### 3.2.2 Execute
+#### 3.2.2 Execute
 
-#### DataSet
+##### 3.2.2.1 DataSet
 
 ```shell
 ➜  flink-1.7.2 bin/stop-cluster.sh
@@ -618,11 +613,11 @@ scala> counts.print()
 (to,2)
 ```
 
-对 DataSet 任务来说，print() 会触发任务的执行。
+对 `DataSet` 任务来说， `print()` 会触发任务的执行。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_19.png)
 
-也可以将结果输出到文件（先删除 /tmp/out1，不然会报错同名文件已经存在），继续执行以下命令：
+也可以将结果输出到文件（先删除 `/tmp/out1` ，不然会报错同名文件已经存在），继续执行以下命令：
 
 ```shell
 scala> counts.writeAsText("/tmp/out1")
@@ -631,7 +626,7 @@ scala> benv.execute("batch test")
 res2: org.apache.flink.api.common.JobExecutionResult = org.apache.flink.api.common.JobExecutionResult@737652a9
 ```
 
-查看 /tmp/out1 文件就能看到输出结果。
+查看 `/tmp/out1` 文件就能看到输出结果。
 
 ```shell
 ➜  flink-1.7.2 cat /tmp/out1
@@ -647,7 +642,7 @@ res2: org.apache.flink.api.common.JobExecutionResult = org.apache.flink.api.comm
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_20.png)
 
-#### DataSteam
+##### 3.2.2.2 DataSteam
 
 ```shell
 scala> val textStreaming = senv.fromElements("To be, or not to be,--that is the question:--")
@@ -670,21 +665,21 @@ scala> senv.execute("Streaming Wordcount")
 res4: org.apache.flink.api.common.JobExecutionResult = org.apache.flink.api.common.JobExecutionResult@1878815a
 ```
 
-对 DataStream 任务，print() 并不会触发任务的执行，需要显示调用 execute(“job name”) 才会执行任务。
+对 `DataStream` 任务， `print()` 并不会触发任务的执行，需要显示调用 `execute("job name")` 才会执行任务。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_21.png)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_22.png)
 
-#### TableAPI
+##### 3.2.2.3 TableAPI
 
-在 Blink 开源版本里面，支持了 TableAPI 方式提交任务（可以用 btenv.sqlQuery 提交 SQL 查询），社区版本 Flink 1.8 会支持 TableAPI: [https://issues.apache.org/jira/browse/FLINK-9555](https://issues.apache.org/jira/browse/FLINK-9555)
+在 `Blink` 开源版本里面，支持了 `TableAPI` 方式提交任务（可以用 `btenv.sqlQuery` 提交 `SQL` 查询），社区版本 `Flink 1.8` 会支持 `TableAPI` ：[https://issues.apache.org/jira/browse/FLINK-9555](https://issues.apache.org/jira/browse/FLINK-9555)
 
-## 3.3 SQL Client Beta
+### 3.3 SQL Client Beta
 
-SQL Client 目前还只是测试版，处于开发阶段，只能用于 SQL 的原型验证，不推荐在生产环境使用。
+`SQL Client` 目前还只是测试版，处于开发阶段，只能用于 `SQL` 的原型验证，不推荐在生产环境使用。
 
-### 3.3.1 基本用法
+#### 3.3.1 基本用法
 
 ```shell
 ➜  flink-1.7.2 bin/start-cluster.sh
@@ -717,7 +712,7 @@ RESET       Resets all session configuration properties.
 Hint: Make sure that a statement ends with ';' for finalizing (multi-line) statements.
 ```
 
-#### Select 查询
+##### 3.3.1.1 Select 查询
 
 ```shell
 Flink SQL> SELECT 'Hello World';
@@ -725,17 +720,17 @@ Flink SQL> SELECT 'Hello World';
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_23.png)
 
-按 ”Q” 退出这个界面 打开 [http://127.0.0.1:8081](http://127.0.0.1:8081) 能看到这条 Select 语句产生的查询任务已经结束了。这个查询采用的是读取固定数据集的 Custom Source，输出用的是 Stream Collect Sink，且只输出一条结果。
+按 `Q` 退出这个界面打开 [http://127.0.0.1:8081](http://127.0.0.1:8081) 能看到这条 `Select` 语句产生的查询任务已经结束了。这个查询采用的是读取固定数据集的 `Custom Source` ，输出用的是 `Stream Collect Sink` ，且只输出一条结果。
 
-注意：如果本机的临时目录存在类似 .yarn-properties-baoniu 的文件，任务会提交到 Yarn 上。
+注意：如果本机的临时目录存在类似 `.yarn-properties-baoniu` 的文件，任务会提交到 `Yarn` 上。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_24.png)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_25.png)
 
-#### Explain
+##### 3.3.1.2 Explain
 
-Explain 命令可以查看 SQL 的执行计划。
+`Explain` 命令可以查看 `SQL` 的执行计划。
 
 ```shell
 Flink SQL> explain SELECT name, COUNT(*) AS cnt FROM (VALUES ('Bob'), ('Alice'), ('Greg'), ('Bob')) AS NameTable(name) GROUP BY name;
@@ -753,17 +748,17 @@ Stage 3 : Data Source
         ship_strategy : HASH
 ```
 
-### 3.3.2 结果展示
+#### 3.3.2 结果展示
 
-SQL Client 支持两种模式来维护并展示查询结果：
+`SQL Client` 支持两种模式来维护并展示查询结果：
 
-- table mode: 在内存中物化查询结果，并以分页 table 形式展示。用户可以通过以下命令启用 table mode;
+* `table mode` ：在内存中物化查询结果，并以分页 `table` 形式展示。用户可以通过以下命令启用 `table mode` ；
 
 ```shell
 SET execution.result-mode=table
 ```
 
-- changlog mode: 不会物化查询结果，而是直接对 continuous query 产生的添加和撤回（retractions）结果进行展示。
+* `changlog mode` ：不会物化查询结果，而是直接对 `continuous query` 产生的添加和撤回（ `retractions` ）结果进行展示。
 
 ```shell
 SET execution.result-mode=changelog
@@ -771,7 +766,7 @@ SET execution.result-mode=changelog
 
 接下来通过实际的例子进行演示。
 
-#### Table mode
+##### 3.3.2.1 Table mode
 
 ```shell
 Flink SQL> SET execution.result-mode=table;
@@ -787,7 +782,7 @@ Flink SQL> SELECT name, COUNT(*) AS cnt FROM (VALUES ('Bob'), ('Alice'), ('Greg'
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_28.png)
 
-#### Changlog mode
+##### 3.3.2.2 Changlog mode
 
 ```shell
 Flink SQL> SET execution.result-mode=changelog;
@@ -799,17 +794,17 @@ Flink SQL> SELECT name, COUNT(*) AS cnt FROM (VALUES ('Bob'), ('Alice'), ('Greg'
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_29.png)
 
-其中 ‘-’ 代表的就是撤回消息。
+其中 `-` 代表的就是撤回消息。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_30.png)
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_31.png)
 
-### 3.3.3 Environment Files
+#### 3.3.3 Environment Files
 
-目前的 SQL Client 还不支持 DDL 语句，只能通过 yaml 文件的方式来定义 SQL 查询需要的表，UDF 和运行参数等信息。
+目前的 `SQL Client` 还不支持 `DDL` 语句，只能通过 `yaml` 文件的方式来定义 `SQL` 查询需要的表， `UDF` 和运行参数等信息。
 
-首先，准备 env.yaml 和 input.csv 两个文件。
+首先，准备 `env.yaml` 和 `input.csv` 两个文件。
 
 ```shell
 ➜  flink-1.7.2 cat /tmp/env.yaml
@@ -855,21 +850,21 @@ tables:
         type: INT
       - name: MyField2
         type: VARCHAR
-# Execution properties allow for changing the behavior of a table program.
+## Execution properties allow for changing the behavior of a table program.
 execution:
-  type: streaming                   # required: execution mode either 'batch' or 'streaming'
-  result-mode: table                # required: either 'table' or 'changelog'
-  max-table-result-rows: 1000000    # optional: maximum number of maintained rows in
-                                    #   'table' mode (1000000 by default, smaller 1 means unlimited)
-  time-characteristic: event-time   # optional: 'processing-time' or 'event-time' (default)
-  parallelism: 1                    # optional: Flink's parallelism (1 by default)
-  periodic-watermarks-interval: 200 # optional: interval for periodic watermarks (200 ms by default)
-  max-parallelism: 16               # optional: Flink's maximum parallelism (128 by default)
-  min-idle-state-retention: 0       # optional: table program's minimum idle state time
-  max-idle-state-retention: 0       # optional: table program's maximum idle state time
-  restart-strategy:                 # optional: restart strategy
-    type: fallback                  #   "fallback" to global restart strategy by default
-# Deployment properties allow for describing the cluster to which table programs are submitted to.
+  type: streaming                   ## required: execution mode either 'batch' or 'streaming'
+  result-mode: table                ## required: either 'table' or 'changelog'
+  max-table-result-rows: 1000000    ## optional: maximum number of maintained rows in
+                                    ##   'table' mode (1000000 by default, smaller 1 means unlimited)
+  time-characteristic: event-time   ## optional: 'processing-time' or 'event-time' (default)
+  parallelism: 1                    ## optional: Flink's parallelism (1 by default)
+  periodic-watermarks-interval: 200 ## optional: interval for periodic watermarks (200 ms by default)
+  max-parallelism: 16               ## optional: Flink's maximum parallelism (128 by default)
+  min-idle-state-retention: 0       ## optional: table program's minimum idle state time
+  max-idle-state-retention: 0       ## optional: table program's maximum idle state time
+  restart-strategy:                 ## optional: restart strategy
+    type: fallback                  ##   "fallback" to global restart strategy by default
+## Deployment properties allow for describing the cluster to which table programs are submitted to.
 deployment:
   response-timeout: 5000
 ➜  flink-1.7.2 cat /tmp/input.csv
@@ -881,7 +876,7 @@ deployment:
 4,yes
 ```
 
-启动 SQL Client：
+启动 `SQL Client` ：
 
 ```shell
 ➜  flink-1.7.2 ./bin/sql-client.sh embedded -e /tmp/env.yaml
@@ -919,7 +914,7 @@ Flink SQL> select * from MyTableSource;
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_34.png)
 
-使用 insert into 写入结果表：
+使用 `insert into` 写入结果表：
 
 ```shell
 Flink SQL> insert into MyTableSink select * from MyTableSource;
@@ -946,15 +941,15 @@ Web interface:
 4,yes
 ```
 
-也可以在 Environment 文件里面定义 UDF，在 SQL Client 里面通过 「HOW FUNCTIONS」查询和使用，这里就不再说明了。
+也可以在 `Environment` 文件里面定义 `UDF` ，在 `SQL Client` 里面通过 `HOW FUNCTIONS` 查询和使用，这里就不再说明了。
 
-SQL Client 功能社区还在开发中，详见 
+`SQL Client` 功能社区还在开发中，详见 `FLIP-24` 。
 
-## 3.4 Restful API
+### 3.4 Restful API
 
-接下来我们演示如何通过 Rest API 来提交 Jar 包和执行任务。
+接下来我们演示如何通过 `Rest API` 来提交 `Jar` 包和执行任务。
 
-更详细的操作请参考 Flink 的 Restful API 文档：[https://ci.apache.org/projects/flink/flink-docs-stable/monitoring/rest_api.html](https://ci.apache.org/projects/flink/flink-docs-stable/monitoring/rest_api.html)
+更详细的操作请参考 `Flink` 的 `Restful API` 文档：[https://ci.apache.org/projects/flink/flink-docs-stable/monitoring/rest_api.html](https://ci.apache.org/projects/flink/flink-docs-stable/monitoring/rest_api.html)
 
 ```shell
 ➜  flink-1.7.2 curl 
@@ -972,14 +967,14 @@ SQL Client 功能社区还在开发中，详见
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_38.png)
 
-Restful API 还提供了很多监控和 Metrics 相关的功能，对于任务提交的操作也支持的比较全面。
+`Restful API` 还提供了很多监控和 `Metrics` 相关的功能，对于任务提交的操作也支持的比较全面。
 
-## 3.5 Web
+### 3.5 Web
 
-在 Flink Dashboard 页面左侧可以看到有个「Submit new Job」的地方，用户可以上传 Jar 包和显示执行计划和提交任务。Web 提交功能主要用于新手入门和演示用。
+在 `Flink Dashboard` 页面左侧可以看到有个 `Submit new Job` 的地方，用户可以上传 `Jar` 包和显示执行计划和提交任务。 `Web` 提交功能主要用于新手入门和演示用。
 
 ![](../../../assets/images/Flink/Flink基础入门/ApacheFlink零基础入门（5）：客户端操作_image_39.png)
 
-# 4. 结语
+## 4 结语
 
-本期的课程到这里就结束了，我们主要讲解了 Flink 的 5 种任务提交的方式。熟练掌握各种任务提交方式，有利于提高我们日常的开发和运维效率。
+本期的课程到这里就结束了，我们主要讲解了 `Flink` 的 `5` 种任务提交的方式。熟练掌握各种任务提交方式，有利于提高我们日常的开发和运维效率。

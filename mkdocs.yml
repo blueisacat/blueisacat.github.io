@@ -233,6 +233,8 @@ nav:
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（8）：详解 Metrics 原理与实战.md
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（9）：Flink Connector 开发.md
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（10）：Flink State 最佳实践.md
+    - Flink基础知识:
+      - documents/Flink/Flink基础知识/概念：流计算中的At Most Once、At Least Once、Exactly Once.md
   - Hadoop:
     - Hadoop集群规划:
       - documents/Hadoop/Hadoop集群规划/CDH官方推荐的集群节点和角色配置.md
