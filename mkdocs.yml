@@ -235,6 +235,12 @@ nav:
       - documents/Flink/Flink进阶教程/Apache Flink 进阶教程（10）：Flink State 最佳实践.md
     - Flink基础知识:
       - documents/Flink/Flink基础知识/概念：流计算中的At Most Once、At Least Once、Exactly Once.md
+    - Flink案例分析:
+      - documents/Flink/Flink案例分析/案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践.md
+      - documents/Flink/Flink案例分析/案例（2）：Flink 实时计算在微博的应用.md
+      - documents/Flink/Flink案例分析/案例（3）：Flink 在顺丰的应用实践.md
+    - Flink选型对比:
+      - documents/Flink/Flink选型对比/选型：Flink、Storm、Spark对比.md
   - Hadoop:
     - Hadoop集群规划:
       - documents/Hadoop/Hadoop集群规划/CDH官方推荐的集群节点和角色配置.md

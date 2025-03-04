@@ -6,7 +6,7 @@
 
 流处理（有时称为事件处理）可以简单的描述为是对无界数据或事件的连续处理。流或事件处理应用程序可以或多或少的描述为有向图，并且通常被描述为有向无环图（ `DAG` ）。在这样的图中，每个边表示数据或事件流，每个顶点表示运算符，会使用程序中定义的逻辑处理来自邻边的数据或事件。有两种特殊类型的顶点，通常称为 `sources` 和 `sinks` 。 `sources` 读取外部数据或事件到应用程序中，而 `sinks` 通常会收集应用程序生成的结果。下图是流式应用程序的示例。
 
-![](../../assets/images/Flink/attachments/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_0.png)
+![](../../../assets/images/Flink/Flink基础知识/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_0.png)
 
 流处理引擎通常允许用户指定可靠性模式或处理语义，以指示它将为整个应用程序中的数据处理提供哪些保证。这些保证是有意义的，因为你始终会遇到由于网络，机器等可能导致数据丢失的故障。流处理引擎通常为应用程序提供了三种数据处理语义：最多一次、至少一次和精确一次。
 
@@ -16,7 +16,7 @@
 
 这本质上是一 `尽力而为` 的方法。保证数据或事件最多由应用程序中的所有算子处理一次
 
-![](../../assets/images/Flink/attachments/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_1.png)
+![](../../../assets/images/Flink/Flink基础知识/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_1.png)
 
 ### 1.2 至少一次（At Least Once）
 
@@ -24,7 +24,7 @@
 
 下图的例子描述了这种情况：第一个算子最初未能成功处理事件，然后在重试时成功，接着在第二次重试时也成功了，其实是没有必要的。
 
-![](../../assets/images/Flink/attachments/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_2.png)
+![](../../../assets/images/Flink/Flink基础知识/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_2.png)
 
 ### 1.3 精确一次（Exactly Once）
 
@@ -38,13 +38,13 @@
 
 实现 `精确一次` 的分布式快照或状态检查点方法受到 `Chandy-Lamport` 分布式快照算法的启发。通过这种机制，流应用程序中每个算子的所有状态都会定期做 `checkpoint` 。如果是在系统中的任何地方发生失败，每个算子的所有状态都回滚到最新的全局一致 `checkpoint` 点。在回滚期间，将暂定所有处理。源也会重置为最近 `checkpoint` 相对应的正确偏移量。整个流应用程序基本上是回到最近一次的一致状态，然后程序可以从该状态重新启动。下图描述了这种 `checkpoint` 机制的基础知识。
 
-![](../../assets/images/Flink/attachments/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_3.png)
+![](../../../assets/images/Flink/Flink基础知识/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_3.png)
 
 在上图中，流应用程序在 `T1` 时间处正常工作，并且做了 `checkpoint` 。然而，在时间 `T2` ，算子未能处理输入的数据。此时， `S=4` 的状态值已保存到持久存储器中，而状态值 `S=12` 保存在算子的内存中。为了修复这种差异，在时间 `T3` ，处理程序将回滚到 `S=4` 并 `重放` 流中的每个连续状态直到最近，并处理每个数据。最终结果是有些数据已被处理了多次，但这没关系，因为无论执行了多少次回滚，结果状态都是相同的。
 
 另一种实现 `精确一次` 的方法是：在每个算子上实现至少一次事件传递和对重复数据去重。使用此方法的流处理引擎将重放失败事件，以便在事件进入算子中的用户定义逻辑之前，进一步尝试处理并移除每个算子的重复事件。此机制要求为每个算子维护一个事务日志，以跟踪它已处理的事件。利用这种机制的引擎有 `Google` 的 `MillWheel` 和 `Apache Kafka Streams` 。下图说明了这种机制的要点。
 
-![](../../assets/images/Flink/attachments/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_4.png)
+![](../../../assets/images/Flink/Flink基础知识/概念：流计算中的AtMostOnce、AtLeastOnce、ExactlyOnce_image_4.png)
 
 ## 2  “精确一次” 是真正的 “精确一次” 吗？
 
