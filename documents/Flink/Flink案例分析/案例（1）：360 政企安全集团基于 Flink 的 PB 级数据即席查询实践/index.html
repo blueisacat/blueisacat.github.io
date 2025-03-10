@@ -1,0 +1,7732 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="梅尔菲斯的个人网站">
+      
+      
+        <meta name="author" content="梅尔菲斯">
+      
+      
+        <link rel="canonical" href="https://www.blueisacat.cn/documents/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%20%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8E%20Flink%20%E7%9A%84%20PB%20%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5/">
+      
+      
+        <link rel="prev" href="../../Flink%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%B5%81%E8%AE%A1%E7%AE%97%E4%B8%AD%E7%9A%84At%20Most%20Once%E3%80%81At%20Least%20Once%E3%80%81Exactly%20Once/">
+      
+      
+        <link rel="next" href="../%E6%A1%88%E4%BE%8B%EF%BC%882%EF%BC%89%EF%BC%9AFlink%20%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97%E5%9C%A8%E5%BE%AE%E5%8D%9A%E7%9A%84%E5%BA%94%E7%94%A8/">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践 - Blue是只蓝色的猫</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1360-flink-pb" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Blue是只蓝色的猫" class="md-header__button md-logo" aria-label="Blue是只蓝色的猫" data-md-component="logo">
+      
+  <img src="../../../../favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Blue是只蓝色的猫
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="light-blue"  aria-label="切换至夜间模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至夜间模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="切换至日间模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至日间模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Alibaba/Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C/Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%EF%BC%88%E9%BB%84%E5%B1%B1%E7%89%88%EF%BC%89/" class="md-tabs__link">
+          
+  
+  Alibaba
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ClickHouse/ClickHouse%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/ClickHouse%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A-%E5%88%9D%E7%BA%A7/" class="md-tabs__link">
+          
+  
+  ClickHouse
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Doris/Doris%E9%80%89%E5%9E%8B%E5%AF%B9%E6%AF%94/Doris%20vs%20ClickHouse/" class="md-tabs__link">
+          
+  
+  Doris
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%881%2B2%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/" class="md-tabs__link">
+          
+  
+  Flink
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Hadoop/Hadoop%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92/CDH%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E5%92%8C%E8%A7%92%E8%89%B2%E9%85%8D%E7%BD%AE/" class="md-tabs__link">
+          
+  
+  Hadoop
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Linux/Linux%E6%8C%87%E4%BB%A4/Linux%E6%8C%87%E4%BB%A4/" class="md-tabs__link">
+          
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Maven/Maven%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/Maven%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" class="md-tabs__link">
+          
+  
+  Maven
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Blue是只蓝色的猫" class="md-nav__button md-logo" aria-label="Blue是只蓝色的猫" data-md-component="logo">
+      
+  <img src="../../../../favicon.ico" alt="logo">
+
+    </a>
+    Blue是只蓝色的猫
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Alibaba
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Alibaba
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Java开发手册
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Java开发手册
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Alibaba/Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C/Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%EF%BC%88%E9%BB%84%E5%B1%B1%E7%89%88%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java开发手册（黄山版）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ClickHouse
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            ClickHouse
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ClickHouse入门教程
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            ClickHouse入门教程
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ClickHouse/ClickHouse%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/ClickHouse%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A-%E5%88%9D%E7%BA%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ClickHouse从入门到精通-初级
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ClickHouse/ClickHouse%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/ClickHouse%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A-%E9%AB%98%E7%BA%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ClickHouse从入门到精通-高级
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ClickHouse/ClickHouse%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/ClickHouse%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A-%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%A4%87%E4%BB%BD/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ClickHouse从入门到精通-监控与备份
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ClickHouse基础知识
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            ClickHouse基础知识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ClickHouse/ClickHouse%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/LSM%20Tree%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LSM Tree原理详解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Doris
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Doris
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Doris选型对比
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Doris选型对比
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E9%80%89%E5%9E%8B%E5%AF%B9%E6%AF%94/Doris%20vs%20ClickHouse/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doris vs ClickHouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E9%80%89%E5%9E%8B%E5%AF%B9%E6%AF%94/Doris%203.x%20vs%20Doris%202.X/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Doris3.x vs Doris2.x
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Doris用户手册
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Doris用户手册
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1 安装部署
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            1 安装部署
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1_1" id="__nav_3_2_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.1 源码编译
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            1.1 源码编译
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.1%20%E4%BD%BF%E7%94%A8%20Docker%20%E5%BC%80%E5%8F%91%E9%95%9C%E5%83%8F%E7%BC%96%E8%AF%91%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.1 使用 Docker 开发镜像编译（推荐）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.2%20%E4%BD%BF%E7%94%A8%20LDB%20Toolchain%20%E7%BC%96%E8%AF%91%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.2 使用 LDB Toolchain 编译（推荐）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.3%20Linux%20%E5%B9%B3%E5%8F%B0%E7%9B%B4%E6%8E%A5%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.3 Linux 平台直接编译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.4%20Arm%20%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.4 Arm 平台上编译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.5%20Windows%20%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.5 Windows 平台上编译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.1%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/1.1.6%20%E5%9C%A8%20MacOS%20%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1.6 在 MacOS 平台上编译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1_2" id="__nav_3_2_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.2 集群部署
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.2 集群部署
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.1%20%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.1 手动部署
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.2%20Docker%20%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.2 Docker 部署
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1_2_3" id="__nav_3_2_1_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.2.3 K8s 部署
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_2_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.2.3 K8s 部署
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.1%20%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.1 集群环境要求
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1_2_3_2" id="__nav_3_2_1_2_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.2.3.2 Compute storage coupled
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_2_1_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.2.3.2 Compute storage coupled
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.2%20Compute%20storage%20coupled/1.2.3.2.1%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.2.1 快速部署
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.2%20Compute%20storage%20coupled/1.2.3.2.2%20%E9%83%A8%E7%BD%B2%20Doris%20Operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.2.2 部署 Doris Operator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.2%20Compute%20storage%20coupled/1.2.3.2.3%20%E9%85%8D%E7%BD%AE%20Doris%20%E9%9B%86%E7%BE%A4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.2.3 配置 Doris 集群
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.2%20Compute%20storage%20coupled/1.2.3.2.4%20%E9%9B%86%E7%BE%A4%E8%BF%90%E7%BB%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.2.4 集群运维
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1_2_3_3" id="__nav_3_2_1_2_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.2.3.3 Compute storage decoupled
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_2_1_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.2.3.3 Compute storage decoupled
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.3%20Compute%20storage%20decoupled/1.2.3.3.1%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.3.1 快速部署
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.3%20Compute%20storage%20decoupled/1.2.3.3.2%20%E9%83%A8%E7%BD%B2%20FoundationDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.3.2 部署 FoundationDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.3%20Compute%20storage%20decoupled/1.2.3.3.3%20%E9%85%8D%E7%BD%AE%E9%83%A8%E7%BD%B2%20Metaservice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.3.3 配置部署 Metaservice
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.3%20Compute%20storage%20decoupled/1.2.3.3.4%20%E9%85%8D%E7%BD%AE%E9%83%A8%E7%BD%B2%20FE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.3.4 配置部署 FE
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.3%20K8s%20%E9%83%A8%E7%BD%B2/1.2.3.3%20Compute%20storage%20decoupled/1.2.3.3.5%20%E9%85%8D%E7%BD%AE%E9%83%A8%E7%BD%B2%E8%AE%A1%E7%AE%97%E7%BB%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.3.3.5 配置部署计算组
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/1%20%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/1.2%20%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1.2.4%20Doris%20on%20AWS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2.4 Doris on AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2 数据库连接
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            2 数据库连接
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/2%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5/2.1%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1 数据库连接
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/2%20%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5/2.2%20%E5%9F%BA%E4%BA%8E%20Arrow%20Flight%20SQL%20%E7%9A%84%E9%AB%98%E9%80%9F%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E9%93%BE%E8%B7%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.2 基于 Arrow Flight SQL 的高速数据传输链路
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3" id="__nav_3_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3 数据表设计
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            3 数据表设计
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.1%20%E6%A6%82%E8%A7%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1 概览
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.2%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2 数据类型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_3" id="__nav_3_2_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3.3 表索引
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            3.3 表索引
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.3%20%E8%A1%A8%E7%B4%A2%E5%BC%95/3.3.1%20%E7%B4%A2%E5%BC%95%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3.1 索引概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.3%20%E8%A1%A8%E7%B4%A2%E5%BC%95/3.3.2%20%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95%E4%B8%8E%E6%8E%92%E5%BA%8F%E9%94%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3.2 前缀索引与排序键
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.3%20%E8%A1%A8%E7%B4%A2%E5%BC%95/3.3.3%20%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3.3 倒排索引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.3%20%E8%A1%A8%E7%B4%A2%E5%BC%95/3.3.4%20BloomFilter%20%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3.4 BloomFilter 索引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.3%20%E8%A1%A8%E7%B4%A2%E5%BC%95/3.3.5%20N-Gram%20%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3.5 N-Gram 索引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_4" id="__nav_3_2_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3.4 Tiered Storage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            3.4 Tiered Storage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.4%20Tiered%20Storage/3.4.1%20SSD%20%E5%92%8C%20HDD%20%E5%B1%82%E7%BA%A7%E5%AD%98%E5%82%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.4.1 SSD 和 HDD 层级存储
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.4%20Tiered%20Storage/3.4.2%20%E8%BF%9C%E7%A8%8B%E5%AD%98%E5%82%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.4.2 远程存储
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_5" id="__nav_3_2_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3.5 数据模型
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            3.5 数据模型
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.5%20%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/3.5.1%20%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5.1 模型概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.5%20%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/3.5.2%20%E6%98%8E%E7%BB%86%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5.2 明细模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.5%20%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/3.5.3%20%E4%B8%BB%E9%94%AE%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5.3 主键模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.5%20%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/3.5.4%20%E8%81%9A%E5%90%88%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5.4 聚合模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.5%20%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/3.5.5%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5.5 使用注意
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.6%20%E8%A1%8C%E5%88%97%E6%B7%B7%E5%AD%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.6 行列混存
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3_7" id="__nav_3_2_3_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3.7 数据划分
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            3.7 数据划分
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.1%20%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.1 基本概念
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.2%20%E6%89%8B%E5%8A%A8%E5%88%86%E5%8C%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.2 手动分区
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.3%20%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.3 动态分区
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.4%20%E8%87%AA%E5%8A%A8%E5%88%86%E5%8C%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.4 自动分区
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.5%20%E6%89%8B%E5%8A%A8%E5%88%86%E6%A1%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.5 手动分桶
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.6%20%E8%87%AA%E5%8A%A8%E5%88%86%E6%A1%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.6 自动分桶
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.7%20%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/3.7.7%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.7.7 常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.8%20Schema%20%E5%8F%98%E6%9B%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.8 Schema 变更
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.9%20%E8%87%AA%E5%A2%9E%E5%88%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.9 自增列
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/3%20%E6%95%B0%E6%8D%AE%E8%A1%A8%E8%AE%BE%E8%AE%A1/3.10%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E8%A1%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.10 数据库建表最佳实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4" id="__nav_3_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4 数据操作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            4 数据操作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4_1" id="__nav_3_2_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4.1 数据导入
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            4.1 数据导入
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.1%20%E5%AF%BC%E5%85%A5%E6%A6%82%E8%A7%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.1 导入概览
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4_1_2" id="__nav_3_2_4_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4.1.2 导入方式
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_2_4_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            4.1.2 导入方式
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.1%20Stream%20Load/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.1 Stream Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.2%20Broker%20Load/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.2 Broker Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.3%20Routine%20Load/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.3 Routine Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.4%20Insert%20Into/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.4 Insert Into
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.5%20MySQL%20Load/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.5 MySQL Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.2%20%E5%AF%BC%E5%85%A5%E6%96%B9%E5%BC%8F/4.1.2.6%20Group%20Commit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.2.6 Group Commit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.3%20%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.3 导入数据格式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.4%20%E9%94%99%E8%AF%AF%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.4 错误数据处理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.5%20%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.5 数据转换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.6%20%E5%AF%BC%E5%85%A5%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.6 导入高可用性
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5/4.1.7%20%E4%BB%8E%E5%85%B6%E4%BB%96%20AP%20%E7%B3%BB%E7%BB%9F%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1.7 从其他 AP 系统迁移数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4_2" id="__nav_3_2_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4.2 数据导入
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            4.2 数据导入
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.2%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0/4.2.1%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2.1 数据更新概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.2%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0/4.2.2%20%E4%B8%BB%E9%94%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%20Update%20%E6%9B%B4%E6%96%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2.2 主键模型的 Update 更新
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.2%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0/4.2.3%20%E4%B8%BB%E9%94%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AF%BC%E5%85%A5%E6%9B%B4%E6%96%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2.3 主键模型的导入更新
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.2%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0/4.2.4%20%E8%81%9A%E5%90%88%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AF%BC%E5%85%A5%E6%9B%B4%E6%96%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2.4 聚合模型的导入更新
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.2%20%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0/4.2.5%20%E4%B8%BB%E9%94%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%9B%B4%E6%96%B0%E4%BA%8B%E5%8A%A1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2.5 主键模型的更新事务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4_3" id="__nav_3_2_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4.3 数据删除
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            4.3 数据删除
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.3%20%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4/4.3.1%20Delete%20%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3.1 Delete 操作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.3%20%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4/4.3.2%20%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3.2 批量删除
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.3%20%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4/4.3.3%20Truncate%20%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3.3 Truncate 操作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.3%20%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4/4.3.4%20%E8%A1%A8%E5%8E%9F%E5%AD%90%E6%9B%BF%E6%8D%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3.4 表原子替换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.3%20%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4/4.3.5%20%E4%B8%B4%E6%97%B6%E5%88%86%E5%8C%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3.5 临时分区
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_4_4" id="__nav_3_2_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4.4  数据导出
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            4.4  数据导出
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.4%20%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA/4.4.1%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4.1 数据导出概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.4%20%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA/4.4.2%20Export/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4.2 Export
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.4%20%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA/4.4.3%20Select%20Into%20Outfile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4.3 Select Into Outfile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.4%20%20%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA/4.4.4%20MySQL%20Dump/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4.4 MySQL Dump
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.5%20%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.5 作业调度
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/4%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/4.6%20%E4%BA%8B%E5%8A%A1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.6 事务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_5" id="__nav_3_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5 数据查询
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            5 数据查询
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.1%20MySQL%20%E5%85%BC%E5%AE%B9%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.1 MySQL 兼容性
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.2%20%E8%BF%9E%E6%8E%A5%EF%BC%88JOIN%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2 连接（JOIN）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.3%20%E5%AD%90%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.3 子查询
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.4%20%E8%81%9A%E5%90%88%E5%A4%9A%E7%BB%B4%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.4 聚合多维分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.5%20%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0%20%28%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.5 分析函数 (窗口函数）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.6%20%E5%85%AC%E7%94%A8%E8%A1%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88CTE%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.6 公用表表达式（CTE）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_5_7" id="__nav_3_2_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5.7 自定义函数
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            5.7 自定义函数
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.7%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/5.7.1%20%E5%88%AB%E5%90%8D%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.7.1 别名函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.7%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/5.7.2%20Java%20UDF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.7.2 Java UDF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.8%20%E5%A4%8D%E6%9D%82%E7%B1%BB%E5%9E%8B%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.8 复杂类型查询
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.9%20%E5%88%97%E8%BD%AC%E8%A1%8C%20%28Lateral%20View%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.9 列转行 (Lateral View)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/5%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2/5.10%20%E5%8A%A0%E5%AF%86%E5%92%8C%E8%84%B1%E6%95%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.10 加密和脱敏
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6" id="__nav_3_2_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6 查询加速
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            6 查询加速
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6_1" id="__nav_3_2_6_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6.1 物化视图
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            6.1 物化视图
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE%E6%A6%82%E8%A7%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.1 物化视图概览
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.2%20%E5%90%8C%E6%AD%A5%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.2 同步物化视图
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6_1_3" id="__nav_3_2_6_1_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6.1.3 异步物化视图
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_2_6_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            6.1.3 异步物化视图
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3%20%E5%BC%82%E6%AD%A5%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3.1%20%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.3.1 原理介绍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3%20%E5%BC%82%E6%AD%A5%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3.2%20%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.3.2 功能描述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3%20%E5%BC%82%E6%AD%A5%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3.3%20%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.3.3 使用与实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.1%20%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3%20%E5%BC%82%E6%AD%A5%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/6.1.3.4%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.3.4 常见问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.2%20%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.2 查询缓存
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.3%20%E9%AB%98%E5%B9%B6%E5%8F%91%E7%82%B9%E6%9F%A5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.3 高并发点查
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6_4" id="__nav_3_2_6_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6.4 高效去重
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            6.4 高效去重
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.4%20%E9%AB%98%E6%95%88%E5%8E%BB%E9%87%8D/6.4.1%20BITMAP%20%E7%B2%BE%E5%87%86%E5%8E%BB%E9%87%8D/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.1.4 BITMAP 精准去重
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.4%20%E9%AB%98%E6%95%88%E5%8E%BB%E9%87%8D/6.4.2%20HLL%20%E8%BF%91%E4%BC%BC%E5%8E%BB%E9%87%8D/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.4.2 HLL 近似去重
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.5%20%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.5 查询优化器介绍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.6%20Pipeline%20%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.6 Pipeline 执行引擎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.7%20%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.7 统计信息
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6_8" id="__nav_3_2_6_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6.8 查询调优原理与实践
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            6.8 查询调优原理与实践
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.1%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.1 查询调优概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.2%20%E6%9F%A5%E8%AF%A2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.2 查询性能分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_6_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_6_8_3" id="__nav_3_2_6_8_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    6.8.3 计划调优
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_2_6_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_6_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            6.8.3 计划调优
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.1%20%E4%BC%98%E5%8C%96%E8%A1%A8%20Schema%20%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.1 优化表 Schema 设计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.2%20%E4%BC%98%E5%8C%96%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E5%92%8C%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.2 优化索引设计和使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.3%20%E4%BD%BF%E7%94%A8%20PrepareStatement%20%E5%8A%A0%E9%80%9F%E9%AB%98%E5%B9%B6%E5%8F%91%E7%82%B9%E6%9F%A5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.3 使用 PrepareStatement 加速高并发点查
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.4%20%E4%BD%BF%E7%94%A8%E5%88%86%E5%8C%BA%E8%A3%81%E5%89%AA%E4%BC%98%E5%8C%96%E6%89%AB%E8%A1%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.4 使用分区裁剪优化扫表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.5%20%E4%BD%BF%E7%94%A8%E5%8D%95%E8%A1%A8%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE%E9%80%8F%E6%98%8E%E6%94%B9%E5%86%99/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.5 使用单表物化视图透明改写
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.6%20%E4%BD%BF%E7%94%A8%E5%A4%9A%E8%A1%A8%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE%E9%80%8F%E6%98%8E%E6%94%B9%E5%86%99/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.6 使用多表物化视图透明改写
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.7%20%E4%BD%BF%E7%94%A8%E5%88%97%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E4%BC%98%E5%8C%96%E8%AE%A1%E5%88%92/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.7 使用列统计信息优化计划
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.8%20%E4%BD%BF%E7%94%A8%20Colocate%20Group%20%E4%BC%98%E5%8C%96%20Join/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.8 使用 Colocate Group 优化 Join
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.9%20%E4%BD%BF%E7%94%A8%20Hint%20%E8%B0%83%E6%95%B4%20Join%20Shuffle%20%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.9 使用 Hint 调整 Join Shuffle 方式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.10%20%E4%BD%BF%E7%94%A8%20Hint%20%E6%8E%A7%E5%88%B6%E4%BB%A3%E4%BB%B7%E6%94%B9%E5%86%99/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.10 使用 Hint 控制代价改写
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.11%20%E4%BD%BF%E7%94%A8%20Leading%20Hint%20%E6%8E%A7%E5%88%B6%20Join%20%E9%A1%BA%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.11 使用 Leading Hint 控制 Join 顺序
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.12%20%E4%BD%BF%E7%94%A8%20SQL%20Cache%20%E5%8A%A0%E9%80%9F%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.12 使用 SQL Cache 加速查询
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.13%20%E4%BD%BF%E7%94%A8%20Runtime%20Filter%20%E9%AB%98%E9%98%B6%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.13 使用 Runtime Filter 高阶优化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.14%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E5%A4%84%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.14 数据倾斜处理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.3%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/6.8.3.15%20DML%20%E8%AE%A1%E5%88%92%E8%B0%83%E4%BC%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.3.15 DML 计划调优
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.4%20%E5%B8%B8%E8%A7%81%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.4 常见调优参数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.5%20Hint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.5 Hint
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.6%20Runtime%20Filter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.6 Runtime Filter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/6%20%E6%9F%A5%E8%AF%A2%E5%8A%A0%E9%80%9F/6.8%20%E6%9F%A5%E8%AF%A2%E8%B0%83%E4%BC%98%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/6.8.7%20TOPN%20%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6.8.7 TOPN 查询优化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_7" id="__nav_3_2_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    7 湖仓一体
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            7 湖仓一体
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.1%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.1 湖仓一体概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_7_2" id="__nav_3_2_7_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    7.2 数据湖分析
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            7.2 数据湖分析
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.1%20Hive%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.1 Hive Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.2%20Hudi%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.2 Hudi Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.3%20Iceberg%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.3 Iceberg Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.4%20Paimon%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.4 Paimon Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.5%20LakeSoul%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.5 LakeSoul Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.6%20BigQuery%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.6 BigQuery Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.7%20Delta%20Lake%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.7 Delta Lake Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.8%20Kudu%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.8 Kudu Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.9%20%E9%98%BF%E9%87%8C%E4%BA%91%20DLF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.9 阿里云 DLF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.10%20TPCH/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.10 TPCH
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.2%20%E6%95%B0%E6%8D%AE%E6%B9%96%E5%88%86%E6%9E%90/7.2.11%20TPCDS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.2.11 TPCDS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_7_3" id="__nav_3_2_7_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    7.3 数据湖构建
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            7.3 数据湖构建
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.3%20%E6%95%B0%E6%8D%AE%E6%B9%96%E6%9E%84%E5%BB%BA/7.3.1%20Hive/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.3.1 Hive
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.3%20%E6%95%B0%E6%8D%AE%E6%B9%96%E6%9E%84%E5%BB%BA/7.3.2%20Iceberg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.3.2 Iceberg
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_7_4" id="__nav_3_2_7_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    7.4 数据库分析
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_2_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            7.4 数据库分析
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.1%20JDBC%20Catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.1 JDBC Catalog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.2%20MySQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.2 MySQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.3%20PostgreSQL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.3 PostgreSQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.4%20Oracle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.4 Oracle
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.5%20SQL%20Server/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.5 SQL Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.6%20IBM%20Db2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.6 IBM Db2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.7%20ClickHouse/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.7 ClickHouse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.8%20SAP%20HANA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.8 SAP HANA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.9%20OceanBase/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.9 OceanBase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.10%20Elasticsearch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.10 Elasticsearch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.4%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90/7.4.11%20%E9%98%BF%E9%87%8C%E4%BA%91%20MaxCompute/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.4.11 阿里云 MaxCompute
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.5%20%E5%88%86%E6%9E%90%20S3%E3%80%81HDFS%20%E4%B8%8A%E7%9A%84%E6%96%87%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.5 分析 S3/HDFS 上的文件
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.6%20%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.6 数据缓存
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.7%20%E5%85%83%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.7 元数据缓存
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.8%20%E5%BC%B9%E6%80%A7%E8%AE%A1%E7%AE%97%E8%8A%82%E7%82%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.8 弹性计算节点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.9%20%E5%A4%96%E8%A1%A8%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.9 外表统计信息
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.10%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E8%AE%A4%E8%AF%81%E6%8E%A5%E5%85%A5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.10 云服务认证接入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/7%20%E6%B9%96%E4%BB%93%E4%B8%80%E4%BD%93/7.11%20SQL%20%E6%96%B9%E8%A8%80%E5%85%BC%E5%AE%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7.11 SQL 方言兼容
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_8" id="__nav_3_2_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    8 存算分离
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            8 存算分离
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.1%20%E6%A6%82%E8%A7%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.1 概览
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.2%20Doris%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB%E6%A8%A1%E5%BC%8F%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.2 Doris 存算分离模式部署准备
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.3%20%E7%BC%96%E8%AF%91%E9%83%A8%E7%BD%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.3 编译部署
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.4%20%E7%AE%A1%E7%90%86%20Storage%20Vault/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.4 管理 Storage Vault
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.5%20%E8%AE%A1%E7%AE%97%E7%BB%84%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.5 计算组操作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.6%20%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.6 数据缓存
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Doris/Doris%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/8%20%E5%AD%98%E7%AE%97%E5%88%86%E7%A6%BB/8.7%20Meta%20Service%20API%20%E5%8F%82%E8%80%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8.7 Meta Service API 参考
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Flink
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Flink
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Flink基础入门
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Flink基础入门
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%881%2B2%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（1+2）：基础概念解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%883%EF%BC%89%EF%BC%9A%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E5%BA%94%E7%94%A8%E7%9A%84%E9%85%8D%E7%BD%AE%E3%80%81%E9%83%A8%E7%BD%B2%E5%8F%8A%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（3）：开发环境搭建和应用的配置、部署及运行
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%884%EF%BC%89%EF%BC%9ADataStream%20API%20%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（4）：DataStream API 编程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%885%EF%BC%89%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（5）：客户端操作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%886%EF%BC%89%EF%BC%9AFlink%20Time%20%26%20Window%20%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（6）：Flink Time &amp; Window 解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%887%EF%BC%89%EF%BC%9A%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E5%8F%8A%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（7）：状态管理及容错机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%888%EF%BC%89%EF%BC%9ATable%20API%20%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（8）：Table API 编程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/Apache%20Flink%20%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%889%EF%BC%89%EF%BC%9AFlink%20SQL%20%E7%BC%96%E7%A8%8B%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 零基础入门（9）：Flink SQL 编程实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Flink进阶教程
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Flink进阶教程
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%881%EF%BC%89%EF%BC%9ARuntime%20%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%E5%89%96%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（1）：Runtime 核心机制剖析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%882%EF%BC%89%EF%BC%9ATime%20%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（2）：Time 深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%883%EF%BC%89%EF%BC%9ACheckpoint%20%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（3）：Checkpoint 的应用实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%884%EF%BC%89%EF%BC%9AFlink%20on%20YarnK8s%20%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E5%8F%8A%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（4）：Flink on YarnK8s 原理剖析及实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%885%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（5）：数据类型和序列化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%886%EF%BC%89%EF%BC%9AFlink%20%E4%BD%9C%E4%B8%9A%E6%89%A7%E8%A1%8C%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（6）：Flink 作业执行深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%887%EF%BC%89%EF%BC%9A%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%8F%8A%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（7）：网络流控及反压剖析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%888%EF%BC%89%EF%BC%9A%E8%AF%A6%E8%A7%A3%20Metrics%20%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（8）：详解 Metrics 原理与实战
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%889%EF%BC%89%EF%BC%9AFlink%20Connector%20%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（9）：Flink Connector 开发
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/Apache%20Flink%20%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B%EF%BC%8810%EF%BC%89%EF%BC%9AFlink%20State%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Apache Flink 进阶教程（10）：Flink State 最佳实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Flink基础知识
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Flink基础知识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%B5%81%E8%AE%A1%E7%AE%97%E4%B8%AD%E7%9A%84At%20Most%20Once%E3%80%81At%20Least%20Once%E3%80%81Exactly%20Once/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念：流计算中的At Most Once、At Least Once、Exactly Once
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Flink案例分析
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Flink案例分析
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-threat-hunting" class="md-nav__link">
+    <span class="md-ellipsis">
+      1 Threat Hunting 平台的架构与设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Threat Hunting 平台的架构与设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 平台的演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 架构设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 深入探索索引结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      2 以降低 IO 为目标的优化与探索
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 以降低 IO 为目标的优化与探索">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-hilbert" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 裁剪率的理论上限及 Hilbert 空间填充曲线
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 字典索引上 Like 的优化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 基于索引对 join 的优化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-alluxio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Alluxio 作为对象存储的缓存
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 未来规划
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%A1%88%E4%BE%8B%EF%BC%882%EF%BC%89%EF%BC%9AFlink%20%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97%E5%9C%A8%E5%BE%AE%E5%8D%9A%E7%9A%84%E5%BA%94%E7%94%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    案例（2）：Flink 实时计算在微博的应用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%A1%88%E4%BE%8B%EF%BC%883%EF%BC%89%EF%BC%9AFlink%20%E5%9C%A8%E9%A1%BA%E4%B8%B0%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    案例（3）：Flink 在顺丰的应用实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Flink选型对比
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Flink选型对比
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Flink%E9%80%89%E5%9E%8B%E5%AF%B9%E6%AF%94/%E9%80%89%E5%9E%8B%EF%BC%9AFlink%E3%80%81Storm%E3%80%81Spark%E5%AF%B9%E6%AF%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    选型：Flink、Storm、Spark对比
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Hadoop
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Hadoop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Hadoop集群规划
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Hadoop集群规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Hadoop/Hadoop%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92/CDH%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E5%92%8C%E8%A7%92%E8%89%B2%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CDH官方推荐的集群节点和角色配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Hadoop/Hadoop%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92/CDH%E9%9B%86%E7%BE%A4%E8%A7%92%E8%89%B2%E5%92%8C%E8%8A%82%E7%82%B9%E6%95%B0%E8%A7%84%E5%88%92%E5%BB%BA%E8%AE%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CDH集群角色和节点数规划建议
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Hadoop配置优化
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Hadoop配置优化
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Hadoop/Hadoop%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96/CDH%E8%B0%83%E4%BC%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CDH调优
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Linux
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Linux
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Linux指令
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Linux指令
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Linux/Linux%E6%8C%87%E4%BB%A4/Linux%E6%8C%87%E4%BB%A4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux指令
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Maven
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Maven
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Maven使用手册
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Maven使用手册
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Maven/Maven%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/Maven%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maven使用手册
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Maven插件使用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Maven插件使用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Maven/Maven%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/%E4%BD%BF%E7%94%A8flatten-maven-plugin%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86%E7%89%88%E6%9C%AC%E5%8F%B7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    使用flatten-maven-plugin插件管理版本号
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Maven/Maven%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/%E4%BD%BF%E7%94%A8maven-assembly-plugin%E6%8F%92%E4%BB%B6%E5%AE%9A%E5%88%B6%E5%8C%96%E6%89%93%E5%8C%85/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    使用maven-assembly-plugin插件定制化打包
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-threat-hunting" class="md-nav__link">
+    <span class="md-ellipsis">
+      1 Threat Hunting 平台的架构与设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1 Threat Hunting 平台的架构与设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 平台的演进
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 架构设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 深入探索索引结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      2 以降低 IO 为目标的优化与探索
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 以降低 IO 为目标的优化与探索">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-hilbert" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 裁剪率的理论上限及 Hilbert 空间填充曲线
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 字典索引上 Like 的优化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 基于索引对 join 的优化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-alluxio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Alluxio 作为对象存储的缓存
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 未来规划
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1360-flink-pb">案例（1）：360 政企安全集团基于 Flink 的 PB 级数据即席查询实践<a class="headerlink" href="#1360-flink-pb" title="Permanent link">&para;</a></h1>
+<h2 id="1-threat-hunting">1 Threat Hunting 平台的架构与设计<a class="headerlink" href="#1-threat-hunting" title="Permanent link">&para;</a></h2>
+<p>第一部分内容大致分为三个部分，分别是：</p>
+<ul>
+<li>
+<p>平台的演进</p>
+</li>
+<li>
+<p>架构设计</p>
+</li>
+<li>
+<p>深入探索索引结构</p>
+</li>
+</ul>
+<h3 id="11">1.1 平台的演进<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_0.png" /></p>
+<p>我们认为所有技术的演化和革新都需要具体的商业问题来驱动，以下是我们团队近几年基于 <code>Flink</code> 开发的几款产品：</p>
+<ul>
+<li>
+<p><code>2017</code> 年我们基于 <code>Flink DataStream</code> 开发了用户行为分析系统 <code>UEBA</code> ，它是通过接入企业 <code>IT</code> 拓扑的各类行为数据，比如身份认证数据、应用系统访问数据、终端安全数据、网络流量解析数据等等，以用户和资产为核心来进行威胁行为的实时检测，最后构建出用户威胁等级和画像的系统；</p>
+</li>
+<li>
+<p><code>2018</code> 年基于 <code>UEBA</code> 的实施经验，我们发现安全分析人员往往需要一种手段来获取安全事件对应的原始日志，去进一步确认安全威胁的源头和解决方式。于是我们基于 <code>Spark</code> 开发了 <code>HQL</code> 来解决在离线模式下的数据检索问题，其中 <code>HQL</code> 可以认为是表达能力比 <code>SQL</code> 更加丰富的查询语言，大致可以看作是在 <code>SQL</code> 能力的基础上增加了算法类算；</p>
+</li>
+<li>
+<p><code>2019</code> 年随着离线 <code>HQL</code> 在客户那边的使用，我们发现其本身就能够快速定义安全规则，构建威胁模型，如果在离线模式下写完语句后直接发布成在线任务，会大大缩短开发周期，加上 <code>Flink SQL</code> 能力相对完善，于是我们基于 <code>Flink SQL + CEP</code> 来升级了 <code>HQL</code> 的能力，产生了 <code>HQL RealTime</code> 版本；</p>
+</li>
+<li>
+<p><code>2020</code> 年随着客户数据量的增大，很多已经达到了 <code>PB</code> 级，过往的解决方案导致离线的数据检索性能远远低于预期，安全分析人员习惯使用 <code>like</code> 和全文检索等模糊匹配操作，造成查询延时非常大。于是从今年开始，我们着重优化 <code>HQL</code> 的离线检索能力，并推出了全新的 <code>Threat Hunting</code> 平台。</p>
+</li>
+</ul>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_1.png" /></p>
+<p>通过调查发现，拥有 <code>PB</code> 级数据规模的客户往往有以下几个商业需求：</p>
+<ul>
+<li>
+<p>第一是低成本的云原生架构。我们知道目前大部分的大数据架构都是基于 <code>hadoop</code> 的，其特点是数据就在计算节点上，能够减少大量网络开销，加速计算性能。但是整个集群为了做到资源均衡，往往需要相同的资源配置，且为了能够存储尽量多的数据，集群规模会很大，所以这类架构在前期需要投入大量硬件成本。而存算分离和弹性计算则能够解决这一问题，因为磁盘的价格是远低于内存和 <code>CPU</code> 的，所以用廉价的磁盘存储搭配低配 <code>CPU</code> 和内存来存储数据，用少量高配机器来做计算，可以在很大程度上降低成本。</p>
+</li>
+<li>
+<p>第二是低延时的查询响应。安全分析人员在做威胁检测时，大部分时间是即席查询，即通过过滤、 <code>join</code> 来做数据的检索和关联。为了能够尽快的获取查询结果，对应的技术方案是：列存、索引、缓存。列存不用多说了，是大数据领域常见的存储方案；在列存的基础上，高效的索引方案能够大量降低 <code>io</code> ，提高查询性能；而存算分析带来的网络延时可以由分布式缓存来弥补。</p>
+</li>
+<li>
+<p>第三是需要丰富的查询能力，其中包括单行的 <code>fields/filter/udf</code> 等，多行的聚合 <code>join</code> ，甚至算法类的分析能力，这部分我们主要依赖于自己开发的分析语言 <code>HQL</code> 来提供。</p>
+</li>
+</ul>
+<h3 id="12">1.2 架构设计<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_2.png" /></p>
+<p>首先，数据是来自于已经存储在 <code>ES</code> 中的历史数据和 <code>kafka</code> 里的实时数据，其中 <code>ES</code> 里的历史数据我们通过自己开发的同步工具来同步， <code>kafka</code> 里的实时数据我们则通过 <code>Streaming File Sink</code> 写 <code>orc</code> 文件到存储集群。在数据同步的同时，我们会将这批数据的索引信息更新到数据库中。</p>
+<p>安全分析人员会从前端页面通过写交互式分析语言 <code>HQL</code> 发起数据检索的请求，此时请求会进入调度系统，一旦开始执行作业，首先会将分析语句解析成算子列表，算子缓存算法会判断该次查询是否可以命中缓存系统中已有的缓存数据。</p>
+<ul>
+<li>
+<p>如果分析语句的输入是已经算好并且 <code>cache</code> 好了的中间结果，那么直接读取缓存来继续计算；</p>
+</li>
+<li>
+<p>如果不能命中，证明我们必须从 <code>orc</code> 文件开始重新计算。</p>
+</li>
+</ul>
+<p>我们会先提取出查询语言的过滤条件或者是 <code>Join</code> 条件来做谓词下推，进入索引数据库中获得目前符合该查询的文件列表，随后将文件列表交给计算引擎来进行计算。计算引擎我们采用双引擎模式，其中复杂度高的语句我们通过 <code>Flink</code> 引擎来完成，其它较为简单的任务我们交给平台内部的 <code>蜂鸟引擎</code> 。 <code>蜂鸟引擎</code> 基于 <code>Apache arrow</code> 做向量化执行，加上 <code>LLVM</code> 编译，查询延迟会非常小。</p>
+<p>由于整个系统的存算分离，为了加速数据读取，我们在计算集群节点上增加了 <code>alluxio</code> 来提供数据缓存服务，其中不仅缓存 <code>remote cluster</code> 上的数据，同时会缓存部分历史作业结果，通过算子缓存的算法来加速下次计算任务。</p>
+<p>这里还需要强调两点：</p>
+<ul>
+<li>
+<p>第一点是索引数据库会返回一批符合该条件的文件列表，如果文件列表非常大的话，当前的 <code>Flink</code> 版本在构建 <code>job graph</code> 时，在获取 <code>Filelist Statistics</code> 逻辑这里在遍历大量文件的时候，会造成长时间无法构建出 <code>job graph</code> 的问题。目前我们对其进行了修复，后期会贡献给社区。</p>
+</li>
+<li>
+<p>第二点是数据缓存那一块，我们的 <code>HQL</code> 之前是通过 <code>Spark</code> 来实现的。用过 <code>Spark</code> 的人可能知道， <code>Spark</code> 会把一个 <code>table</code> 来做 <code>cache</code> 或 <code>persist</code> 。我们在迁移到 <code>Flink</code> 的时候，也沿用了这个算子。 <code>Flink</code> 这边我们自己实现了一套，就是用户在 <code>cache table</code> 时，我们会把它注册成一个全新的 <code>table source</code> ，后面在重新读取的时候只会用这个新的 <code>table source</code> 来打通整个流程。</p>
+</li>
+</ul>
+<h3 id="13">1.3 深入探索索引结构<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_3.png" /></p>
+<p>数据库为了加速数据检索，我们往往会事先为数据创建索引，再在扫描数据之前通过索引定位到数据的起始位置，从而加速数据检索。而传统数据库常见的是行索引，通过一个或若干字段创建索引，索引结果以树形结构存储，此类索引能够精确到行级别，索引效率最高。</p>
+<p>某些大数据项目也支持了行索引，而它所带来的弊端就是大量的索引数据会造成写入和检索的延时。而我们平台处理的是机器数据，例如终端和网络这类数据，它的特点是重复度非常高，而安全分析的结果往往非常少，极少数的威胁行为会隐藏在海量数据里，占比往往会是 <code>1/1000</code> 甚至更少。</p>
+<p>所以我们选择性价比更高的块索引方案，已经能够支撑目前的应用场景。目前通过客户数据来看，索引能够为 <code>85%</code> 的语句提供 <code>90%</code> 以上的裁剪率，基本满足延时要求。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_4.png" /></p>
+<p>某些大数据平台是将索引数据以文件的形式存储在磁盘上，外加一些 <code>cache</code> 机制来加速数据访问，而我们是将索引数据直接存在了数据库中。主要有以下两个方面的考虑：</p>
+<ul>
+<li>
+<p>第一是 <code>transaction</code> 。我们知道列存文件往往是无法 <code>update</code> 的，而我们在定期优化文件分布时会做 <code>Merge File</code> 操作，为了保证查询一致性，需要数据库提供 <code>transaction</code> 能力。</p>
+</li>
+<li>
+<p>第二是性能。数据库拥有较强的读写和检索能力，甚至可以将谓词下推到数据库来完成，数据库的高压缩比也能进一步节省存储。</p>
+</li>
+</ul>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_5.png" /></p>
+<p>上图为块索引的设计。在我们的索引数据库中，我们把这些数据分为不同类别数据源，比如终端数据为一类数据源，网络数据为一类数据源，我们分类数据源的逻辑是他们是否拥有统一的 <code>Schema</code> 。就单个数据源来说，它以日期作为 <code>Partition</code> ， <code>Partition</code> 内部是大量的 <code>ORC</code> 小文件，具体到索引结构，我们会为每一个字段建 <code>min/max</code> 索引，基数小于 <code>0.001</code> 的字段我们建 <code>Bloom</code> 索引。</p>
+<p>上文提到过，安全人员比较喜欢用 <code>like</code> 和全文检索。对于 <code>like</code> 这一块，我们也做了一些优化。全文检索方面，我们会为数据来做分词，来构建倒排索引，同时也会对于单个分词过后的单个 <code>item</code> 来做文件分布层面的位图索引。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_6.png" /></p>
+<p>上图是一个索引大小的大致的比例假设， <code>JSON</code> 格式的原始日志大有 <code>50PB</code> ，转化成 <code>ORC</code> 大概是 <code>1PB</code> 左右。我们的 <code>Index</code> 数据是 <code>508GB</code> ，其中 <code>8GB</code> 为 <code>Min/Max</code> 索引， <code>500GB</code> 为 <code>Bloom</code> 。加上上文提到的位图以及倒排，这个索引数据的占比会进一步加大。基于此，我们采用的是分布式的索引方案。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_7.png" /></p>
+<p>我们知道日志是在不断的进行变化的，对于有的数据员来说，他有时会增加字段或者减少字段，甚至有时字段类型也会发生变化。</p>
+<p>那么我们采取这种 <code>Merge Schema</code> 模式方案，在文件增量写入的过程中，也就是在更新这批数据的索引信息的同时来做 <code>Schema Merge</code> 的操作。如图所示，在 <code>block123</code> 中，文件 <code>3</code> 是最后一个写入的。随着文件的不断写入，会组成一个全新的 <code>Merge Schema</code> 。可以看到 <code>B</code> 字段和 <code>C</code> 字段其实是历史字段，而 <code>A_V</code> 字段是 <code>A</code> 字段的历史版本字段，我们用这种方式来尽量多的让客户看到比较全的数据。最后基于自己开发的 <code>Input format</code> 加 <code>Merge Schema</code> 来构建一个新的 <code>table source</code> ，从而打通整个流程。</p>
+<h2 id="2-io">2 以降低 IO 为目标的优化与探索<a class="headerlink" href="#2-io" title="Permanent link">&para;</a></h2>
+<p>上文介绍了为什么要选择块索引，那么接下来将具体介绍如何使用块索引。块索引的核心可以落在两个字上：“裁剪”。裁剪就是在查询语句被真正执行前就将无关的文件给过滤掉，尽可能减少进入计算引擎的数据量，从数据源端进行节流。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_8.png" /></p>
+<p>这张图展示了整个系统使用 <code>IndexDB</code> 来做裁剪流程：</p>
+<ul>
+<li>
+<p>第一步是解析查询语句。获取到相关的 <code>filter</code> ，可以看到最左边的 <code>SQL</code> 语句中有两个过滤条件，分别是 <code>src_address = 某个ip</code> ， <code>occur_time &gt; 某个时间戳</code> 。</p>
+</li>
+<li>
+<p>第二步将查询条件带入 <code>Index DB</code> 对应数据源的 <code>meta</code> 表中去进行文件筛选。 <code>src_address</code> 是字符串类型字段，它会联合使用 <code>min/max</code> 和 <code>bloom</code> 索引进行裁剪。 <code>occur_time</code> 是数值类型字段并且是时间字段，我们会优先查找 <code>min/max</code> 索引来进行文件裁剪。需要强调的是，这里我们是将用户写的 <code>filter</code> 封装成了 <code>index db</code> 的查询条件，直接将 <code>filter pushdown</code> 到数据库中完成。</p>
+</li>
+<li>
+<p>第三步在获取到文件列表后，这些文件加上前面提到的 <code>merged schema</code> 会共同构造成一个 <code>TableSource</code> 来交给 <code>Flink</code> 进行后续计算。</p>
+</li>
+</ul>
+<p>同时，构建 <code>source</code> 的时候，我们在细节上做了一些优化。比如在将 <code>filter</code> 传给 <code>ORC reader</code> 的时候，清除掉已经 <code>pushdown</code> 了的 <code>filter</code> ，避免在引擎侧进行二次过滤。当然，这里并不是将所有 <code>filter</code> 都清除掉了，我们保留了 <code>like</code> 表达式，关于 <code>like</code> 的 <code>filter pushdown</code> 会在后文介绍。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_9.png" /></p>
+<p>接下来着重介绍一下四大优化点：</p>
+<ul>
+<li>
+<p>第一点，数据在未排序的情况下，裁剪率是有理论上限的，我们通过在数据写入的时候使用 <code>hilbert</code> 曲线排序原始数据来提升裁剪率；</p>
+</li>
+<li>
+<p>第二点，因为安全领域的特殊性，做威胁检测严重依赖 <code>like</code> 语法，所以我们对 <code>orc api</code> 进行了增强，使其支持了 <code>like</code> 语法的下推；</p>
+</li>
+<li>
+<p>第三点，同样是因为使用场景严重依赖 <code>join</code> ，所以我们对 <code>join</code> 操作也做了相应的优化；</p>
+</li>
+<li>
+<p>第四点，我们的系统底层支持多种文件系统，所以我们选取 <code>Alluxio</code> 这一成熟的云原生数据编排系统来做数据缓存，提高数据的访问局部性。</p>
+</li>
+</ul>
+<h3 id="21-hilbert">2.1 裁剪率的理论上限及 Hilbert 空间填充曲线<a class="headerlink" href="#21-hilbert" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_10.png" /></p>
+<p>裁剪可以抽象成 <code>N</code> 个球扔进 <code>M</code> 个桶的概率问题，在这里我们直接说结论。假设行在块中随机均匀分布，所有块的总行数固定，查询条件命中的总行数也固定，则块命中率直接与命中的 <code>总行数 / 总块数</code> 正相关。</p>
+<p>结论有两个：</p>
+<ul>
+<li>
+<p>第一点，如果命中 <code>总行数 = 总块数</code> ，即 <code>X</code> 轴值为 <code>1</code> 的时候，命中率为 <code>2/3</code> ，也就是 <code>2/3</code> 的块，都包含命中的行，对应的块修剪率的上限是 <code>1/3</code> 。 <code>1/3</code> 是一个很低数值，但是由于它的前提是数据随机均匀分布，所以为了让数据分布更好，我们需要在数据写入时对原始数据进行排序。</p>
+</li>
+<li>
+<p>第二点，假设命中总行数固定，那么大幅度减少每块中的行数来增加总块数，也能提升块修剪率。所以我们缩小了块大小。根据测试结果，我们设定每个文件的大小为： <code>16M</code> 。缩小文件大小是很简单的。针对排序，我们引入了 <code>hilbert</code> 空间填充曲线。</p>
+</li>
+</ul>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_11.png" /></p>
+<p>为什么使用 <code>hilbert</code> 曲线？主要是基于两点：</p>
+<ul>
+<li>
+<p>首先是，以什么路径遍历 <code>2</code> 维空间，使路径的地址序列对其中任一维度都基本有序？为什么要对每一列或者说子集都有序？因为系统在使用的过程中，查询条件是不固定的。数据写入时排序用到了 <code>5</code> 个字段，查询的时候可能只用到了其中的一个或两个字段。 <code>Hilbert</code> 排序能让多个字段做到既整体有序，又局部有序。</p>
+</li>
+<li>
+<p>另外，空间填充曲线有很多，还有 <code>Z</code> 形曲线、蛇形曲线等等，大家可以看看右边这两张对比图。直观的看，曲线路径的长跨度跳跃越少越好，点的位置在迭代过程中越稳定越好。而 <code>hilbert</code> 曲线在空间填充曲线里面综合表现最好。</p>
+</li>
+</ul>
+<p><code>hilbert</code> 用法，就是实现一个 <code>UDF</code> ，输入列值，输出坐标值，然后根据坐标值排序。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_12.png" /></p>
+<p>我们抽样了客户环境所使用的 <code>1500</code> 条 <code>SQL</code> 语句，过滤掉了其中裁剪率为分之 <code>100%</code> 的相关语句，也就是没有命中文件的无效语句。然后还剩下 <code>1148</code> 条，我们使用这些语句做了裁剪率排序后，对裁剪率进行了对比，裁剪率 <code>95</code> 百分位从之前的 <code>68%</code> 提升到了 <code>87%</code> ，提升了 <code>19%</code> 。可能大家会觉得 <code>19%</code> 这个数值不是特别高，但如果我们带上一个基数，比如说 <code>10</code> 万个文件，这样看的话就会很可观了。</p>
+<h3 id="22-like">2.2 字典索引上 Like 的优化<a class="headerlink" href="#22-like" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_13.png" /></p>
+<p>之前也有讲到安全行业的特殊性，我们做威胁检测的时候会严重依赖 <code>like</code> 查询。鉴于此，我们也对它做了优化。</p>
+<ul>
+<li>
+<p>首先我们为 <code>ORC api</code> 添加了 <code>like</code> 条件表达式，保证 <code>SQL</code> 中的 <code>like</code> 能下推到 <code>orc record reader</code> 中。</p>
+</li>
+<li>
+<p>其次，重构了 <code>orc record reader</code> 的 <code>row group filter</code> 逻辑，如果发现是 <code>like</code> 表达式，首先读取该字段的 <code>dict steam</code> ，判断 <code>dict stream</code> 是否包含 <code>like</code> 目标字符串，如果字典中不存在该值，直接跳过该 <code>row group</code> ，不用读取 <code>data stream</code> 和 <code>length steam</code> ，能大幅提高文件读取速度。后期我们也考虑构建字典索引到索引数据库中，直接将字典过滤 <code>pushdown</code> 到数据库中完成。</p>
+</li>
+</ul>
+<p>例如图上所示，最左边的 <code>SQL</code> 中有三个表达式。前两个在上文中已经提到了，是将 <code>filter</code> 直接 <code>pushdown</code> 到 <code>index db</code> 中完成，我们交给 <code>orc reader</code> 的 <code>filter</code> 只有最后一个 <code>attachment_name like '%投标%'</code> ，真正需要读取的记录只是 <code>dict</code> 包含“投标”的 <code>row group</code> ，也就是做到了 <code>row group</code> 级别的过滤，进一步减少了需要进入计算引擎的数据量。</p>
+<h3 id="23-join">2.3 基于索引对 join 的优化<a class="headerlink" href="#23-join" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_14.png" /></p>
+<p>威胁情报的匹配中大量使用 <code>join</code> 操作，如果要加速 <code>join</code> 的性能，仅仅是 <code>where</code> 条件的 <code>filter pushdown</code> 是远远不够的。</p>
+<p><code>Flink</code> 中已经内置了许多 <code>join</code> 算法，比如 <code>broadcast join</code> ， <code>hash join</code> 和 <code>sort merge join</code> 。其中， <code>sort merge join</code> 对预先排好序的表 <code>join</code> 非常友好，而上文有提到我们使用 <code>Hilbert</code> 曲线来对多字段进行联合排序，所以 <code>sort merge join</code> 暂时不在我们的优化范围之内。</p>
+<p>另外，我们知道 <code>join</code> 的性能和左右表的大小正相关，而威胁情报 <code>join</code> 的稀疏度非常高，所以事先对左右表做裁剪，能够大幅减少进入 <code>join</code> 阶段的数据。</p>
+<p>上文提到过我们已经为常见字段建立了 <code>bloom</code> 索引。那么利用这些已经创建好的 <code>bloom</code> ，来进行文件预过滤，就变得顺理成章，并且省掉了构建 <code>bloom</code> 的时间开销。</p>
+<p>对于 <code>broadcast join</code> ，我们直接扫描小表，将小表记录依次进入大表所属文件的 <code>bloom</code> ，判断该数据块是否需要，对数据量大的表做预裁剪。</p>
+<p>对于 <code>hash join</code> ，正如我们看到的，我们可以预先对 <code>join key</code> 的文件级 <code>bloom</code> 做 <code>预join</code> 操作，具体就是将左表所属的某个文件的 <code>bloom</code> 依次与右表所属文件的 <code>bloom</code> 做 <code>与</code> 操作，只保留左右表能与后结果条数不为 <code>0</code> 的文件，再让各表剩余的文件进入引擎做后续计算。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_15.png" /></p>
+<p>比如说图上的这三张表，分别是 <code>table1</code> 、 <code>table2</code> 和 <code>table3</code> 。我们可以从 <code>index DB</code> 中获取到表的统计信息，也就是文件个数或者说是文件表的大小。图上就直接列的是文件个数： <code>table 1</code> 是 <code>1000</code> 个，然后 <code>table 2</code> 是 <code>5</code> 万个文件， <code>table 3</code> 是 <code>3</code> 万个文件。</p>
+<p>我们就是参照上一张图片里面的逻辑进行预 <code>join</code> ，然后预估 <code>join</code> 的成本。我们会让成本低的预 <code>join</code> 先进行，这样的话就能够大幅度减少中间结果，提升 <code>join</code> 的效率。</p>
+<h3 id="24-alluxio">2.4 Alluxio 作为对象存储的缓存<a class="headerlink" href="#24-alluxio" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_16.png" /></p>
+<p>因为底层文件存储系统的多种多样，所以我们选取了 <code>Alluxio</code> 数据编排系统， <code>Alluxio</code> 的优点是让数据更靠近计算框架，利用内存或者 <code>SSD</code> 多级缓存机制加速文件访问，如果在完全命中 <code>cache</code> 的情况下，能够达到内存级 <code>IO</code> 的文件访问速度，减少直接从底层文件系统读文件的频次，很大程度上缓解了底层文件系统的压力。</p>
+<p>对我们系统来说就是它带来了更高的并发，而且对低裁剪率的查询更友好，因为低裁剪率的话就意味着需要读取大量的文件。</p>
+<p>如果这些文件在之前的查询中已经被 <code>load</code> 到 <code>cache</code> 里面，就能够大幅度的提升查询速度。</p>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_17.png" /></p>
+<p>在做完这些优化以后，我们做了性能对比测试。我们选取了一个规模为 <code>249TB</code> 的 <code>es</code> 集群。它使用了 <code>20</code> 台服务器， <code>Flink</code> 使用了两台服务器，为了在图标上看到更直观的对比效果，我们选取了 <code>16</code> 条测试结果。</p>
+<p>图表上红橙色的是 <code>es</code> ，蓝色的是 <code>HQL</code> 优化前，绿色的是 <code>HQL</code> 优化后。上面的数字标签是与 <code>es</code> 相比， <code>HQL</code> 的性能差值。比如第一个标签就意味着 <code>HQL</code> 的性能五倍于 <code>es</code> ，其中 <code>6</code> 号和 <code>7</code> 号比 <code>es</code> 慢，主要是因为 <code>HQL</code> 是块索引， <code>es</code> 是行索引，全在内存里面，所以可以做到超快的检索速度。 <code>13</code> 号是因为 <code>HQL</code> 在使用 <code>not equal</code> 的情况下，裁剪率相对较差。</p>
+<p>总体说，优化效果是很明显的，大部分语句在与 <code>es</code> 查询速度相比是持平甚至略优的。完全满足客户对长周期数据存储和查询的期望。</p>
+<h2 id="3">3 未来规划<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../../../../assets/images/Flink/Flink%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/%E6%A1%88%E4%BE%8B%EF%BC%881%EF%BC%89%EF%BC%9A360%E6%94%BF%E4%BC%81%E5%AE%89%E5%85%A8%E9%9B%86%E5%9B%A2%E5%9F%BA%E4%BA%8EFlink%E7%9A%84PB%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%8D%B3%E5%B8%AD%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5_image_18.png" /></p>
+<p>上图是未来规划。因为客户现场经常会涉及到很多的 <code>BI Dashboard</code> 运算和长周期运算报告的需求，所以我们下一步会考虑做 <code>BI</code> 预算，以及苏军提到的容器化和 <code>JVM</code> 预热，当然还有对标 <code>es</code> ，以及提升多用户并发查询的能力。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.instant.preview", "navigation.tracking", "navigation.tabs", "navigation.path", "toc.follow", "navigation.top", "search.suggest", "search.highlight", "navigation.footer", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
