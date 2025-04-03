@@ -130,6 +130,11 @@ COMMIT_MSG_PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|reve
 # 读取commit message文件的内容
 COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
+# 忽略merge
+if echo "$COMMIT_MSG" | grep -iq "^merge"; then
+    exit 0
+fi
+
 # 使用正则表达式匹配commit message
 if ! echo "$COMMIT_MSG" | grep -E -q "$COMMIT_MSG_PATTERN"; then
   echo "##############失败原因##############"
