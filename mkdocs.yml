@@ -10,6 +10,9 @@ nav:
   - Alibaba:
     - Java开发手册:
       - documents/Alibaba/Java开发手册/Java开发手册（黄山版）.md
+  - Article:
+    - 收藏夹:
+      - documents/Article/收藏夹/软件开发的四大悖论.md
   - ClickHouse:
     - ClickHouse入门教程:
       - documents/ClickHouse/ClickHouse入门教程/ClickHouse从入门到精通-初级.md
