@@ -1,4 +1,4 @@
-# Idea代码质量使用教程
+# Idea代码质量插件使用教程
 
 ## 1 SonarQube介绍
 
@@ -60,7 +60,7 @@
 
 5. 点击 `Restart IDE / 重启IDE`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_1.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_1.png)
 
 ### 2.2 Idea配置SonarLint
 
@@ -72,7 +72,7 @@
 
 4. 点击 `+`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_2.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_2.png)
 
 1. 在 `Connection Name` 输入 `Tongtech SonarQube Server`
 
@@ -82,27 +82,27 @@
 
 4. 点击 `Next / 下一步`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_3.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_3.png)
 
 1. 点击 `Create token`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_4.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_4.png)
 
 1. 点击 `允许连接`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_5.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_5.png)
 
 1. 点击 `Next / 下一步`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_6.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_6.png)
 
 1. 点击 `Create / 创建`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_7.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_7.png)
 
 1. 点击 `Applay / 应用`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_8.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_8.png)
 
 1. 打开 `Settings / 设置`
 
@@ -118,17 +118,17 @@
 
 7. 点击 `Search in list...`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_9.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_9.png)
 
 1. 选择 `对应项目`
 
 2. 点击 `OK / 确定`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_10.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_10.png)
 
 1. 点击 `Apply / 应用`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_11.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_11.png)
 
 ### 2.3 Idea使用SonarLint
 
@@ -140,7 +140,7 @@
 
 3. 点击 `Analyze Current File`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_12.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_12.png)
 
 #### 2.3.2 方法二
 
@@ -150,4 +150,4 @@
 
 3. 点击 `Anaylze with SonarQube for IDE`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码质量使用教程_image_13.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码质量插件使用教程_image_13.png)

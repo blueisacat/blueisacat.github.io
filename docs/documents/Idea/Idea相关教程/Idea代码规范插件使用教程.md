@@ -1,4 +1,4 @@
-# Idea代码规范使用教程
+# Idea代码规范插件使用教程
 
 ## 1 CheckStyle介绍
 
@@ -201,7 +201,7 @@
 
 5. 点击 `Restart IDE / 重启IDE`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_1.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_1.png)
 
 ### 2.3 Idea配置CheckStyle
 
@@ -215,29 +215,29 @@
 
 5. 点击 `+`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_2.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_2.png)
 
 1. 点击 `Browse`
 
 2. 选择 `tongtech_check_style.xml`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_3.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_3.png)
 
 1. 在 `Description` 输入 `Tongtech Checks`
 
 2. 点击 `Next`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_4.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_4.png)
 
 1. 点击 `Finish`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_5.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_5.png)
 
 1. 勾选 `Tongtech Checks`
 
 2. 点击 `Apply / 应用`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_6.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_6.png)
 
 ### 2.4 Idea使用CheckStyle
 
@@ -249,7 +249,7 @@
 
 4. 点击 `Check Project` 检查当前项目
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_7.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_7.png)
 
 ### 2.5 忽略告警
 
@@ -262,7 +262,7 @@ String a = "12345678901234567890123456789012345678901234567890123456789012345678
 
 `value` 值为 `checkstyle:校验规则` ，以下是 `校验规则` 获取方法：
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_10.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_10.png)
 
 ## 3 CodeStyle使用说明
 
@@ -324,7 +324,7 @@ String a = "12345678901234567890123456789012345678901234567890123456789012345678
 
 7. 选择 `tongtech_code_style.xml`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_8.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_8.png)
 
 1. 在 `Scheme / 方案` 选择 `tongtech_code_style`
 
@@ -332,7 +332,7 @@ String a = "12345678901234567890123456789012345678901234567890123456789012345678
 
 3. 点击 `Applay / 应用`
 
-![](../../../assets/images/Idea/Idea相关教程/Idea代码规范使用教程_image_9.png)
+![](../../../assets/images/Idea/Idea相关教程/Idea代码规范插件使用教程_image_9.png)
 
 ### 3.3 Idea使用CodeStyle
 

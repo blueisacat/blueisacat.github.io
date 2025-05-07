@@ -1,4 +1,4 @@
-# Git提交规范使用教程
+# Git提交规范插件使用教程
 
 ## 1 Git钩子介绍
 
@@ -177,7 +177,7 @@ exit 0
 
 4. 勾选 `隐藏的项目`
 
-![](../.././../assets/images/Git/Git相关教程/Git提交规范使用教程_image_1.png)
+![](../.././../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_1.png)
 
 1. 复制 `commit-msg` 脚本
 
@@ -193,11 +193,11 @@ exit 0
 
 当填写了不符合规范的 `commit message` 并 `提交` 时：
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_2.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_2.png)
 
 `提交` 会被拦截，并给出提示信息如下：
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_3.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_3.png)
 
 请根据提示信息修改 `commit message` ，然后重新提交。
 
@@ -217,7 +217,7 @@ exit 0
 
 5. 点击 `Restart IDE / 重启IDE`
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_4.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_4.png)
 
 ### 3.2 配置Git Commit Message Helper
 
@@ -229,7 +229,7 @@ exit 0
 
 4. 勾选 `Hidden Option / 隐藏设置` 的 `scope` 、 `changes` 、 `skip ci`
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_7.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_7.png)
 
 1. 打开 `Commit Template`
 
@@ -243,13 +243,13 @@ exit 0
 
 3. 点击 `Apply / 应用`
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_8.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_8.png)
 
 ### 3.3 使用Git Commit Message Helper
 
 1. 点击 `图标`
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_5.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_5.png)
 
 1. 选择 `Type of Change / 更改类型`
 
@@ -259,4 +259,4 @@ exit 0
 
 4. 填写 `Closed Issues / 关闭问题`
 
-![](../../../assets/images/Git/Git相关教程/Git提交规范使用教程_image_6.png)
+![](../../../assets/images/Git/Git相关教程/Git提交规范插件使用教程_image_6.png)
